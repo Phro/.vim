@@ -1,8 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer:
 "       Amir Salihefendic
-"       This build by Jesse Frohlich
 "       http://amix.dk - amix@amix.dk
+"       This build by Jesse Frohlich
 "
 " Version:
 "       5.0 - 29/05/12 15:43:36
@@ -727,7 +727,7 @@
     " Append a semicolon to the end of a line
     noremap <LocalLeader>; mqA;<Esc>`q
     " Go to the link under the cursor
-    noremap gl ml"lyiW:!open l<CR>`l
+    noremap gl ml"lyiW:!open <c-r>l<CR>`l
     " This could also be removed once ctrl is made more accesible. However, it
     " *does* match nicely with the already in place tab...
     map <S-Tab> <C-o>
