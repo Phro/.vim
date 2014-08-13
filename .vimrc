@@ -667,7 +667,7 @@
 " => Editing mappings
     " Remap VIM 0 to first non-blank character
     map 0 ^
-    " Remap ; to : in normal mode (and vise-versa)
+    " Swap ; and : in normal mode (and vise-versa)
     noremap ; :
     noremap : ;
     "onoremap ; :
@@ -676,6 +676,12 @@
     " Remap p to paste to the current indentation, wheras ctrl-p maps to normal paste.
     noremap p ]p
     noremap <C-P> p
+
+    noremap <LocalLeader>o moo<Esc>`o
+    noremap <LocalLeader>O moO<Esc>`o
+    " This still must be fixed
+    silent! call repeat#set("<LocalLeader>O", v:count)
+    silent! call repeat#set("<LocalLeader>o", v:count)
 
     " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
     nnoremap <M-j> mz:m+<cr>`z
@@ -714,6 +720,9 @@
     " (Page up-down)
     map ƒ <C-f>
     map ∫ <C-b>
+    
+    " Run the :make command
+    nnoremap <LocalLeader>m<Space> :make<cr>
 
     " Append a semicolon to the end of a line
     noremap <LocalLeader>; mqA;<Esc>`q
@@ -883,6 +892,3 @@
          execute("bdelete! ".l:currentBufNum)
        endif
     endfunction
-
-    " Run the :make command
-    nnoremap <LocalLeader>m<Space> :make<cr>
