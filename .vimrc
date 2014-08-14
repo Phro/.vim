@@ -64,12 +64,18 @@
     Plugin 'Townk/vim-autoclose'
     " Add a command for renaming files
     Plugin 'danro/rename.vim'
+    " LaTeX collection of useful commands
+    Plugin 'LaTeX-Box-Team/LaTeX-Box'
+
     " Surround objects with quotes, parentheses, etc.
     Plugin 'tpope/vim-surround'
     " Intelligent date 'crementation' with <C-A>/<C-X>
     Plugin 'tpope/vim-speeddating'
     " Intelligent repeating for the above 2 plugins
     Plugin 'tpope/vim-repeat'
+
+    " Extra colorschemes
+    Plugin 'flazz/vim-colorschemes'
 
     "Plugin 'jordwalke/AutoComplPop.git'
     " Snippets Package:
@@ -78,7 +84,7 @@
     " Snippets are separated from the engine. Add this if you want them:
     "Plugin 'honza/vim-snippets'
 
-    "Bundle "jordwalke/VimCompleteLikeAModernEditor"
+    "Bundle 'jordwalke/VimCompleteLikeAModernEditor'
     " Trigger configuration. Do not use <tab> if you use
     " https://github.com/Valloric/YouCompleteMe.
 
@@ -473,7 +479,11 @@
 
 
     " Allow TeX documents to be folded according to their syntax. (This may be made irrelevant by LaTeX-Box)
-    let g:tex_fold_enabled=1
+    let g:LatexBox_Folding=1
+    "let g:LatexBox_latexmk_async=1
+    "let g:LatexBox_latexmk_preview_continuously=1
+    "let g:LatexBox_no_mappings=1
+    "let g:tex_fold_enabled=1
 
 " => Status line
     "statusline setup
