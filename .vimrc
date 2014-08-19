@@ -76,6 +76,10 @@
 
     " Extra colorschemes
     Plugin 'flazz/vim-colorschemes'
+    " Color table viewer
+    Plugin 'guns/xterm-color-table.vim'
+    " Smart Status Line:
+    Plugin 'bling/vim-airline'
 
     "Plugin 'jordwalke/AutoComplPop.git'
     " Snippets Package:
@@ -125,8 +129,10 @@
         au BufNewFile,BufRead *.md   setfiletype markdown
     augroup END
 
-    " Detect filetypes by their extension and syntax
+    " Detect filetypes by their extension and syntax; something is not working
+    " though: Newly opened buffers aren't being highlighted.
     filetype plugin indent on
+    syntax enable
 
     " Brief help
     " :PluginList          - list configured plugins
@@ -307,10 +313,11 @@
 
 " => Colors and Fonts
     " Enable syntax highlighting
-    syntax enable
+    "syntax enable
 
     set background=dark
-    colorscheme vividchalk2
+    " The diff coloration still needs work.
+    colorscheme industry
 
     " Set extra options when running in GUI mode
     if has("gui_running")
@@ -482,184 +489,187 @@
     let g:LatexBox_Folding=1
     "let g:LatexBox_latexmk_async=1
     "let g:LatexBox_latexmk_preview_continuously=1
-    "let g:LatexBox_no_mappings=1
+    let g:LatexBox_no_mappings=1 " This is somewhat annoying, as <leader>l has a long delay in it.
     "let g:tex_fold_enabled=1
 
-" => Status line
+ "=> Status line
+    let g:airline_powerline_fonts=1
+
+    " The following has been deprecated by the use of vim-airline.
     "statusline setup
-    set statusline =%#identifier#
-    set statusline+=[%t]    "tail of the filename
-    set statusline+=%*
+    "set statusline =%#identifier#
+    "set statusline+=[%t]   " tail of the filename
+    "set statusline+=%*
 
     "display a warning if fileformat isnt unix
-    set statusline+=%#warningmsg#
-    set statusline+=%{&ff!='unix'?'['.&ff.']':''}
-    set statusline+=%*
+    "set statusline+=%#warningmsg#
+    "set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+    "set statusline+=%*
 
     "display a warning if file encoding isnt utf-8
-    set statusline+=%#warningmsg#
-    set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
-    set statusline+=%*
+    "set statusline+=%#warningmsg#
+    "set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+    "set statusline+=%*
 
-    set statusline+=%h      "help file flag
-    set statusline+=%y      "filetype
+    "set statusline+=%h      "help file flag
+    "set statusline+=%y      "filetype
 
     "read only flag
-    set statusline+=%#identifier#
-    set statusline+=%r
-    set statusline+=%*
+    "set statusline+=%#identifier#
+    "set statusline+=%r
+    "set statusline+=%*
 
     "modified flag
-    set statusline+=%#identifier#
-    set statusline+=%m
-    set statusline+=%*
+    "set statusline+=%#identifier#
+    "set statusline+=%m
+    "set statusline+=%*
 
     "set statusline+=%{fugitive#statusline()}
 
     "display a warning if &et is wrong, or we have mixed-indenting
-    set statusline+=%#error#
-    set statusline+=%{StatuslineTabWarning()}
-    set statusline+=%*
+    "set statusline+=%#error#
+    "set statusline+=%{StatuslineTabWarning()}
+    "set statusline+=%*
 
-    set statusline+=%{StatuslineTrailingSpaceWarning()}
+    "set statusline+=%{StatuslineTrailingSpaceWarning()}
 
-    set statusline+=%{StatuslineLongLineWarning()}
+    "set statusline+=%{StatuslineLongLineWarning()}
 
-    set statusline+=%#warningmsg#
+    "set statusline+=%#warningmsg#
     "set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+    "set statusline+=%*
 
     "display a warning if &paste is set
-    set statusline+=%#error#
-    set statusline+=%{&paste?'[paste]':''}
-    set statusline+=%*
+    "set statusline+=%#error#
+    "set statusline+=%{&paste?'[paste]':''}
+    "set statusline+=%*
 
-    set statusline+=%=      "left/right separator
+    "set statusline+=%=      "left/right separator
     "if &filetype == "text"
         ""colorscheme distinguished
         "set statusline+=wc:%{WordCount()}\  " word count for text files
     "endif
-    set statusline+=%{StatuslineCurrentHighlight()}\ \  "current highlight
-    set statusline+=%c,     "cursor column
-    set statusline+=%l/%L   "cursor line/total lines
-    set statusline+=\ %P    "percent through file
+    "set statusline+=%{StatuslineCurrentHighlight()}\ \  "current highlight
+    "set statusline+=%c,     "cursor column
+    "set statusline+=%l/%L   "cursor line/total lines
+    "set statusline+=\ %P    "percent through file
     set laststatus=2
 
     "recalculate the trailing whitespace warning when idle, and after saving
-    autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+    "autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
     "return '[\s]' if trailing white space is detected
     "return '' otherwise
-    function! StatuslineTrailingSpaceWarning()
-        if !exists("b:statusline_trailing_space_warning")
+    "function! StatuslineTrailingSpaceWarning()
+        "if !exists("b:statusline_trailing_space_warning")
 
-            if !&modifiable
-                let b:statusline_trailing_space_warning = ''
-                return b:statusline_trailing_space_warning
-            endif
+            "if !&modifiable
+                "let b:statusline_trailing_space_warning = ''
+                "return b:statusline_trailing_space_warning
+            "endif
 
-            if search('\s\+$', 'nw') != 0
-                let b:statusline_trailing_space_warning = '[\s]'
-            else
-                let b:statusline_trailing_space_warning = ''
-            endif
-        endif
-        return b:statusline_trailing_space_warning
-    endfunction
+            "if search('\s\+$', 'nw') != 0
+                "let b:statusline_trailing_space_warning = '[\s]'
+            "else
+                "let b:statusline_trailing_space_warning = ''
+            "endif
+        "endif
+        "return b:statusline_trailing_space_warning
+    "endfunction
 
 
     "return the syntax highlight group under the cursor ''
-    function! StatuslineCurrentHighlight()
-        let name = synIDattr(synID(line('.'),col('.'),1),'name')
-        if name == ''
-            return ''
-        else
-            return '[' . name . ']'
-        endif
-    endfunction
+    "function! StatuslineCurrentHighlight()
+        "let name = synIDattr(synID(line('.'),col('.'),1),'name')
+        "if name == ''
+            "return ''
+        "else
+            "return '[' . name . ']'
+        "endif
+    "endfunction
 
     "recalculate the tab warning flag when idle and after writing
-    autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+    "autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 
     "return '[&et]' if &et is set wrong
     "return '[mixed-indenting]' if spaces and tabs are used to indent
     "return an empty string if everything is fine
-    function! StatuslineTabWarning()
-        if !exists("b:statusline_tab_warning")
-            let b:statusline_tab_warning = ''
+    "function! StatuslineTabWarning()
+        "if !exists("b:statusline_tab_warning")
+            "let b:statusline_tab_warning = ''
 
-            if !&modifiable
-                return b:statusline_tab_warning
-            endif
+            "if !&modifiable
+                "return b:statusline_tab_warning
+            "endif
 
-            let tabs = search('^\t', 'nw') != 0
+            "let tabs = search('^\t', 'nw') != 0
 
             "find spaces that arent used as alignment in the first indent column
-            let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+            "let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
 
-            if tabs && spaces
-                let b:statusline_tab_warning =  '[mixed-indenting]'
-            elseif (spaces && !&et) || (tabs && &et)
-                let b:statusline_tab_warning = '[&et]'
-            endif
-        endif
-        return b:statusline_tab_warning
-    endfunction
+            "if tabs && spaces
+                "let b:statusline_tab_warning =  '[mixed-indenting]'
+            "elseif (spaces && !&et) || (tabs && &et)
+                "let b:statusline_tab_warning = '[&et]'
+            "endif
+        "endif
+        "return b:statusline_tab_warning
+    "endfunction
 
     "recalculate the long line warning when idle and after saving
-    autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+    "autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 
-    " return a warning for "long lines" where "long" is either &textwidth or 80
-    " (if "no &textwidth is set)
-    "
-    " return '' if no long lines
-    " return '[#x,my,$z] if long lines are found, were x is the number of long
-    " lines, y is the median length of the long lines and z is the length of the
-    " longest line
-    function! StatuslineLongLineWarning()
-        if !exists("b:statusline_long_line_warning")
+     "return a warning for "long lines" where "long" is either &textwidth or 80
+     "(if "no &textwidth is set)
+    
+     "return '' if no long lines
+     "return '[#x,my,$z] if long lines are found, were x is the number of long
+     "lines, y is the median length of the long lines and z is the length of the
+     "longest line
+    "function! StatuslineLongLineWarning()
+        "if !exists("b:statusline_long_line_warning")
 
-            if !&modifiable || &filetype == "text" " Don't warn about long lines in text files.
-                let b:statusline_long_line_warning = ''
-                return b:statusline_long_line_warning
-            endif
+            "if !&modifiable || &filetype == text" " Don't warn about long lines in text files.
+                "let b:statusline_long_line_warning = ''
+                "return b:statusline_long_line_warning
+            "endif
 
-            let long_line_lens = s:LongLines()
+            "let long_line_lens = s:LongLines()
 
-            if len(long_line_lens) > 0
-                let b:statusline_long_line_warning = "[" .
-                            \ '#' . len(long_line_lens) . "," .
-                            \ 'm' . s:Median(long_line_lens) . "," .
-                            \ '$' . max(long_line_lens) . "]"
-            else
-                let b:statusline_long_line_warning = ""
-            endif
-        endif
-        return b:statusline_long_line_warning
-    endfunction
+            "if len(long_line_lens) > 0
+                "let b:statusline_long_line_warning = "[" .
+                            "\ '#' . len(long_line_lens) . "," .
+                            "\ 'm' . s:Median(long_line_lens) . "," .
+                            "\ '$' . max(long_line_lens) . "]"
+            "else
+                "let b:statusline_long_line_warning = ""
+            "endif
+        "endif
+        "return b:statusline_long_line_warning
+    "endfunction
 
     "return a list containing the lengths of the long lines in this buffer
-    function! s:LongLines()
-        let threshold = (&tw ? &tw : 80)
-        let spaces = repeat(" ", &ts)
-        let line_lens = map(getline(1,'$'), 'len(substitute(v:val, "\\t", spaces, "g"))')
-        return filter(line_lens, 'v:val > threshold')
-    endfunction
+    "function! s:LongLines()
+        "let threshold = (&tw ? &tw : 80)
+        "let spaces = repeat(" ", &ts)
+        "let line_lens = map(getline(1,'$'), 'len(substitute(v:val, "\\t", spaces, "g"))')
+        "return filter(line_lens, 'v:val > threshold')
+    "endfunction
 
     "find the median of the given array of numbers
-    function! s:Median(nums)
-        let nums = sort(a:nums)
-        let l = len(nums)
+    "function! s:Median(nums)
+        "let nums = sort(a:nums)
+        "let l = len(nums)
 
-        if l % 2 == 1
-            let i = (l-1) / 2
-            return nums[i]
-        else
-            return (nums[l/2] + nums[(l/2)-1]) / 2
-        endif
-    endfunction:%l\ C:%c
+        "if l % 2 == 1
+            "let i = (l-1) / 2
+            "return nums[i]
+        "else
+            "return (nums[l/2] + nums[(l/2)-1]) / 2
+        "endif
+    "endfunction:%l\ C:%c
 
-    set showcmd
+    "set showcmd
 
     "function! WordCount()
         "let s:old_status = v:statusmsg
@@ -671,8 +681,8 @@
         "return s:word_count
     "endfunction
 
-    " Sets the current working directory to the location of the file bieng edited.
-    autocmd BufEnter * silent! lcd %:p:h
+     "Sets the current working directory to the location of the file bieng edited.
+    "autocmd BufEnter * silent! lcd %:p:h
 
 " => Editing mappings
     " Remap VIM 0 to first non-blank character
@@ -685,6 +695,7 @@
     "set langmap=:\\;,\\;:
     " Remap p to paste to the current indentation, wheras ctrl-p maps to normal paste.
     noremap p ]p
+    " May be overridden if CtrlP is introduced (a file/buffer editor/ viewer)
     noremap <C-P> p
 
     noremap <LocalLeader>o moo<Esc>`o
@@ -730,7 +741,7 @@
     " (Page up-down)
     map ƒ <C-f>
     map ∫ <C-b>
-    
+
     " Run the :make command
     nnoremap <LocalLeader>m<Space> :make<cr>
 
@@ -840,7 +851,7 @@
     noremap <LocalLeader>at :s/\v<(.)(\w{2,})/\u\1\L\2/g<CR>
 
     " The following may not be that useful...
-    " 'add date' after the cursor. 
+    " 'add date' after the cursor.
     map <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
     " 'ad name' after the cursor
     map <LocalLeader>an aJesse Frohlich<Esc>
