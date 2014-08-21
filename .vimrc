@@ -42,7 +42,6 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 " => Vundle Configuration
     set nocompatible    " be iMproved, required
     filetype off         " required
@@ -69,7 +68,7 @@
 
     " Surround objects with quotes, parentheses, etc.
     Plugin 'tpope/vim-surround'
-    " Intelligent date 'crementation' with <C-A>/<C-X>
+    " Intelligent date in/de-crementation' with <C-A>/<C-X>
     Plugin 'tpope/vim-speeddating'
     " Intelligent repeating for the above 2 plugins
     Plugin 'tpope/vim-repeat'
@@ -78,28 +77,10 @@
     Plugin 'flazz/vim-colorschemes'
     " Color table viewer
     Plugin 'guns/xterm-color-table.vim'
-    " Smart Status Line:
+    " smart Status Line:
     Plugin 'bling/vim-airline'
 
-    "Plugin 'jordwalke/AutoComplPop.git'
-    " Snippets Package:
-    " Track the engine.
-    "Plugin 'SirVer/ultisnips'
-    " Snippets are separated from the engine. Add this if you want them:
-    "Plugin 'honza/vim-snippets'
-
-    "Bundle 'jordwalke/VimCompleteLikeAModernEditor'
-    " Trigger configuration. Do not use <tab> if you use
-    " https://github.com/Valloric/YouCompleteMe.
-
-    "let g:UltiSnipsExpandTrigger="<tab>"
-    "let g:UltiSnipsJumpForwardTrigger="<Tab>"
-    "let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
-
-    " If you want :UltiSnipsEdit to split your window.
-    "let g:UltiSnipsEditSplit="vertical"
-
-    " The following are examples of different formats supported.
+     "The following are examples of different formats supported.
     " Keep Plugin commands between vundle#begin/end.
     " plugin on GitHub repo
     " Plugin 'tpope/vim-fugitive'
@@ -214,45 +195,6 @@
     " Close popup by <Space>.
     "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
-    " For cursor moving in insert mode(Not recommended)
-    "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-    "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-    "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-    "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-    " Or set this.
-    "let g:neocomplete#enable_cursor_hold_i = 1
-    " Or set this.
-    "let g:neocomplete#enable_insert_char_pre = 1
-
-    " AutoComplPop like behavior.
-    "let g:neocomplete#enable_auto_select = 1
-
-    " Shell like behavior(not recommended).
-    "set completeopt+=longest
-    "let g:neocomplete#enable_auto_select = 1
-    "let g:neocomplete#disable_auto_complete = 1
-    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-
-    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-    " For perlomni.vim setting.
-    " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
 " => VIM user interface
     " Set 7 lines to the cursor - when moving vertically using j/k
     set so=4
@@ -317,7 +259,7 @@
 
     set background=dark
     " The diff coloration still needs work.
-    colorscheme industry
+    colorscheme desert256
 
     " Set extra options when running in GUI mode
     if has("gui_running")
@@ -496,6 +438,7 @@
     let g:airline_powerline_fonts=1
 
     " The following has been deprecated by the use of vim-airline.
+    
     "statusline setup
     "set statusline =%#identifier#
     "set statusline+=[%t]   " tail of the filename
@@ -669,7 +612,7 @@
         "endif
     "endfunction:%l\ C:%c
 
-    "set showcmd
+    set showcmd
 
     "function! WordCount()
         "let s:old_status = v:statusmsg
@@ -710,7 +653,7 @@
     vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
     vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-    if has("mac") || has("macunix") " If using a linux distribution with the same .vimrc, this is helpful
+    if has("mac") || has("macunix") " If using a linux distribution (cough Arch cough) with the same .vimrc, this is helpful
       nmap <D-j> <M-j>
       nmap <D-k> <M-k>
       vmap <D-j> <M-j>
@@ -764,6 +707,8 @@
     noremap <LocalLeader>co <Plug>NERDCommenterComment
     " Recursive comment
     noremap <LocalLeader>cr <Plug>NERDCommenterNested
+    " More convenient comment toggle
+    " noremap gc <Plug>NERDCommenterToggle
 
     silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
     silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
@@ -846,9 +791,12 @@
     noremap <LocalLeader>pp :setlocal paste!<cr>
 
     " This fantastic vim-sed will take a title and capitalize all words that are
-    " at least 3 tharacters long!
+    " at least 3 characters long!
     " 'add title'-case to the current line
-    noremap <LocalLeader>at :s/\v<(.)(\w{2,})/\u\1\L\2/g<CR>
+    noremap <silent> <LocalLeader>at :call setline(line('.'),substitute(getline('.'), '\v<(.)(\w{2,})', '\u\1\L\2', 'g'))<CR>
+
+    noremap <LocalLeader>au yypVr-
+    noremap <LocalLeader>aU yypVr=
 
     " The following may not be that useful...
     " 'add date' after the cursor.
