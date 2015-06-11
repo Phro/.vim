@@ -84,6 +84,9 @@
     " Undo last closed window
     Plugin 'AndrewRadev/undoquit.vim'
 
+    " Smartly deal with parentheses
+    "Plugin 'msarfati/auto-pairs'
+
     " A plugin called 'easymotion' sounds like a great way to move around
     " in-screen.
 
@@ -308,7 +311,7 @@
     " Enable syntax highlighting
     "syntax enable
 
-    set background=dark
+    set background=light
     nnoremap <Leader>ad :set background=dark<CR>
     nnoremap <Leader>al :set background=light<CR>
 
@@ -324,7 +327,7 @@
     endif
 
     " Set utf8 as standard encoding and en_US as the standard language
-    set encoding=utf8
+    set encoding=utf-8
 
     " Expand spell-checking to multiple languages (Be careful with this...)
     set spelllang=en,es,de
@@ -491,6 +494,52 @@
         return indent(a:lnum) / &shiftwidth
     endfunction
 
+    function! MoveToPrevTab()
+      "there is only one window
+      if tabpagenr('$') == 1 && winnr('$') == 1
+        return
+      endif
+      "preparing new window
+      let l:tab_nr = tabpagenr('$')
+      let l:cur_buf = bufnr('%')
+      if tabpagenr() != 1
+        close!
+        if l:tab_nr == tabpagenr('$')
+          tabprev
+        endif
+        sp
+      else
+        close!
+        exe "0tabnew"
+      endif
+      "opening current buffer in new window
+      exe "b".l:cur_buf
+    endfunc
+
+    function! MoveToNextTab()
+      "there is only one window
+      if tabpagenr('$') == 1 && winnr('$') == 1
+        return
+      endif
+      "preparing new window
+      let l:tab_nr = tabpagenr('$')
+      let l:cur_buf = bufnr('%')
+      if tabpagenr() < tab_nr
+        close!
+        if l:tab_nr == tabpagenr('$')
+          tabnext
+        endif
+        sp
+      else
+        close!
+        tabnew
+      endif
+      "opening current buffer in new window
+      exe "b".l:cur_buf
+    endfunc 
+
+    noremap mt :call MoveToNextTab()<CR>
+    noremap mT :call MoveToPrevTab()<CR>
 
     " Allow TeX documents to be folded according to their syntax. (This may be made irrelevant by LaTeX-Box)
     "let g:LatexBox_Folding=1
@@ -541,6 +590,8 @@
     noremap - "dddp
     noremap _ "dddkP
 
+    " Make capital Y act as one would expect
+    noremap Y y$
     " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
     nnoremap <M-j> mz:m+<cr>`z
     nnoremap <M-k> mz:m-2<cr>`z
@@ -553,6 +604,8 @@
       vmap <D-j> <M-j>
       vmap <D-k> <M-k>
     endif
+
+    noremap <LocalLeader>ts :call DeleteTrailingWS()<CR>
 
     " Delete trailing white space on save
     func! DeleteTrailingWS()
@@ -637,7 +690,7 @@
     vnoremap <silent> gv :call VisualSelection('gv')<CR>
 
     " Open vimgrep and put the cursor in the right position
-    noremap <LocalLeader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+    "noremap <LocalLeader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
 
     " Vimgreps in the current file
     "noremap <LocalLeader><space> :vimgrep // <C-R>%<C-b><right><right><right><right><right><right><right><right><right>
@@ -695,9 +748,10 @@
 
     " This fantastic vim-sed will take a title and capitalize all words that are
     " at least 3 characters long!
-    " 'add title'-case to the current line
-    noremap <silent> <LocalLeader>at :call setline(line('.'),substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<CR>
+    " 'Add Title'-case to the current line
+    noremap <silent> <LocalLeader>at guu:call setline(line('.'),substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<CR>
 
+    " Underline the current line (with dashes "u", or equals "U").
     noremap <LocalLeader>au yypVr-
     noremap <LocalLeader>aU yypVr=
 
