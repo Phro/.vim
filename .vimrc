@@ -84,14 +84,8 @@
     " Undo last closed window
     Plugin 'AndrewRadev/undoquit.vim'
 
-    " Smartly deal with parentheses
-    "Plugin 'msarfati/auto-pairs'
-
     " A plugin called 'easymotion' sounds like a great way to move around
     " in-screen.
-
-    " Smart csv file editor
-    "Plugin 'chrisbra/csv.vim'
 
     " Extra Color-schemes
     Plugin 'flazz/vim-colorschemes'
@@ -541,13 +535,6 @@
     noremap mt :call MoveToNextTab()<CR>
     noremap mT :call MoveToPrevTab()<CR>
 
-    " Allow TeX documents to be folded according to their syntax. (This may be made irrelevant by LaTeX-Box)
-    "let g:LatexBox_Folding=1
-    "let g:LatexBox_latexmk_async=1
-    "let g:LatexBox_latexmk_preview_continuously=1
-    "let g:LatexBox_no_mappings=1 " This is somewhat annoying, as <leader>l has a long delay in it.
-    "let g:tex_fold_enabled=1
-
  "=> Status line
     let g:airline_powerline_fonts=1
 
@@ -689,11 +676,6 @@
     " When you press gv you vimgrep after the selected text
     vnoremap <silent> gv :call VisualSelection('gv')<CR>
 
-    " Open vimgrep and put the cursor in the right position
-    "noremap <LocalLeader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
-    " Vimgreps in the current file
-    "noremap <LocalLeader><space> :vimgrep // <C-R>%<C-b><right><right><right><right><right><right><right><right><right>
 
     " When you press <LocalLeader>r you can search and replace the selected text
     vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<CR>
