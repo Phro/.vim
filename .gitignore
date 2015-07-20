@@ -1,0 +1,5 @@
+# exclude the bundle directory except for Vundle
+bundle/*
+!bundle/Vundle.vim
+.netrwhist
+spell/*

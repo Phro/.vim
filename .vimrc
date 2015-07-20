@@ -88,11 +88,11 @@
     " in-screen.
 
     " Extra Color-schemes
-    Plugin 'flazz/vim-colorschemes'
+    "Plugin 'flazz/vim-colorschemes'
     " Solarized theme
     Plugin 'altercation/vim-colors-solarized'
     " Color table viewer
-    Plugin 'guns/xterm-color-table.vim'
+    "Plugin 'guns/xterm-color-table.vim'
     " smart Status Line:
     Plugin 'bling/vim-airline'
 
