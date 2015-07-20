@@ -240,7 +240,7 @@
     " https://github.com/c9s/perlomni.vim
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-" => VIM user interface
+" => Vim User Interface
     " Set 4 lines to the cursor - when moving vertically using j/k
     set so=4
 
@@ -305,7 +305,7 @@
     " Enable syntax highlighting
     "syntax enable
 
-    set background=light
+    set background=dark
     nnoremap <Leader>ad :set background=dark<CR>
     nnoremap <Leader>al :set background=light<CR>
 
@@ -324,7 +324,7 @@
     set encoding=utf-8
 
     " Expand spell-checking to multiple languages (Be careful with this...)
-    set spelllang=en,es,de
+    set spelllang=en,es,de,fr
 
     " Use Unix as the standard file type
     set ffs=unix,dos,mac
@@ -593,6 +593,9 @@
     endif
 
     noremap <LocalLeader>ts :call DeleteTrailingWS()<CR>
+
+    " For git commit messages, limit line width.
+    autocmd Filetype gitcommit setlocal spell textwidth=72
 
     " Delete trailing white space on save
     func! DeleteTrailingWS()
