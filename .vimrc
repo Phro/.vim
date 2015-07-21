@@ -59,7 +59,7 @@
     Plugin 'Shougo/neocomplete.vim'
 
     " Comment handling keymaps
-    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'phro/nerdcommenter'
 
     " Fugitive: Git-handling commands
     Plugin 'tpope/vim-fugitive'
