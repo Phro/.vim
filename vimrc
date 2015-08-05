@@ -279,7 +279,8 @@
     " Enable syntax highlighting
     "syntax enable
 
-    set background=dark
+    set background=light
+    "set background=dark
     nnoremap <Leader>ad :set background=dark<CR>
     nnoremap <Leader>al :set background=light<CR>
 
