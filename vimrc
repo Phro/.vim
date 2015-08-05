@@ -42,109 +42,83 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" => Vundle Configuration
-    set nocompatible    " be iMproved, required
-    filetype off         " required
-
-    " set the runtime path to include Vundle and initialize
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-    " alternatively, pass a path where Vundle should install plugins
-    "call vundle#begin('~/some/path/here')
-
-    " let Vundle manage Vundle, required
-    Plugin 'VundleVim/Vundle.vim'
+" => Vim-Plugin Configuration
+    let g:plug_shallow=0
+    let g:plug_threads=2
+    call plug#begin('~/.vim/plugged')
 
     " Autocompletions
-    Plugin 'Shougo/neocomplete.vim'
+    Plug 'Shougo/neocomplete.vim'
 
     " Comment handling keymaps
-    Plugin 'phro/nerdcommenter'
+    Plug 'phro/nerdcommenter'
 
     " Fugitive: Git-handling commands
-    Plugin 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
 
     " Auto-close quotes, parentheses, etc. (find a way to fix the undo using
     " the vim-repeat plugin)
-    "Plugin 'Townk/vim-autoclose'
+    "Plug 'Townk/vim-autoclose'
 
     " Add a command for renaming files
-    Plugin 'danro/rename.vim'
+    Plug 'danro/rename.vim'
 
     " LaTeX collection of useful commands
-    "Plugin 'LaTeX-Box-Team/LaTeX-Box'
+    "Plug 'LaTeX-Box-Team/LaTeX-Box'
 
     " Surround objects with quotes, parentheses, etc.
-    Plugin 'tpope/vim-surround'
+    Plug 'tpope/vim-surround'
     " Intelligent date in/de-crementation' with <C-A>/<C-X>
-    Plugin 'tpope/vim-speeddating'
+    Plug 'tpope/vim-speeddating'
     " Intelligent repeating for the above 2 plugins
-    Plugin 'tpope/vim-repeat'
+    Plug 'tpope/vim-repeat'
 
     " Undo last closed window
-    Plugin 'AndrewRadev/undoquit.vim'
+    Plug 'AndrewRadev/undoquit.vim'
 
     " A plugin called 'easymotion' sounds like a great way to move around
     " in-screen.
 
     " Extra Color-schemes
-    "Plugin 'flazz/vim-colorschemes'
+    "Plug 'flazz/vim-colorschemes'
     " Solarized theme
-    Plugin 'altercation/vim-colors-solarized'
+    Plug 'altercation/vim-colors-solarized'
     " Color table viewer
-    "Plugin 'guns/xterm-color-table.vim'
+    "Plug 'guns/xterm-color-table.vim'
     " smart Status Line:
-    Plugin 'bling/vim-airline'
+    Plug 'bling/vim-airline'
 
-     "The following are examples of different formats supported.
-    " Keep Plugin commands between vundle#begin/end.
-    " plugin on GitHub repo
-    " Plugin 'tpope/vim-fugitive'
-    " plugin from http://vim-scripts.org/vim/scripts.html
-    " Plugin 'L9'
-    " Git plugin not hosted on GitHub
-    " Plugin 'git://git.wincent.com/command-t.git'
-    " git repos on your local machine (i.e. when working on your own plugin)
-    " Plugin 'file:///home/gmarik/path/to/plugin'
-    " The sparkup vim script is in a subdirectory of this repo called vim.
-    " Pass the path to set the runtimepath properly.
-    " Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-    " Avoid a name conflict with L9
-    " Plugin 'user/L9', {'name': 'newL9'}
+    " Make sure you use single quotes
+    "Plug 'junegunn/seoul256.vim'
+    "Plug 'junegunn/vim-easy-align'
 
-    " All of your Plugins must be added before the following line
-    call vundle#end()            " required
+    " Group dependencies, vim-snippets depends on ultisnips
+    "Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-    " Assign filetypes manually before detecting them.
-    augroup filetypedetect
-        " I don't know if this is the right thing to do, but it works for the
-        " Asymptote project...:
-        au BufNewFile,BufRead *.asy    setfiletype asy
-        au BufNewFile,BufRead *.in     setfiletype cpp
+    " On-demand loading
+    "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
-        " This is the applescript filetype:
-        au BufNewFile,BufRead *.scpt   setfiletype scpt
+    " Using git URL
+    "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
-        au BufNewFile,BufRead *.md   setfiletype markdown
+    " Plugin options
+    "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
-        " For TeX document classes
-        au BufNewFile,BufRead *.cls   setfiletype tex
-    augroup END
+    " Plugin outside ~/.vim/plugged with post-update hook
+    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
+    " Unmanaged plugin (manually installed and updated)
+    "Plug '~/my-prototype-plugin'
+
+    " Add plugins to &runtimepath
+    call plug#end()
+
+" => General
     " Detect filetypes by their extension and syntax
     filetype plugin indent on
     syntax enable
 
-    " Brief help
-    " :PluginList          - list configured plugins
-    " :PluginInstall(!)    - install (update) plugins
-    " :PluginSearch(!) foo - search (or refresh cache first) for foo
-    " :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-    "
-    " see :h vundle for more details or wiki for FAQ
-    " Put your non-Plugin stuff after this line
-
-" => General
     set shell=zsh
 
     " Sets how many lines of history VIM has to remember

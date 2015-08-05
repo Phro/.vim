@@ -1,5 +1,4 @@
-# exclude the bundle directory except for Vundle
-bundle/*
-!bundle/Vundle.vim
+# exclude plugged; vim-plug generates it. 
+plugged
 .netrwhist
 spell/*
