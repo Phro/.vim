@@ -24,18 +24,18 @@
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
-"    -> Vundle Configuration
+"    -> Vim-plug configuration
 "    -> General
-"    -> NeoComplete Configuration Settings
+"    -> NeoComplete configuration settings
 "    -> VIM user interface
-"    -> Colors and Fonts
+"    -> Colors and fonts
 "    -> Files and backups
 "    -> Text, tab and indent related
 "    -> Visual mode related
 "    -> Moving around, tabs, windows, and buffers
 "    -> Status line
 "    -> Editing mappings
-"    -> vimgrep searching and cope displaying
+"    -> Vimgrep searching and cope displaying
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
@@ -43,6 +43,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " => Vim-Plugin Configuration
+    set nocompatible
     let g:plug_shallow=0
     let g:plug_threads=2
     call plug#begin('~/.vim/plugged')
@@ -279,8 +280,8 @@
     " Enable syntax highlighting
     "syntax enable
 
-    set background=light
-    "set background=dark
+    "set background=light
+    set background=dark
     nnoremap <Leader>ad :set background=dark<CR>
     nnoremap <Leader>al :set background=light<CR>
 
@@ -307,13 +308,19 @@
     " Resolve an issue with autocompletion YCM
     "let g:clang_user_options='|| exit 0'
 
-" => Files, backups and undo
+" => Filetypes, backups and undo
     " Turn backup off, since most stuff is in SVN, git et.c anyway...
     set nobackup
     set nowb
     set noswapfile
 
-" => Text, tab and indent related
+    " New filetype detection
+    augroup filetypedetect
+      " Asymptote
+      au BufRead,BufNewFile *.asy setfiletype asy
+    augroup end
+
+" => Text, Tab and Indent Related
     " Use spaces instead of tabs
     set expandtab
 
@@ -326,11 +333,11 @@
 
     " Linebreak more cleanly
     set lbr
-    set wrap "Wrap lines
+    set wrap " Wrap lines
     set tw=0 " Set this to a non-null number for *non*-TeX files
 
-    set ai "Auto indent
-    set si "Smart indent
+    set ai " Auto indent
+    set si " Smart indent
 
 " => Visual mode related
     " Visual mode pressing * or # searches for the current selection
@@ -390,7 +397,7 @@
     " Close all the buffers
     noremap <LocalLeader>ba :1,1000 bd!<cr>
 
-    "Open alternate buffer (can be used to reopen a closed tab)
+    " Open alternate buffer (can be used to reopen a closed tab)
     noremap <LocalLeader>br :vs<Bar>:b#<CR>
 
     " Useful mappings for managing tabs:
@@ -486,7 +493,7 @@
     endfunc
 
     function! MoveToNextTab()
-      "there is only one window
+      " there is only one window
       if tabpagenr('$') == 1 && winnr('$') == 1
         return
       endif
@@ -503,9 +510,9 @@
         close!
         tabnew
       endif
-      "opening current buffer in new window
+      " opening current buffer in new window
       exe "b".l:cur_buf
-    endfunc 
+    endfunc
 
     noremap mt :call MoveToNextTab()<CR>
     noremap mT :call MoveToPrevTab()<CR>
