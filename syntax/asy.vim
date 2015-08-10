@@ -115,7 +115,7 @@ syn keyword     asyConstant     null nullframe nullpath
 
 if exists("asy_syn_plain")
   syn keyword	asyConstant	currentpicture currentpen currentprojection
-  syn keyword	asyConstant	inch inches cm mm bp pt up down right left 
+  syn keyword	asyConstant	inch inches cm mm bp pt up down right left
   syn keyword	asyConstant	E NE N NW W SW S SE
   syn keyword	asyConstant	ENE NNE NNW WNW WSW SSW SSE ESE
   syn keyword	asyConstant	I pi twopi
@@ -198,7 +198,7 @@ if version >= 508 || !exists("did_asy_syn_inits")
   HiLink asyCppOut2		asyCppOut
   HiLink asyCppOut		Comment
   HiLink asyPathSpec		Statement
-		
+
 
   delcommand HiLink
 endif
