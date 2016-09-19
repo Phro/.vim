@@ -137,8 +137,12 @@
     "let mapleader = "\<space>"
     map <Space> <Leader>
 
-    " Fast saving
+    " Fast saving, somewhat nulled by the following autosave:
     nnoremap <LocalLeader>w :w!<cr>
+
+    " Autosave after leaving insert mode and making a change in normal mode
+    autocmd InsertLeave * silent! update
+    autocmd TextChanged * silent! update
 
     " This should fix the strange delay occurring in when the escape (^[) key is pressed.
     set ttimeout
@@ -296,11 +300,8 @@
         set guitablabel=%M\ %t
     endif
 
-    " Set utf8 as standard encoding and en_US as the standard language
-    set encoding=utf-8
-
     " Expand spell-checking to multiple languages (Be careful with this...)
-    set spelllang=en,es,de,fr
+    set spelllang=en,es,de
 
     " Use Unix as the standard file type
     set ffs=unix,dos,mac
