@@ -46,16 +46,26 @@
     set nocompatible
     let g:plug_shallow=0
     let g:plug_threads=2
-    call plug#begin('~/.vim/plugged')
+    call plug#begin('~/.config/nvim/plugged')
 
     " Autocompletions
-    Plug 'Shougo/neocomplete.vim'
+    "Plug 'Shougo/neocomplete.vim'
+    "Plug 'Shougo/neocomplete.vim'
+
+    " One theme
+    Plug 'rakr/vim-one'
 
     " Comment handling keymaps
     Plug 'phro/nerdcommenter'
 
+    " Haskell expansion
+    Plug 'neovimhaskell/haskell-vim'
+
     " Fugitive: Git-handling commands
     Plug 'tpope/vim-fugitive'
+
+    " Set $EDITOR to current neovim instance.
+    Plug 'rliang/termedit.nvim'
 
     " Auto-close quotes, parentheses, etc. (find a way to fix the undo using
     " the vim-repeat plugin)
@@ -82,8 +92,11 @@
 
     " Extra Color-schemes
     "Plug 'flazz/vim-colorschemes'
+    
     " Solarized theme
-    Plug 'altercation/vim-colors-solarized'
+    "Plug 'altercation/vim-colors-solarized'
+    Plug 'lifepillar/vim-solarized8'
+
     " Color table viewer
     "Plug 'guns/xterm-color-table.vim'
     " smart Status Line:
@@ -120,6 +133,9 @@
     filetype plugin indent on
     syntax enable
 
+
+    "let $EDITOR = '~/bin/e'
+
     set shell=zsh
 
     " Sets how many lines of history VIM has to remember
@@ -138,7 +154,7 @@
     map <Space> <Leader>
 
     " Fast saving, somewhat nulled by the following autosave:
-    nnoremap <LocalLeader>w :w!<cr>
+    "nnoremap <LocalLeader>w :w!<cr>
 
     " Autosave after leaving insert mode and making a change in normal mode
     autocmd InsertLeave * silent! update
@@ -148,76 +164,6 @@
     set ttimeout
     set ttimeoutlen=0
     set notimeout
-
-" => NeoComplete Configuration Settings
-    " Add a function to toggle the neocomplete state.
-    "map <LocalLeader>n :NeoCompleteToggle
-
-    "Note: This option must set it in .vimrc, NOT IN .gvimrc!
-    " Disable AutoComplPop.
-    let g:acp_enableAtStartup = 0
-    " Use neocomplete.
-    let g:neocomplete#enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplete#enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
-
-    " Define keyword.
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-    " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " Recommended key-mappings.
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-      return neocomplete#close_popup() . "\<CR>"
-      " For no inserting <CR> key.
-      "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y>  neocomplete#close_popup()
-    inoremap <expr><C-e>  neocomplete#cancel_popup()
-    " Close popup by <Space>.
-    "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-
-    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-    " For perlomni.vim setting.
-    " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 " => Vim User Interface
     " Set 4 lines to the cursor - when moving vertically using j/k
@@ -281,27 +227,47 @@
     set shortmess=atI
 
 " => Colors and Fonts
-    " Enable syntax highlighting
-    "syntax enable
 
-    "set background=light
-    set background=dark
-    nnoremap <Leader>ad :set background=dark<CR>
-    nnoremap <Leader>al :set background=light<CR>
+    set termguicolors
+    let g:solarized_term_italics = 1
 
-    " The diff coloration still needs work.
-    colorscheme solarized
+    " If you want a transparent editor
+    "let g:solarized_termtrans=1
 
-    " Set extra options when running in GUI mode
-    if has("gui_running")
-        set guioptions-=T
-        set guioptions+=e
-        set t_Co=256
-        set guitablabel=%M\ %t
-    endif
+    "colorscheme one
+    colorscheme solarized8_dark
+    "colorscheme solarized8_light
+
+
+    " Set the colorscheme based on the time of day. Between 06:00 and 18:00
+    " it is light, otherwise, it's dark. However, this is super annoying.
+    "let time = strftime("%H") 
+    "if 5 < time && time < 19
+      "exe "colorscheme" substitute(g:colors_name, 'dark', 'light', '')
+    "else
+      "exe "colorscheme" substitute(g:colors_name, 'light', 'dark', '')
+    "endif
+
+    "nnoremap <Leader>as :call ChangeBackground()<cr>
+    nnoremap <Leader>as :<c-u>exe "colors" (g:colors_name =~# "dark"
+    \ ? substitute(g:colors_name, 'dark', 'light', '')
+    \ : substitute(g:colors_name, 'light', 'dark', '')
+    \ )<cr>
+
+
+    noremap <localleader>- :call Solarized8Contrast(-v:count1)<cr>
+    noremap <localleader>_ :call Solarized8Contrast(+v:count1)<cr>
+
+    function! Solarized8Contrast(delta)
+      let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
+      exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
+      echom g:colors_name
+    endfunction
+
 
     " Expand spell-checking to multiple languages (Be careful with this...)
-    set spelllang=en,es,de
+    set spelllang=en
+    "set spelllang=en,es,de
 
     " Use Unix as the standard file type
     set ffs=unix,dos,mac
@@ -309,7 +275,7 @@
     " Resolve an issue with autocompletion YCM
     "let g:clang_user_options='|| exit 0'
 
-" => Filetypes, backups and undo
+    " => Filetypes, backups and undo
     " Turn backup off, since most stuff is in SVN, git et.c anyway...
     set nobackup
     set nowb
@@ -320,6 +286,16 @@
       " Asymptote
       au BufRead,BufNewFile *.asy setfiletype asy
     augroup end
+
+    augroup terminal
+      " No spellcheck in terminals
+      autocmd TermOpen * setlocal nospell
+      " Automatically enter insert mode when entering terminal buffers
+      autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
+    augroup END
+
+    " Open a terminal at the bottom
+    noremap <localleader>tt :belowright 5split +term<cr>
 
 " => Text, Tab and Indent Related
     " Use spaces instead of tabs
@@ -340,6 +316,18 @@
     set ai " Auto indent
     set si " Smart indent
 
+		" Copy to clipboard
+		vnoremap  <leader>y  "+y
+		nnoremap  <leader>Y  "+yg_
+		nnoremap  <leader>y  "+y
+		nnoremap  <leader>yy  "+yy
+
+		" Paste from clipboard
+		nnoremap <leader>p "+p
+		nnoremap <leader>P "+P
+		vnoremap <leader>p "+p
+		vnoremap <leader>P "+P
+
 " => Visual mode related
     " Visual mode pressing * or # searches for the current selection
     " Super useful! From an idea by Michael Naumann
@@ -350,8 +338,13 @@
     " Treat long lines as break lines (useful when moving around in them)
     noremap j gj
     noremap k gk
+    noremap gj j
+    noremap gk k
     noremap ' `
     noremap ` '
+    " Escape exits terminal
+    tnoremap <Esc> <C-\><C-n>
+    vnoremap // y/<C-R>"<CR>
 
     " Make the mouse more useful in vim
     set mouse=a
@@ -368,6 +361,15 @@
     noremap <C-h> <C-W>h
     noremap <C-l> <C-W>l
 
+    " As cute as this is, don't use it.
+    "inoremap <C-h> <c-o><C-W>h
+    "inoremap <C-l> <c-o><C-W>l
+    tnoremap <C-h> <c-\><c-n><C-W>h
+    tnoremap <C-l> <c-\><c-n><C-W>l
+    tnoremap <C-j> <c-\><c-n><C-W>j
+    tnoremap <C-k> <c-\><c-n><C-W>k
+    tnoremap <c-o> <c-\><c-n>
+
     " More accesible than the control key:
     noremap <Leader>h <C-W>h
     noremap <Leader>l <C-W>l
@@ -380,6 +382,8 @@
     noremap <Leader>K <C-w>K
 
     noremap <Leader>d :q<cr>
+
+    "noremap y+ :%y+<cr>
 
     " NOTE: the function <C-W>i searches for the first occurrence of a variable
     " in a file (i.e. it's first declaration / definition). However, this search
@@ -520,13 +524,16 @@
 
  "=> Status line
     let g:airline_powerline_fonts=1
+    "let g:airline#extensione'
+    "let g:airline_theme='one'
 
     set laststatus=2
 
     set showcmd
 
-    " Sets the current working directory to the location of the file bieng edited.
-    " Wasn't there already something like this somewhere else, except as a mapping?
+    " Sets the current working directory to the location of the file bieng
+    " edited. Wasn't there already something like this somewhere else, except
+    " as a mapping?
     autocmd BufEnter * silent! lcd %:p:h
 
 " => Editing mappings
@@ -557,11 +564,11 @@
 
     " Move lines upwards / downwards
     " Note: Perhaps use some insight from below?
-    noremap - "dddp
-    noremap _ "dddkP
+    noremap - "ddd"dp
+    noremap _ "dddk"dP
 
-    " Make capital Y act as one would expect
-    noremap Y y$
+    " Make capital Y act as one would expect, but better
+    noremap Y yg_
     " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
     nnoremap <M-j> mz:m+<cr>`z
     nnoremap <M-k> mz:m-2<cr>`z
@@ -609,7 +616,7 @@
     noremap ∫ <C-b>
 
     " Save and run the :make command
-    nnoremap <LocalLeader>m<Space> :w!<cr>:make<cr>
+    nnoremap <LocalLeader>m :w!<cr>:make<cr>
 
     " Append a semicolon to the end of a line
     noremap <LocalLeader>; mqA;<Esc>`q
@@ -618,6 +625,8 @@
     " This could also be removed once ctrl is made more accesible. However, it
     " *does* match nicely with the already in place tab...
     noremap <S-Tab> <C-o>
+    noremap <bs> <C-o>
+    noremap <s-bs> <C-i>
 
     " Quickly edit ~/.vimrc (i.e. likely this file) with ' ev' and source it
     " with ' sv'
@@ -679,11 +688,11 @@
     "
     nnoremap <Leader>cc :rightbelow cope<cr>
     " Navigate through quickfix windows
-    nnoremap <Leader>cn :cnewer<CR>
-    nnoremap <Leader>cp :colder<CR>
+    "nnoremap <Leader>cn :cnewer<CR>
+    "nnoremap <Leader>cp :colder<CR>
     "noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
-    noremap <Leader>n :cn<cr>
-    noremap <Leader>p :cp<cr>
+    "noremap <Leader>n :cn<cr>
+    "noremap <Leader>p :cp<cr>
 
 " => Spell checking
 
@@ -702,7 +711,7 @@
 
 " => Misc
     " Remove the Windows ^M - when the encodings gets messed up
-    noremap <LocalLeader>mw mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+    "noremap <LocalLeader>mw mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
     " Quickly open a buffer for scribble
     noremap <LocalLeader>qb :e ~/buffer<cr>
@@ -712,7 +721,7 @@
     noremap <LocalLeader>qs :mksession!<CR>:qall<CR>
 
     " Toggle paste mode on and off
-    noremap <LocalLeader>pp :setlocal paste!<cr>
+    noremap <LocalLeader>wp :setlocal paste!<cr>
 
     " This fantastic vim-sed will take a title and capitalize all words that are
     " at least 3 characters long!
@@ -730,10 +739,18 @@
     noremap <LocalLeader>an aJesse Frohlich<Esc>
 
 " => Helper functions
+    function! ChangeBackground()
+      if &background == "dark"
+        set background=light
+      else
+        set background=dark
+      endif
+    endfunction
+
     function! CmdLine(str)
-        exe "menu Foo.Bar :" . a:str
-        emenu Foo.Bar
-        unmenu Foo
+      exe "menu Foo.Bar :" . a:str
+      emenu Foo.Bar
+      unmenu Foo
     endfunction
 
     function! VisualSelection(direction) range
