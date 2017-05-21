@@ -55,6 +55,12 @@
     " One theme
     Plug 'rakr/vim-one'
 
+    " Render Haskell symbols prettily
+    Plug 'Twinside/vim-haskellConceal'
+
+    " Better Markdown Syntax
+    Plug 'gabrielelana/vim-markdown'
+
     " Comment handling keymaps
     Plug 'phro/nerdcommenter'
 
@@ -232,7 +238,7 @@
     let g:solarized_term_italics = 1
 
     " If you want a transparent editor
-    "let g:solarized_termtrans=1
+    let g:solarized_termtrans=0
 
     "colorscheme one
     colorscheme solarized8_dark
@@ -264,7 +270,6 @@
       echom g:colors_name
     endfunction
 
-
     " Expand spell-checking to multiple languages (Be careful with this...)
     set spelllang=en
     "set spelllang=en,es,de
@@ -281,6 +286,11 @@
     set nowb
     set noswapfile
 
+    " Conceal markdown stuff (from: gabrielelana/vim-markdown)
+    let g:markdown_enable_conceal = 1
+    let g:markdown_enable_mappings = 0
+    let g:markdown_include_jekyll_support = 0
+
     " New filetype detection
     augroup filetypedetect
       " Asymptote
@@ -295,7 +305,10 @@
     augroup END
 
     " Open a terminal at the bottom
-    noremap <localleader>tt :belowright 5split +term<cr>
+    noremap <localleader>tl :belowright 5split +term<cr>
+    noremap <localleader>tt :tabedit +term<cr>
+    " Make <c-r> act like normal.
+    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 
 " => Text, Tab and Indent Related
     " Use spaces instead of tabs
@@ -558,6 +571,9 @@
     noremap <LocalLeader>o moo<Esc>`o
     noremap <LocalLeader>O moO<Esc>`o
 
+    " Say Date
+    noremap <localleader>sd !date<cr>
+
     " This still must be fixed
     silent! call repeat#set("<LocalLeader>O", v:count)
     silent! call repeat#set("<LocalLeader>o", v:count)
@@ -628,9 +644,16 @@
     noremap <bs> <C-o>
     noremap <s-bs> <C-i>
 
-    " Quickly edit ~/.vimrc (i.e. likely this file) with ' ev' and source it
-    " with ' sv'
+    function! EditFiletype()
+      let configdir = fnamemodify(expand("$MYVIMRC"),":p:h")
+      execute ":tabedit" . configdir . "/ftplugin/" . &filetype .".vim"
+    endfunction
+
+    " Quickly edit init.vim or the .vimrc (i.e. likely this file) with ' ev'
+    " and source it with ' sv'. Edit your current filetype settings with '
+    " ef'.
     nnoremap <LocalLeader>ev :tabedit $MYVIMRC<cr>
+    nnoremap <LocalLeader>ef :call EditFiletype()<cr>
     nnoremap <LocalLeader>sv :source $MYVIMRC<cr>
 
     " Swap the default mappings (since 'append' is used more often here)

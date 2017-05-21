@@ -4,8 +4,10 @@ setlocal errorformat=%f:\ %l.%c:\ %m
 "unmap <buffer> <LocalLeader>m<Space>
 nnoremap <buffer> <LocalLeader>m :w!<cr>:make<cr>
 " Run current file, if file exists. Pump output into new, non-modifiable,
-" non-modified buffer.
-nnoremap <buffer> <LocalLeader>w :below 5new\|0read !#:r<cr>:set nomod<cr>
+" non-modified buffer. The "./" akes this more universal, but shouldn't be
+" necessary for my platform.
+nnoremap <buffer> <LocalLeader>v :belowright 5split +term\ %:r<cr>
+nnoremap <buffer> <LocalLeader>V :below 5new\|0read !./#:r<cr>:set nomod<cr>
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
