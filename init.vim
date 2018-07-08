@@ -52,14 +52,34 @@
     "Plug 'Shougo/neocomplete.vim'
     "Plug 'Shougo/neocomplete.vim'
 
+    if has('nvim')
+      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    else
+      Plug 'Shougo/deoplete.nvim'
+      Plug 'roxma/nvim-yarp'
+      Plug 'roxma/vim-hug-neovim-rpc'
+    endif
+
+    " Neosnippet
+    Plug 'Shougo/neosnippet'
+    Plug 'Shougo/neosnippet-snippets'
+
     " One theme
     Plug 'rakr/vim-one'
+    "Plug 'cocopon/iceberg.vim'
+    "Plug 'vim-scripts/clarity.vim'
+
+    " GAP syntax
+    Plug 'petRUShka/vim-gap'
 
     " Render Haskell symbols prettily
     Plug 'Twinside/vim-haskellConceal'
 
     " Better Markdown Syntax
     Plug 'gabrielelana/vim-markdown'
+
+    " Syntastic
+    "Plug 'vim-syntastic/syntastic'
 
     " Comment handling keymaps
     Plug 'phro/nerdcommenter'
@@ -69,6 +89,9 @@
 
     " Fugitive: Git-handling commands
     Plug 'tpope/vim-fugitive'
+
+    " Better 'ga' responses
+    Plug 'tpope/vim-characterize'
 
     " Set $EDITOR to current neovim instance.
     Plug 'rliang/termedit.nvim'
@@ -98,7 +121,7 @@
 
     " Extra Color-schemes
     "Plug 'flazz/vim-colorschemes'
-    
+
     " Solarized theme
     "Plug 'altercation/vim-colors-solarized'
     Plug 'lifepillar/vim-solarized8'
@@ -139,6 +162,37 @@
     filetype plugin indent on
     syntax enable
 
+    " Syntastic settings
+    "set statusline+=%#warningmsg#
+    "set statusline+=%{SyntasticStatuslineFlag()}
+    "set statusline+=%*
+
+    "let g:syntastic_always_populate_loc_list = 1
+    "let g:syntastic_auto_loc_list = 1
+    "let g:syntastic_check_on_open = 1
+    "let g:syntastic_check_on_wq = 0
+
+    " Autocomplete
+    "
+    call deoplete#enable()
+    " Use deoplete.
+    let g:deoplete#enable_at_startup = 1
+    " Use smartcase.
+    let g:deoplete#enable_smart_case = 1
+
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function() abort
+      return deoplete#close_popup() . "\<CR>"
+    endfunction
+
+    " deoplete tab-complete
+    inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
 
     "let $EDITOR = '~/bin/e'
 
@@ -152,6 +206,10 @@
 
     " Set the window title to the current file being edited.
     set title
+
+    " Line numbering
+    set number
+    set relativenumber
 
     " Set the leader to space (backslash will still work).
     "map <Space> <Leader>
@@ -170,6 +228,8 @@
     set ttimeout
     set ttimeoutlen=0
     set notimeout
+
+    set autochdir
 
 " => Vim User Interface
     " Set 4 lines to the cursor - when moving vertically using j/k
@@ -247,7 +307,7 @@
 
     " Set the colorscheme based on the time of day. Between 06:00 and 18:00
     " it is light, otherwise, it's dark. However, this is super annoying.
-    "let time = strftime("%H") 
+    "let time = strftime("%H")
     "if 5 < time && time < 19
       "exe "colorscheme" substitute(g:colors_name, 'dark', 'light', '')
     "else
@@ -395,6 +455,8 @@
     noremap <Leader>K <C-w>K
 
     noremap <Leader>d :q<cr>
+
+    "noremap <localleader>f
 
     "noremap y+ :%y+<cr>
 
@@ -756,8 +818,8 @@
     noremap <LocalLeader>aU yypVr=
 
     " The following may not be that useful...
-    " 'add date' after the cursor.
-    "noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+    " 'add date' at the cursor.
+    noremap <LocalLeader>ad i<C-R>=strftime("%Y %m %d")<CR><Esc>
     " 'ad name' after the cursor
     noremap <LocalLeader>an aJesse Frohlich<Esc>
 
