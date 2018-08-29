@@ -52,13 +52,13 @@
     "Plug 'Shougo/neocomplete.vim'
     "Plug 'Shougo/neocomplete.vim'
 
-    if has('nvim')
-      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    else
-      Plug 'Shougo/deoplete.nvim'
-      Plug 'roxma/nvim-yarp'
-      Plug 'roxma/vim-hug-neovim-rpc'
-    endif
+    "if has('nvim')
+      "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "else
+      "Plug 'Shougo/deoplete.nvim'
+      "Plug 'roxma/nvim-yarp'
+      "Plug 'roxma/vim-hug-neovim-rpc'
+    "endif
 
     " Neosnippet
     Plug 'Shougo/neosnippet'
@@ -115,6 +115,9 @@
 
     " Undo last closed window
     Plug 'AndrewRadev/undoquit.vim'
+
+    " Autosave
+    Plug '907th/vim-auto-save'
 
     " A plugin called 'easymotion' sounds like a great way to move around
     " in-screen.
@@ -174,24 +177,24 @@
 
     " Autocomplete
     "
-    call deoplete#enable()
-    " Use deoplete.
-    let g:deoplete#enable_at_startup = 1
-    " Use smartcase.
-    let g:deoplete#enable_smart_case = 1
+    "call deoplete#enable()
+    "" Use deoplete.
+    "let g:deoplete#enable_at_startup = 1
+    "" Use smartcase.
+    "let g:deoplete#enable_smart_case = 1
 
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+    "" <C-h>, <BS>: close popup and delete backword char.
+    "inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+    "inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function() abort
-      return deoplete#close_popup() . "\<CR>"
-    endfunction
+    "" <CR>: close popup and save indent.
+    "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    "function! s:my_cr_function() abort
+      "return deoplete#close_popup() . "\<CR>"
+    "endfunction
 
-    " deoplete tab-complete
-    inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+    "" deoplete tab-complete
+    "inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 
     "let $EDITOR = '~/bin/e'
@@ -218,11 +221,30 @@
     map <Space> <Leader>
 
     " Fast saving, somewhat nulled by the following autosave:
-    "nnoremap <LocalLeader>w :w!<cr>
+    nnoremap <LocalLeader>w :w!<cr>
+    nnoremap <LocalLeader>Wt :AutoSaveToggle<cr>
 
     " Autosave after leaving insert mode and making a change in normal mode
-    autocmd InsertLeave * silent! update
-    autocmd TextChanged * silent! update
+    let g:auto_save = 1
+    "let g:auto_save_presave_hook = 'call AbortIfMountPoint()'
+    let g:auto_save_events = ["InsertLeave", "TextChanged"]
+    let g:auto_save_silent = 1
+
+    functio! AbortIfMountPoint()
+      silent execute "! mountpoint ."
+      if v:shell_error =~ 0
+        let g:auto_save_abort = 1
+      else
+        let g:auto_save_abort = 0
+      endif
+    endfunction
+    "augroup AutoSave
+      "au!
+      "autocmd InsertLeave * silent! update
+      "autocmd TextChanged * silent! update
+    "augroup END
+
+    "nnoremap <LoralLeader>aw augroup
 
     " This should fix the strange delay occurring in when the escape (^[) key is pressed.
     set ttimeout
@@ -806,7 +828,7 @@
     noremap <LocalLeader>qs :mksession!<CR>:qall<CR>
 
     " Toggle paste mode on and off
-    noremap <LocalLeader>wp :setlocal paste!<cr>
+    noremap <LocalLeader>Wp :setlocal paste!<cr>
 
     " This fantastic vim-sed will take a title and capitalize all words that are
     " at least 3 characters long!
@@ -822,6 +844,9 @@
     noremap <LocalLeader>ad i<C-R>=strftime("%Y %m %d")<CR><Esc>
     " 'ad name' after the cursor
     noremap <LocalLeader>an aJesse Frohlich<Esc>
+
+    " Yank file name to unnamed register
+    noremap <LocalLeader>gf :let @" = expand("%")<cr>
 
 " => Helper functions
     function! ChangeBackground()
