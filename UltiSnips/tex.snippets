@@ -1,0 +1,89 @@
+# Environments
+snippet def "Definition"
+\begin{definition}
+	$0
+\end{definition}
+endsnippet
+
+snippet pf "Proof"
+\begin{proof}
+	$0
+\end{proof}
+endsnippet
+
+snippet prob "Problem"
+\begin{problem}
+	$0
+\end{problem}
+endsnippet
+
+snippet prob* "Unnumbered Problem"
+\begin{problem*}
+	$0
+\end{problem*}
+endsnippet
+
+snippet sol "Solution"
+\begin{solution}
+	$0
+\end{solution}
+endsnippet
+
+# Setbuilder notation
+snippet sb "\setbuilder{}" w
+\setbuilder{${1:element}}{${2:condition}}
+endsnippet
+
+# Transpose
+snippet "\btr" "\transpose{}" rw
+\transpose{$1}
+endsnippet
+
+# Conjugate transpose
+snippet "ctr" "\ctranspose{}" rw
+\ctranspose{$1}
+endsnippet
+
+# Christoffel Symbols
+snippet chr "\Christoffel {i}{jk}" w
+\Christoffel{${1:k}}{${2:ij}}
+endsnippet
+
+
+snippet vf "Vector fields" w
+\vectorfield($1)
+endsnippet
+
+snippet conn "Riemannian connection" w
+\connection{$1}
+endsnippet
+
+snippet inn "Inner product" w
+\inner{$1}{$2}
+endsnippet
+
+snippet curv "Curvature tensor" w
+\curv{$1}{$2}{$3}{$4}
+endsnippet
+
+snippet lbk "Lie bracket" w
+\liebk{$1}{$2}
+endsnippet
+
+snippet lap "Laplacian" w
+\laplacian
+endsnippet
+
+snippet map "Function notation" w
+\map {$1} {$2} ${3:[${4:\to}] }{$5}
+endsnippet
+
+# Add appropriate whitespace
+snippet mapdef "Function definition" w
+\mapdef {$1} {$2} ${3:[${4:\to}] }{$5}
+				   ${1/./ /ga}{$6} {$7}
+endsnippet
+
+snippet nuc "\newunicodechar"
+	\\newunicodechar{${1}}{${2:\\ensuremath}${3:tex-substitute}}} ${0}
+endsnippet

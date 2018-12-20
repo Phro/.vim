@@ -22,6 +22,11 @@
 "
 " Raw_version:
 "       http://amix.dk/vim/vimrc.txt
+" To_do:
+"   - Remove unused content (or incorporate into your workflow)
+"   - Reorganize plugin settings to immediately after the plugged section.
+"   - Update the fold-method to be filetype specific (or manual)
+"   - Update the table of contents below:
 "
 " Sections:
 "    -> Vim-plug configuration
@@ -42,32 +47,31 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" => Vim-Plugin Configuration
+" => Vim-Plug
     set nocompatible
     let g:plug_shallow=0
     let g:plug_threads=2
     call plug#begin('~/.config/nvim/plugged')
 
     " Autocompletions
-    "Plug 'Shougo/neocomplete.vim'
-    "Plug 'Shougo/neocomplete.vim'
+    if has('nvim')
+      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    else
+      Plug 'Shougo/deoplete.nvim'
+      Plug 'roxma/nvim-yarp'
+      Plug 'roxma/vim-hug-neovim-rpc'
+    endif
 
-    "if has('nvim')
-      "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    "else
-      "Plug 'Shougo/deoplete.nvim'
-      "Plug 'roxma/nvim-yarp'
-      "Plug 'roxma/vim-hug-neovim-rpc'
-    "endif
-
-    " Neosnippet
-    Plug 'Shougo/neosnippet'
-    Plug 'Shougo/neosnippet-snippets'
+    " Ultisnips
+    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
     " One theme
     Plug 'rakr/vim-one'
     "Plug 'cocopon/iceberg.vim'
     "Plug 'vim-scripts/clarity.vim'
+
+    " NERDtree
+    Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 
     " GAP syntax
     Plug 'petRUShka/vim-gap'
@@ -77,9 +81,6 @@
 
     " Better Markdown Syntax
     Plug 'gabrielelana/vim-markdown'
-
-    " Syntastic
-    "Plug 'vim-syntastic/syntastic'
 
     " Comment handling keymaps
     Plug 'phro/nerdcommenter'
@@ -103,17 +104,20 @@
     " Add a command for renaming files
     Plug 'danro/rename.vim'
 
-    " LaTeX collection of useful commands
-    "Plug 'LaTeX-Box-Team/LaTeX-Box'
+    " Vimtex : (La)TeX support
+    Plug 'lervag/vimtex', {'for': 'tex'}
 
     " Surround objects with quotes, parentheses, etc.
     Plug 'tpope/vim-surround'
+
     " Intelligent date in/de-crementation' with <C-A>/<C-X>
     Plug 'tpope/vim-speeddating'
+
     " Intelligent repeating for the above 2 plugins
     Plug 'tpope/vim-repeat'
 
     " Undo last closed window
+    " TODO: do you actually use this?
     Plug 'AndrewRadev/undoquit.vim'
 
     " Autosave
@@ -138,11 +142,7 @@
     "Plug 'junegunn/seoul256.vim'
     "Plug 'junegunn/vim-easy-align'
 
-    " Group dependencies, vim-snippets depends on ultisnips
-    "Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
     " On-demand loading
-    "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
     " Using git URL
@@ -160,42 +160,110 @@
     " Add plugins to &runtimepath
     call plug#end()
 
-" => General
+    " Must come after plugins (TODO: verify this):
     " Detect filetypes by their extension and syntax
     filetype plugin indent on
     syntax enable
 
-    " Syntastic settings
-    "set statusline+=%#warningmsg#
-    "set statusline+=%{SyntasticStatuslineFlag()}
-    "set statusline+=%*
+" => Plugin commands
+    " vimtex
+      " Set viewer to mupdf
+      let g:vimtex_view_method = 'mupdf'
+      " Make the colour of mupdf easier on the eyes.
+      let g:vimtex_view_mupdf_options = '-C FF9600'
 
-    "let g:syntastic_always_populate_loc_list = 1
-    "let g:syntastic_auto_loc_list = 1
-    "let g:syntastic_check_on_open = 1
-    "let g:syntastic_check_on_wq = 0
+      " For scrolling between various parenthesis sizes
+      let g:vimtex_delim_toggle_mod_list = [
+        \ ['\bigl', '\bigr'],
+        \ ['\Bigl', '\Bigr'],
+        \ ['\biggl', '\biggr'],
+        \ ['\Biggl', '\Biggr'],
+        \]
 
-    " Autocomplete
-    "
-    "call deoplete#enable()
-    "" Use deoplete.
-    "let g:deoplete#enable_at_startup = 1
-    "" Use smartcase.
-    "let g:deoplete#enable_smart_case = 1
+      let g:vimtex_quickfix_mode = 0
 
-    "" <C-h>, <BS>: close popup and delete backword char.
-    "inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-    "inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+      nnoremap <c-S> <plug>(vimtex-delim-toggle-modifier)
+      nnoremap <c-s-S> <plug>(vimtex-delim-toggle-modifier-reverse)
 
-    "" <CR>: close popup and save indent.
-    "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    "function! s:my_cr_function() abort
-      "return deoplete#close_popup() . "\<CR>"
-    "endfunction
+    " deoplete
+      " Enable at startup
+      let g:deoplete#enable_at_startup = 1
 
-    "" deoplete tab-complete
-    "inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+      " Use smartcase.
+      let g:deoplete#enable_smart_case = 1
 
+      "" <C-h>, <BS>: close popup and delete backword char.
+      inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+      inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+      " <CR>: close popup and save indent.
+      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+      function! s:my_cr_function() abort
+        return deoplete#close_popup() . "\<CR>"
+      endfunction
+
+      "" deoplete tab-complete
+      inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+    " ultisnips
+      "set runtimepath+=~/.config/nvim/my-snippets/
+      "let g:UltiSnipsExpandTrigger="<C-s>"
+      let g:UltiSnipsExpandTrigger="<Tab>"
+      let g:UltiSnipsJumpForwardTrigger="<Tab>"
+      let g:UltiSnipsJumpBackwardTrigger="<C-x>"
+      let g:UltiSnipsEditSplit="context"
+
+    " NERDtree
+      autocmd StdinReadPre * let s:std_in=1
+      autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+      nnoremap <localleader>n :NERDTreeToggle<cr>
+
+    " NERDcommenter
+
+      " Add a space after the opening delimiter of a comment.
+      let g:NERDSpaceDelims=1
+
+      " Enable trimming of trailing whitespace when uncommenting
+      let g:NERDTrimTrailingWhitespace = 1
+
+      " Enable NERDCommenterToggle to check all selected lines is commented or not 
+      let g:NERDToggleCheckAllLines = 1
+
+      " Swap the default mappings (since 'append' is used more often here)
+      map <Leader>ca <Plug>NERDCommenterAppend
+      map <Leader>cA <Plug>NERDCommenterAltDelims
+      " Non-toggling comment
+      map <LocalLeader>co <Plug>NERDCommenterComment
+      " Recursive comment
+      map <LocalLeader>cr <Plug>NERDCommenterNested
+      " More convenient comment toggle
+      " noremap gc <Plug>NERDCommenterToggle
+
+      silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterAltDelims", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterToEOL", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
+      silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
+
+" => General
 
     "let $EDITOR = '~/bin/e'
 
@@ -322,25 +390,25 @@
     " If you want a transparent editor
     let g:solarized_termtrans=0
 
-    "colorscheme one
-    colorscheme solarized8_dark
+    set background=dark
+    colorscheme solarized8
     "colorscheme solarized8_light
 
 
     " Set the colorscheme based on the time of day. Between 06:00 and 18:00
     " it is light, otherwise, it's dark. However, this is super annoying.
     "let time = strftime("%H")
-    "if 5 < time && time < 19
+    "if 5 < time && time < 19;
       "exe "colorscheme" substitute(g:colors_name, 'dark', 'light', '')
     "else
       "exe "colorscheme" substitute(g:colors_name, 'light', 'dark', '')
     "endif
 
-    "nnoremap <Leader>as :call ChangeBackground()<cr>
-    nnoremap <Leader>as :<c-u>exe "colors" (g:colors_name =~# "dark"
-    \ ? substitute(g:colors_name, 'dark', 'light', '')
-    \ : substitute(g:colors_name, 'light', 'dark', '')
-    \ )<cr>
+    nnoremap <Leader>as :call ChangeBackground()<cr>
+    "nnoremap <Leader>as :<c-u>exe "colors" (g:colors_name =~# "dark"
+    "\ ? substitute(g:colors_name, 'dark', 'light', '')
+    "\ : substitute(g:colors_name, 'light', 'dark', '')
+    "\ )<cr>
 
 
     noremap <localleader>- :call Solarized8Contrast(-v:count1)<cr>
@@ -377,6 +445,8 @@
     augroup filetypedetect
       " Asymptote
       au BufRead,BufNewFile *.asy setfiletype asy
+      " Mathematica (default is matlab)
+      au BufRead,BufNewFile *.m   setfiletype mma
     augroup end
 
     augroup terminal
@@ -388,6 +458,7 @@
 
     " Open a terminal at the bottom
     noremap <localleader>tl :belowright 5split +term<cr>
+    noremap <localleader>tn :vs +term<cr>
     noremap <localleader>tt :tabedit +term<cr>
     " Make <c-r> act like normal.
     tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
@@ -477,6 +548,7 @@
     noremap <Leader>K <C-w>K
 
     noremap <Leader>d :q<cr>
+    noremap <Leader>D :bdelete<cr>
 
     "noremap <localleader>f
 
@@ -504,10 +576,10 @@
 
     " Useful mappings for managing tabs:
     " NOTE: Either delete these or fix them and start using them.
-    noremap <LocalLeader>tn :tabnew<cr>
-    noremap <LocalLeader>to :tabonly<cr>
-    noremap <LocalLeader>tc :tabclose<cr>
-    noremap <LocalLeader>tm :tabmove
+    "noremap <LocalLeader>tn :tabnew<cr>
+    "noremap <LocalLeader>to :tabonly<cr>
+    "noremap <LocalLeader>tc :tabclose<cr>
+    "noremap <LocalLeader>tm :tabmove
 
     " Opens a new tab with the current buffer's path
     " Super useful when editing files in the same directory
@@ -619,10 +691,15 @@
     noremap mt :call MoveToNextTab()<CR>
     noremap mT :call MoveToPrevTab()<CR>
 
- "=> Status line
+    "=> Status line
+ "
+    " Airline
     let g:airline_powerline_fonts=1
     "let g:airline#extensione'
     "let g:airline_theme='one'
+    "
+    " Enable the list of buffers
+    let g:airline#extensions#tabline#enabled = 1
 
     set laststatus=2
 
@@ -720,8 +797,10 @@
 
     " Append a semicolon to the end of a line
     noremap <LocalLeader>; mqA;<Esc>`q
-    " Go to the link under the cursor
-    noremap gl ml"lyiW:!open <c-r>l<CR>`l
+
+    " Go to the link under the cursor (browser-dependant)
+    noremap gl ml"lyiW:!chromium-browser <c-r>l<CR>`l
+
     " This could also be removed once ctrl is made more accesible. However, it
     " *does* match nicely with the already in place tab...
     noremap <S-Tab> <C-o>
@@ -736,43 +815,10 @@
     " Quickly edit init.vim or the .vimrc (i.e. likely this file) with ' ev'
     " and source it with ' sv'. Edit your current filetype settings with '
     " ef'.
-    nnoremap <LocalLeader>ev :tabedit $MYVIMRC<cr>
     nnoremap <LocalLeader>ef :call EditFiletype()<cr>
+    nnoremap <LocalLeader>ev :tabedit $MYVIMRC<cr>
     nnoremap <LocalLeader>sv :source $MYVIMRC<cr>
 
-    " Swap the default mappings (since 'append' is used more often here)
-    map <Leader>ca <Plug>NERDCommenterAppend
-    map <Leader>cA <Plug>NERDCommenterAltDelims
-    " Non-toggling comment
-    map <LocalLeader>co <Plug>NERDCommenterComment
-    " Recursive comment
-    map <LocalLeader>cr <Plug>NERDCommenterNested
-    " More convenient comment toggle
-    " noremap gc <Plug>NERDCommenterToggle
-
-    silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterAltDelims", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterToEOL", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
-    silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
 
 " => Vimgrep searching and cope displaying
     " When you press gv you vimgrep after the selected text
@@ -841,7 +887,7 @@
 
     " The following may not be that useful...
     " 'add date' at the cursor.
-    noremap <LocalLeader>ad i<C-R>=strftime("%Y %m %d")<CR><Esc>
+    noremap <LocalLeader>ad i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
     " 'ad name' after the cursor
     noremap <LocalLeader>an aJesse Frohlich<Esc>
 
