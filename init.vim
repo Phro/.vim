@@ -259,6 +259,8 @@
         "augroup END
 
         "nnoremap <LoralLeader>aw augroup
+      " gitgutter
+        set updatetime=100
 
       " ultisnips
         "set runtimepath+=~/.config/nvim/my-snippets/
