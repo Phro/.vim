@@ -8,8 +8,10 @@ nnoremap <buffer> <LocalLeader>m :w!<cr>:make<cr>
 " necessary for my platform.
 
 "nnoremap <buffer> <LocalLeader>v :belowright 10split +term\ %:r<cr>
-nnoremap <buffer> <LocalLeader>v :belowright 15split +term\ runhaskell\ %<cr>
-nnoremap <buffer> <LocalLeader>V :below 5new\|0read !./#:r<cr>:set nomod<cr>
+" nnoremap <buffer> <LocalLeader>v :belowright 15split +term\ runhaskell\ %<cr>
+" nnoremap <buffer> <LocalLeader>V :below 5new\|0read !./#:r<cr>:set nomod<cr>
+nnoremap <buffer> <LocalLeader>V :!%< && see %<.ppm&<cr>
+nnoremap <buffer> <LocalLeader>v :!%<<cr>
 nnoremap <buffer> <localleader>h :vs +term\ ghci\ %:r<cr>
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`

@@ -1,41 +1,142 @@
-# Environments
+## tmp
+
+snippet cs "Case Study"
+\caseStudy{
+  $1
+}{
+  $2
+}
+endsnippet
+
+## Environments
+snippet eg "Example"
+\begin{example}
+	$0
+\end{example}
+endsnippet
+
+snippet q "Question"
+\begin{question}
+	$0
+\end{question}
+endsnippet
+
+snippet an "Answer"
+\begin{answer}
+	$0
+\end{answer}
+endsnippet
+
+snippet resp "Response"
+\begin{response}
+	$0
+\end{response}
+endsnippet
+
+snippet fact "Fact"
+\begin{fact}
+	$0
+\end{fact}
+endsnippet
+
+snippet doc "Document Class"
+\\documentclass${2:[${3:options}]}{${1:math}}
+\\title{$4}
+\\author{${5:Jesse Frohlich}}
+
+\\begin{document}
+\maketitle
+$0
+\\end{document}
+endsnippet
+
+snippet /\\?pdc/ "Provide Document Command" r
+\\ProvideDocumentCommand{\\${1:name}}{${2:arguments}}{${3:$1}}
+endsnippet
+
+snippet prop "Proposition"
+\begin{proposition}
+	$0
+\end{proposition}
+endsnippet
+
+snippet cor "Corollary"
+\begin{corollary}
+	$0
+\end{corollary}
+endsnippet
+
+snippet thm "Theorem"
+\begin{theorem}
+	$0
+\end{theorem}
+endsnippet
+
+snippet conj "Conjecture"
+\begin{conjecture}
+	$0
+\end{conjecture}
+endsnippet
+
+snippet lem "Lemma"
+\begin{lemma}
+	$0
+\end{lemma}
+endsnippet
+
+snippet rem "Remark"
+\begin{remark}
+	$0
+\end{remark}
+endsnippet
+
 snippet def "Definition"
 \begin{definition}
 	$0
 \end{definition}
 endsnippet
 
-snippet pf "Proof"
+snippet di "\defi{...}"
+\defi{$1}
+endsnippet
+
+snippet "p(roo)?f" "Proof" r
 \begin{proof}
 	$0
 \end{proof}
 endsnippet
 
 snippet prob "Problem"
-\begin{problem}
+\begin{problem}${1:[${2:description}]}
 	$0
 \end{problem}
 endsnippet
 
 snippet prob* "Unnumbered Problem"
-\begin{problem*}
+\begin{problem*}${1:[${2:description}]}
 	$0
 \end{problem*}
 endsnippet
 
 snippet sol "Solution"
-\begin{solution}
+\begin{solution}[\solspace]
 	$0
 \end{solution}
 endsnippet
 
+## Custom commands
+
 # Setbuilder notation
-snippet sb "\setbuilder{}" w
+snippet /\\?gb/ "Generating set builder" wr
+\genbuilder{${1:element}}{${2:condition}}
+endsnippet
+
+snippet /\\?sb/ "Setbuilder notation" wr
 \setbuilder{${1:element}}{${2:condition}}
 endsnippet
 
 # Transpose
-snippet "\btr" "\transpose{}" rw
+snippet "\\?tr" "\transpose{}" rw
 \transpose{$1}
 endsnippet
 
@@ -45,45 +146,248 @@ snippet "ctr" "\ctranspose{}" rw
 endsnippet
 
 # Christoffel Symbols
-snippet chr "\Christoffel {i}{jk}" w
+snippet /\\?chr/ "\Christoffel {i}{jk}" wr
 \Christoffel{${1:k}}{${2:ij}}
 endsnippet
 
 
-snippet vf "Vector fields" w
+snippet /\\?vf/ "Vector fields" wr
 \vectorfield($1)
 endsnippet
 
-snippet conn "Riemannian connection" w
+snippet "\\?conn" "Riemannian connection" wr
 \connection{$1}
 endsnippet
 
-snippet inn "Inner product" w
+snippet "\\?prezipp" "Pre-zip" wr
+\prezippair{$1}{$2}{$3}
+endsnippet
+
+snippet "\\?zipp" "Zip" wr
+\zippair{$1}{$2}{$3}
+endsnippet
+
+snippet "\\?inn" "Inner product" wr
 \inner{$1}{$2}
 endsnippet
 
-snippet curv "Curvature tensor" w
+snippet "\\?pair" "Dual pairing" wr
+\pair{$1}{$2}
+endsnippet
+
+snippet /\\?curv/ "Curvature tensor" wr
 \curv{$1}{$2}{$3}{$4}
 endsnippet
 
-snippet lbk "Lie bracket" w
+snippet /\\?lbk/ "Lie bracket" wr
 \liebk{$1}{$2}
 endsnippet
 
-snippet lap "Laplacian" w
+snippet /\\?lap/ "Laplacian" wr
 \laplacian
 endsnippet
 
-snippet map "Function notation" w
+snippet /\\?coinv/ "Coinvariant" r
+\coinv{${1:space}}{${2:action}}
+endsnippet
+
+snippet invar "Invariant"
+\invariant{${1:space}}{${2:action}}
+endsnippet
+
+# Greek letters
+snippet ,a "α" Ai
+α
+endsnippet
+snippet ,b "β" Ai
+β
+endsnippet
+snippet ,d "δ" Ai
+δ
+endsnippet
+snippet ,D "Δ" Ai
+Δ
+endsnippet
+snippet ,g "γ" Ai
+γ
+endsnippet
+snippet ,G "Γ" Ai
+Γ
+endsnippet
+snippet ,e "ϵ" Ai
+ϵ
+endsnippet
+snippet ,z "ζ" Ai
+ζ
+endsnippet
+snippet ,y "η" Ai
+η
+endsnippet
+snippet ,t "τ" Ai
+τ
+endsnippet
+snippet ,h "θ" Ai
+θ
+endsnippet
+snippet ,k "κ" Ai
+κ
+endsnippet
+snippet ,i "ι" Ai
+ι
+endsnippet
+snippet ,l "λ" Ai
+λ
+endsnippet
+snippet ,L "Λ" Ai
+Λ
+endsnippet
+snippet ,m "μ" Ai
+μ
+endsnippet
+snippet ,p "π" Ai
+π
+endsnippet
+snippet ,q "ψ" Ai
+ψ
+endsnippet
+snippet ,Q "Ψ" Ai
+Ψ
+endsnippet
+snippet ,f "ϕ" Ai
+ϕ
+endsnippet
+snippet ,F "Φ" Ai
+Φ
+endsnippet
+snippet ,s "σ" Ai
+σ
+endsnippet
+snippet ,S "Σ" Ai
+Σ
+endsnippet
+snippet ,x "ξ" Ai
+ξ
+endsnippet
+snippet ,X "Ξ" Ai
+Ξ
+endsnippet
+snippet ,r "ρ" Ai
+ρ
+endsnippet
+snippet ,o "ω" Ai
+ω
+endsnippet
+snippet ,O "Ω" Ai
+Ω
+endsnippet
+snippet ,c "χ" Ai
+χ
+endsnippet
+	
+
+snippet "\\?smap" "Function notation (self map)" wr
+\selfmap {$1} {$2} ${3:[${4:\to}] }
+endsnippet
+
+snippet "\\?mapnd" "Function notation (no domain)" wr
+\nodomainmap {$1} {$2} {$3}
+endsnippet
+
+snippet "\\?map" "Function notation" r
 \map {$1} {$2} ${3:[${4:\to}] }{$5}
 endsnippet
 
-# Add appropriate whitespace
-snippet mapdef "Function definition" w
+snippet /\\?mapdef/ "Function definition" wr
 \mapdef {$1} {$2} ${3:[${4:\to}] }{$5}
-				   ${1/./ /ga}{$6} {$7}
+{           ${1/./ /ga}$6} {$7}
 endsnippet
 
-snippet nuc "\newunicodechar"
-	\\newunicodechar{${1}}{${2:\\ensuremath}${3:tex-substitute}}} ${0}
+# Add appropriate whitespace
+snippet /\\?smapdef/ "Function definition (self map)" wr
+\mapdef {$1} {$2} ${3:[${4:\to}] }
+           ${1/./ /ga}{$6} {$7}
 endsnippet
+
+snippet /\\?nuc/ "\newunicodechar" r
+\\newunicodechar{${1}}{${2:\\ensuremath}${3:tex-substitute}}} ${0}
+endsnippet
+
+# Automatically expand quotes to the proper command.
+snippet /""/ "enquote" rA
+\\enquote{$1}
+endsnippet
+
+# snippet /\$/ "mathmode" rA
+# $$1$
+# endsnippet
+
+snippet /\\?pub/ "pullback" wr
+\\pullback{$1}
+endsnippet
+
+snippet /\\?puf/ "pushforward" wr
+\\pushforward{$1}
+endsnippet
+
+snippet /\\?ld/ "Lie Derivative" wr
+\\liederiv{$1}
+endsnippet
+
+snippet /\\?ps/ "Power Series" wr
+\\powerseries{${1:ring}}{${2:variables}}
+endsnippet
+
+snippet /\\?zip/ "Zip" wr
+\\zip{${1:function}}{${2:variable}}
+endsnippet
+
+snippet /\\?set/ "{ ... set ... }" wr
+\\set{$1}
+endsnippet
+
+# This only works sometimes...
+snippet /\\?wedge/ "∧" rw
+∧
+endsnippet
+
+snippet /\\?homol/ "homology" wr
+\\homology${1:[${2:deg}]}
+endsnippet
+
+snippet /\\?coh/ "cohomology" wr
+\\cohomology${1:[${2:deg}]}
+endsnippet
+
+snippet /\\?zdrcoh/ "integral de Rahm cohomology" wr
+\\ZdRcohomology${1:[${2:deg}]}
+endsnippet
+
+snippet /\\?drcoh/ "de Rahm cohomology" wr
+\\dRcohomology${1:[${2:deg}]}
+endsnippet
+
+snippet /\\?pre/ "preimage" wr
+\\preimage{$1}
+endsnippet
+
+snippet /\\?(?<!\w)em/ "emph" wr
+\\emph{$1} 
+endsnippet
+
+snippet fb "Feedback Page"
+\feedbackpage{${1:Name}}{ % Remove braces for a checkmark
+	\objective{Verbal     }${2:\{$3\}}
+	\objective{Persistence}{}
+	\objective{Strategies }{}
+}
+{\begin{itemize}
+  \item $4
+\end{itemize}} % Remove braces to hide
+$0
+endsnippet
+	
+
+# What about automatic quote surrounding? One day.
+# snippet '' "regular quote" A
+# "$1"
+# endsnippet

@@ -22,11 +22,12 @@
 "
 " Raw_version:
 "       http://amix.dk/vim/vimrc.txt
-" To_do:
-"   - Remove unused content (or incorporate into your workflow)
-"   - Reorganize plugin settings to immediately after the plugged section.
-"   - Update the fold-method to be filetype specific (or manual)
-"   - Update the table of contents below:
+" To Do:
+"   - TODO: Remove unused content (or incorporate into your workflow)
+"   - TODO: Reorganize plugin settings to immediately after the plugged section.
+"   - TODO: Update the fold-method to be filetype specific (or manual)
+"   - TODO: Update the table of contents below:
+"   - TODO: improve syntax highlighting of comments
 "
 " Sections:
 "    -> Vim-plug configuration
@@ -53,215 +54,275 @@
     let g:plug_threads=2
     call plug#begin('~/.config/nvim/plugged')
 
-    " Autocompletions
-    if has('nvim')
-      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    else
-      Plug 'Shougo/deoplete.nvim'
-      Plug 'roxma/nvim-yarp'
-      Plug 'roxma/vim-hug-neovim-rpc'
-    endif
+    " Language Specific:
 
-    " Ultisnips
-    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+      " Haskell:
+        " Display symbols prettily
+        Plug 'Twinside/vim-haskellConceal'
+        " Expansion, highlighting, and indentation
+        Plug 'neovimhaskell/haskell-vim'
 
-    " One theme
-    Plug 'rakr/vim-one'
-    "Plug 'cocopon/iceberg.vim'
-    "Plug 'vim-scripts/clarity.vim'
+      " LaTeX Support: Vimtex
+        Plug 'lervag/vimtex', {'for': 'tex'} | Plug 'KeitaNakamura/tex-conceal.vim'
 
-    " NERDtree
-    Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+      " Markdown Syntax:
+        " TODO: This is still not adequate,
+        Plug 'gabrielelana/vim-markdown'
 
-    " GAP syntax
-    Plug 'petRUShka/vim-gap'
+      " YAML Syntax Highlighting:
+        " TODO: find / create one which handles muliline strings with colons.
+        " This is also an indentation issue, which has less to do with
+        " syntax-highlighting.
+        Plug 'stephpy/vim-yaml'
 
-    " Render Haskell symbols prettily
-    Plug 'Twinside/vim-haskellConceal'
+    " Editor Specific:
 
-    " Better Markdown Syntax
-    Plug 'gabrielelana/vim-markdown'
+      " Auto Closing: quotes, parentheses, etc. (TODO: find a way to fix the
+      " undo using the vim-repeat plugin)
+        " Plug 'Townk/vim-autoclose'
 
-    " Comment handling keymaps
-    Plug 'phro/nerdcommenter'
+      " Autocompletion:
+        if has('nvim')
+          Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        else
+          Plug 'Shougo/deoplete.nvim'
+          Plug 'roxma/nvim-yarp'
+          Plug 'roxma/vim-hug-neovim-rpc'
+        endif
 
-    " Haskell expansion
-    Plug 'neovimhaskell/haskell-vim'
+      " Autosave:
+        Plug '907th/vim-auto-save'
 
-    " Fugitive: Git-handling commands
-    Plug 'tpope/vim-fugitive'
+      " Colorschemes:
+        " TODO: Choose / build theme
+        " Color Table Viewer:
+        "Plug 'guns/xterm-color-table.vim'
+        Plug 'lifepillar/vim-solarized8'
+        " Plug 'rakr/vim-one'
+        " Plug 'cocopon/iceberg.vim'
+        " Plug 'vim-scripts/clarity.vim'
+        " Extra Colorschemes:
+        "Plug 'flazz/vim-colorschemes'
 
-    " Better 'ga' responses
-    Plug 'tpope/vim-characterize'
+      " Comment Handling Keymaps:
+        Plug 'phro/nerdcommenter'
 
-    " Set $EDITOR to current neovim instance.
-    Plug 'rliang/termedit.nvim'
+      " Emoji Support:
+        Plug 'junegunn/vim-emoji'
 
-    " Auto-close quotes, parentheses, etc. (find a way to fix the undo using
-    " the vim-repeat plugin)
-    "Plug 'Townk/vim-autoclose'
+      " Entering Unicode:
+        Plug 'chrisbra/unicode.vim'
 
-    " Add a command for renaming files
-    Plug 'danro/rename.vim'
+      " Expand 'ga':
+        Plug 'tpope/vim-characterize'
 
-    " Vimtex : (La)TeX support
-    Plug 'lervag/vimtex', {'for': 'tex'}
+      " Filesystem Navigation: NERDtree
+        " TODO: investigate how to break long lines in vimscript.
+        Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 
-    " Surround objects with quotes, parentheses, etc.
-    Plug 'tpope/vim-surround'
+      " Git: Fugitive
+        Plug 'tpope/vim-fugitive'
 
-    " Intelligent date in/de-crementation' with <C-A>/<C-X>
-    Plug 'tpope/vim-speeddating'
+      " Intelligent Dates: in/de-crementation' with <C-A>/<C-X>
+        Plug 'tpope/vim-speeddating'
 
-    " Intelligent repeating for the above 2 plugins
-    Plug 'tpope/vim-repeat'
+      " Intelligent Repeating: for 'speeddating' and 'surround'
+        Plug 'tpope/vim-repeat'
 
-    " Undo last closed window
-    " TODO: do you actually use this?
-    Plug 'AndrewRadev/undoquit.vim'
+      " Set $EDITOR to current neovim instance.
+        " TODO: set editor to edit vim files (almost) always in the same
+        " instance.
+        Plug 'rliang/termedit.nvim'
 
-    " Autosave
-    Plug '907th/vim-auto-save'
+      " Add Diff Information:
+        Plug 'airblade/vim-gitgutter'
 
-    " A plugin called 'easymotion' sounds like a great way to move around
-    " in-screen.
+      " Snippets: Ultisnips
+        Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-    " Extra Color-schemes
-    "Plug 'flazz/vim-colorschemes'
+      " Rename Files:
+        Plug 'danro/rename.vim'
 
-    " Solarized theme
-    "Plug 'altercation/vim-colors-solarized'
-    Plug 'lifepillar/vim-solarized8'
+      " Undo Last Closed Window:
+      " TODO: do you actually use this? No.
+      " TODO: does this actually work?
+        Plug 'AndrewRadev/undoquit.vim'
 
-    " Color table viewer
-    "Plug 'guns/xterm-color-table.vim'
-    " smart Status Line:
-    Plug 'bling/vim-airline'
+      " Status Line:
+      " TODO: customize to the information I care about.
+        " Plug 'bling/vim-airline'
 
-    " Make sure you use single quotes
-    "Plug 'junegunn/seoul256.vim'
-    "Plug 'junegunn/vim-easy-align'
+      " Surround Objects: with quotes, parentheses, etc.
+        Plug 'tpope/vim-surround'
 
-    " On-demand loading
-    "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+    " Vim Plug Examples:
 
-    " Using git URL
-    "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+      " On-demand loading
+      "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
-    " Plugin options
-    "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+      " Using git URL
+      "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
-    " Plugin outside ~/.vim/plugged with post-update hook
-    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+      " Plugin options
+      "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
-    " Unmanaged plugin (manually installed and updated)
-    "Plug '~/my-prototype-plugin'
+      " Plugin outside ~/.vim/plugged with post-update hook
+      "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+      " Unmanaged plugin (manually installed and updated)
+      "Plug '~/my-prototype-plugin'
 
     " Add plugins to &runtimepath
     call plug#end()
 
     " Must come after plugins (TODO: verify this):
     " Detect filetypes by their extension and syntax
-    filetype plugin indent on
-    syntax enable
+    " filetype plugin indent on
+    " syntax enable
 
-" => Plugin commands
-    " vimtex
-      " Set viewer to mupdf
-      let g:vimtex_view_method = 'mupdf'
-      " Make the colour of mupdf easier on the eyes.
-      let g:vimtex_view_mupdf_options = '-C FF9600'
+" => Plugin Settings
 
-      " For scrolling between various parenthesis sizes
-      let g:vimtex_delim_toggle_mod_list = [
-        \ ['\bigl', '\bigr'],
-        \ ['\Bigl', '\Bigr'],
-        \ ['\biggl', '\biggr'],
-        \ ['\Biggl', '\Biggr'],
-        \]
+    " Language Specific:
 
-      let g:vimtex_quickfix_mode = 0
+      " Vimtex:
+        " Set viewer to mupdf
+        let g:vimtex_view_method = 'mupdf'
+        " Make the colour of mupdf easier on the eyes.
+        let g:vimtex_view_mupdf_options = '-C DF4700'
 
-      nnoremap <c-S> <plug>(vimtex-delim-toggle-modifier)
-      nnoremap <c-s-S> <plug>(vimtex-delim-toggle-modifier-reverse)
+        " For scrolling between various parenthesis sizes
+        let g:vimtex_delim_toggle_mod_list = [
+          \ ['\bigl', '\bigr'],
+          \ ['\Bigl', '\Bigr'],
+          \ ['\biggl', '\biggr'],
+          \ ['\Biggl', '\Biggr'],
+          \]
 
-    " deoplete
-      " Enable at startup
-      let g:deoplete#enable_at_startup = 1
+        let g:vimtex_quickfix_mode = 0
 
-      " Use smartcase.
-      let g:deoplete#enable_smart_case = 1
+        nnoremap <c-S> <plug>(vimtex-delim-toggle-modifier)
+        nnoremap <c-s-S> <plug>(vimtex-delim-toggle-modifier-reverse)
+        let g:vimtex_compiler_latexmk = {
+            \ 'backend' : 'nvim'
+            \}
 
-      "" <C-h>, <BS>: close popup and delete backword char.
-      inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-      inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+      " Markdown: vim-markdown
+      let g:markdown_enable_conceal = 1
+      let g:markdown_enable_mappings = 0
+      let g:markdown_include_jekyll_support = 0
 
-      " <CR>: close popup and save indent.
-      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-      function! s:my_cr_function() abort
-        return deoplete#close_popup() . "\<CR>"
-      endfunction
+    " Editor Specific:
 
-      "" deoplete tab-complete
-      inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+      " Deoplete:
+        " Enable at startup
+        let g:deoplete#enable_at_startup = 1
 
-    " ultisnips
-      "set runtimepath+=~/.config/nvim/my-snippets/
-      "let g:UltiSnipsExpandTrigger="<C-s>"
-      let g:UltiSnipsExpandTrigger="<Tab>"
-      let g:UltiSnipsJumpForwardTrigger="<Tab>"
-      let g:UltiSnipsJumpBackwardTrigger="<C-x>"
-      let g:UltiSnipsEditSplit="context"
+        " Use smartcase.
+        let g:deoplete#enable_smart_case = 1
 
-    " NERDtree
-      autocmd StdinReadPre * let s:std_in=1
-      autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-      nnoremap <localleader>n :NERDTreeToggle<cr>
+        "" <C-h>, <BS>: close popup and delete backword char.
+        inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+        inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-    " NERDcommenter
+        " <CR>: close popup and save indent.
+        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+        function! s:my_cr_function() abort
+          return deoplete#close_popup() . "\<CR>"
+        endfunction
 
-      " Add a space after the opening delimiter of a comment.
-      let g:NERDSpaceDelims=1
+        "" deoplete tab-complete
+        " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-      " Enable trimming of trailing whitespace when uncommenting
-      let g:NERDTrimTrailingWhitespace = 1
+      " Autosave: vim-auto-save
+        " Fast saving, somewhat nulled by the following autosave:
+        nnoremap <LocalLeader>w :w!<cr>
+        nnoremap <LocalLeader>Wt :AutoSaveToggle<cr>
 
-      " Enable NERDCommenterToggle to check all selected lines is commented or not 
-      let g:NERDToggleCheckAllLines = 1
+        " Autosave after leaving insert mode and making a change in normal mode
+        let g:auto_save = 1
+        "let g:auto_save_presave_hook = 'call AbortIfMountPoint()'
+        " let g:auto_save_events = ["InsertLeave", "TextChanged"]
+        let g:auto_save_silent = 1
 
-      " Swap the default mappings (since 'append' is used more often here)
-      map <Leader>ca <Plug>NERDCommenterAppend
-      map <Leader>cA <Plug>NERDCommenterAltDelims
-      " Non-toggling comment
-      map <LocalLeader>co <Plug>NERDCommenterComment
-      " Recursive comment
-      map <LocalLeader>cr <Plug>NERDCommenterNested
-      " More convenient comment toggle
-      " noremap gc <Plug>NERDCommenterToggle
+        function! AbortIfMountPoint()
+          silent execute "! mountpoint ."
+          if v:shell_error =~ 0
+            let g:auto_save_abort = 1
+          else
+            let g:auto_save_abort = 0
+          endif
+        endfunction
+        "augroup AutoSave
+          "au!
+          "autocmd InsertLeave * silent! update
+          "autocmd TextChanged * silent! update
+        "augroup END
 
-      silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterAltDelims", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterToEOL", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
-      silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
+        "nnoremap <LoralLeader>aw augroup
+
+      " ultisnips
+        "set runtimepath+=~/.config/nvim/my-snippets/
+        "let g:UltiSnipsExpandTrigger="<C-s>"
+        let g:UltiSnipsExpandTrigger="<Tab>"
+        let g:UltiSnipsJumpForwardTrigger="<Tab>"
+        let g:UltiSnipsJumpBackwardTrigger="<C-x>"
+        let g:UltiSnipsEditSplit="context"
+
+      " NERDtree
+        autocmd StdinReadPre * let s:std_in=1
+        autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+        nnoremap <localleader>n :NERDTreeToggle<cr>
+
+      " NERDcommenter
+
+        " Add a space after the opening delimiter of a comment.
+        let g:NERDSpaceDelims=1
+
+        " Enable trimming of trailing whitespace when uncommenting
+        let g:NERDTrimTrailingWhitespace = 1
+
+        " Enable NERDCommenterToggle to check all selected lines is commented or not
+        let g:NERDToggleCheckAllLines = 1
+
+        " Swap the default mappings (since 'append' is used more often here)
+        map <Leader>ca <Plug>NERDCommenterAppend
+        map <Leader>cA <Plug>NERDCommenterAltDelims
+        " Non-toggling comment
+        map <LocalLeader>co <Plug>NERDCommenterComment
+        " Recursive comment
+        map <LocalLeader>cr <Plug>NERDCommenterNested
+        " More convenient comment toggle
+        " noremap gc <Plug>NERDCommenterToggle
+
+        silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterAltDelims", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterToEOL", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
+        silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
+
+      " Vim-Emoji
+        set completefunc=emoji#complete
+
+        " Substitute Emoji
+        nnoremap <LocalLeader>se :%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<cr>
 
 " => General
 
@@ -281,38 +342,14 @@
     " Line numbering
     set number
     set relativenumber
+    " Don't add extra padding if not necessary.
+    set numberwidth=3
 
     " Set the leader to space (backslash will still work).
     "map <Space> <Leader>
     "nnoremap <Space> <Nop>
     "let mapleader = "\<space>"
     map <Space> <Leader>
-
-    " Fast saving, somewhat nulled by the following autosave:
-    nnoremap <LocalLeader>w :w!<cr>
-    nnoremap <LocalLeader>Wt :AutoSaveToggle<cr>
-
-    " Autosave after leaving insert mode and making a change in normal mode
-    let g:auto_save = 1
-    "let g:auto_save_presave_hook = 'call AbortIfMountPoint()'
-    let g:auto_save_events = ["InsertLeave", "TextChanged"]
-    let g:auto_save_silent = 1
-
-    functio! AbortIfMountPoint()
-      silent execute "! mountpoint ."
-      if v:shell_error =~ 0
-        let g:auto_save_abort = 1
-      else
-        let g:auto_save_abort = 0
-      endif
-    endfunction
-    "augroup AutoSave
-      "au!
-      "autocmd InsertLeave * silent! update
-      "autocmd TextChanged * silent! update
-    "augroup END
-
-    "nnoremap <LoralLeader>aw augroup
 
     " This should fix the strange delay occurring in when the escape (^[) key is pressed.
     set ttimeout
@@ -436,43 +473,55 @@
     set nowb
     set noswapfile
 
-    " Conceal markdown stuff (from: gabrielelana/vim-markdown)
-    let g:markdown_enable_conceal = 1
-    let g:markdown_enable_mappings = 0
-    let g:markdown_include_jekyll_support = 0
-
     " New filetype detection
     augroup filetypedetect
       " Asymptote
       au BufRead,BufNewFile *.asy setfiletype asy
       " Mathematica (default is matlab)
       au BufRead,BufNewFile *.m   setfiletype mma
+      " No plaintex, please.
+      au BufRead,BufNewFile *.tex  setfiletype tex
     augroup end
+
+    " .tex files now are interpreted as not plaintex.
+    let g:tex_flavor='tex'
 
     augroup terminal
       " No spellcheck in terminals
-      autocmd TermOpen * setlocal nospell
+      autocmd TermOpen * setlocal nospell nonumber norelativenumber modifiable
+
+      " FIXME
       " Automatically enter insert mode when entering terminal buffers
-      autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
+      " autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
+      " autocmd BufEnter term:// startinsrt
     augroup END
 
     " Open a terminal at the bottom
     noremap <localleader>tl :belowright 5split +term<cr>
     noremap <localleader>tn :vs +term<cr>
     noremap <localleader>tt :tabedit +term<cr>
+
     " Make <c-r> act like normal.
     tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 
 " => Text, Tab and Indent Related
+
+    " In the IBLLinearAlgebra directory, don't use expandtab
+    autocmd BufEnter ~/edu/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
+
     " Use spaces instead of tabs
     set expandtab
 
+    command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
     " Be smart when using tabs ;)
     set smarttab
 
     " 1 tab == 2 spaces
     set shiftwidth=2
     set tabstop=2
+
+    " Highlight whitespace accordingly
+    set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
 
     " Linebreak more cleanly
     set lbr
@@ -482,17 +531,17 @@
     set ai " Auto indent
     set si " Smart indent
 
-		" Copy to clipboard
-		vnoremap  <leader>y  "+y
-		nnoremap  <leader>Y  "+yg_
-		nnoremap  <leader>y  "+y
-		nnoremap  <leader>yy  "+yy
+    " Copy to clipboard
+    vnoremap  <leader>y  "+y
+    nnoremap  <leader>Y  "+yg_
+    nnoremap  <leader>y  "+y
+    nnoremap  <leader>yy  "+yy
 
-		" Paste from clipboard
-		nnoremap <leader>p "+p
-		nnoremap <leader>P "+P
-		vnoremap <leader>p "+p
-		vnoremap <leader>P "+P
+    " Paste from clipboard
+    nnoremap <leader>p "+p
+    nnoremap <leader>P "+P
+    vnoremap <leader>p "+p
+    vnoremap <leader>P "+P
 
 " => Visual mode related
     " Visual mode pressing * or # searches for the current selection
@@ -508,6 +557,7 @@
     noremap gk k
     noremap ' `
     noremap ` '
+
     " Escape exits terminal
     tnoremap <Esc> <C-\><C-n>
     vnoremap // y/<C-R>"<CR>
@@ -522,6 +572,11 @@
     noremap <silent> <LocalLeader><cr> :noh<cr>
 
     " Smart way to move between windows
+    noremap <C-S-J> <C-W>J
+    noremap <C-S-K> <C-W>K
+    noremap <C-S-H> <C-W>H
+    noremap <C-S-L> <C-W>L
+
     noremap <C-j> <C-W>j
     noremap <C-k> <C-W>k
     noremap <C-h> <C-W>h
@@ -537,10 +592,10 @@
     tnoremap <c-o> <c-\><c-n>
 
     " More accesible than the control key:
-    noremap <Leader>h <C-W>h
-    noremap <Leader>l <C-W>l
-    noremap <Leader>j <C-W>j
-    noremap <Leader>k <C-W>k
+    " noremap <Leader>h <C-W>h
+    " noremap <Leader>l <C-W>l
+    " noremap <Leader>j <C-W>j
+    " noremap <Leader>k <C-W>k
 
     noremap <Leader>H <C-w>H
     noremap <Leader>L <C-w>L
@@ -602,28 +657,6 @@
          \ endif
     " Remember info about open buffers on close
     set viminfo^=%
-
-    " Custom folding script (fix so that this vimrc doesn't break :) )
-    " Goals: This may be syntax-based, but include the closing brace (C-style)/
-    " tag (xml) in a fold.
-    " Note: Deactivate this for tex files.
-    set foldmethod=expr
-    set foldexpr=CustomFold(v:lnum)
-
-    function! CustomFold(lnum)
-        if getline(a:lnum,end) =~ '\v^\s*$'
-            return '-1'
-        endif
-
-        let this_indent = IndentLevel(a:lnum)
-        let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
-
-        if next_indent <= this_indent
-            return this_indent
-        else
-            return next_indent
-        endif
-    endfunction
 
     function! NextNonBlankLine(lnum)
         let numlines = line('$')
@@ -700,6 +733,7 @@
     "
     " Enable the list of buffers
     let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#csv#enabled = 1
 
     set laststatus=2
 
@@ -711,6 +745,10 @@
     autocmd BufEnter * silent! lcd %:p:h
 
 " => Editing mappings
+
+    inoremap ,, ̌
+    inoremap ,.  ̆
+    nmap ga <Plug>(UnicodeGA)
     " Remap VIM 0 to first non-blank character. Do I really want this now that
     " it's really easy to reach the "^" key? I really need to deactivate the
     " numlock feature on this keyboard... :P
@@ -741,6 +779,7 @@
 
     " Move lines upwards / downwards
     " Note: Perhaps use some insight from below?
+    " TODO: replace with a funciton
     noremap - "ddd"dp
     noremap _ "dddk"dP
 
@@ -760,11 +799,18 @@
     endif
 
     noremap <LocalLeader>ts :call DeleteTrailingWS()<CR>
+    noremap <LocalLeader>tS :call DeleteInternalWS()<CR>
+    noremap <LocalLeader>T  :call DeleteInternalWS()<CR>
+    " Good regex for removing superfluous spaces: be careful for table
+    " alignment in, say TeX documents: \v([^ ]@<=) +
+
 
     " For git commit messages, limit line width.
     autocmd Filetype gitcommit setlocal spell textwidth=72
 
-    " Delete trailing white space on save
+    " Don't insert two spaces after a '.', '!', or '?'
+    set nojoinspaces
+    " Delete trailing white space
     func! DeleteTrailingWS()
         " Add files from which you don't want to remove whitespace.
         "if &filetype =~ 'vim'
@@ -772,6 +818,16 @@
         "endif
         exe "normal! mz"
         %s/\s\+$//e
+        " %s/\v(\.)@<=\s{2,}/ /e
+        exe "normal! `z"
+    endfunc
+    func! DeleteInternalWS()
+        " Add files from which you don't want to remove whitespace.
+        "if &filetype =~ 'vim'
+            "return
+        "endif
+        exe "normal! mz"
+        %s/\v[^ ]@<= {2,}/ /ge
         exe "normal! `z"
     endfunc
 
@@ -799,7 +855,7 @@
     noremap <LocalLeader>; mqA;<Esc>`q
 
     " Go to the link under the cursor (browser-dependant)
-    noremap gl ml"lyiW:!chromium-browser <c-r>l<CR>`l
+    " noremap gl ml"lyiW:!chromium-browser <c-r>l<CR>`l
 
     " This could also be removed once ctrl is made more accesible. However, it
     " *does* match nicely with the already in place tab...
@@ -816,9 +872,9 @@
     " and source it with ' sv'. Edit your current filetype settings with '
     " ef'.
     nnoremap <LocalLeader>ef :call EditFiletype()<cr>
+    nnoremap <LocalLeader>es :UltiSnipsEdit<cr>
     nnoremap <LocalLeader>ev :tabedit $MYVIMRC<cr>
     nnoremap <LocalLeader>sv :source $MYVIMRC<cr>
-
 
 " => Vimgrep searching and cope displaying
     " When you press gv you vimgrep after the selected text
@@ -873,8 +929,14 @@
     " Save the current vim session and quit (warn if there are unsaved changes).
     noremap <LocalLeader>qs :mksession!<CR>:qall<CR>
 
+    " Start a web server in the current directory.
+    noremap <LocalLeader>aw :call jobstart('python -m SimpleHTTPServer')<CR>
+
     " Toggle paste mode on and off
     noremap <LocalLeader>Wp :setlocal paste!<cr>
+
+    " Get day of week of date expression
+    noremap <LocalLeader>yd "dyiW:call GetDayOfWeek("<C-R>d")<CR>
 
     " This fantastic vim-sed will take a title and capitalize all words that are
     " at least 3 characters long!
@@ -887,7 +949,7 @@
 
     " The following may not be that useful...
     " 'add date' at the cursor.
-    noremap <LocalLeader>ad i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+    noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
     " 'ad name' after the cursor
     noremap <LocalLeader>an aJesse Frohlich<Esc>
 
@@ -895,6 +957,10 @@
     noremap <LocalLeader>gf :let @" = expand("%")<cr>
 
 " => Helper functions
+    function! GetDayOfWeek(str)
+      exe "!date +\\\%A -d" . a:str
+    endfunction
+
     function! ChangeBackground()
       if &background == "dark"
         set background=light
