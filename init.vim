@@ -90,6 +90,8 @@
           Plug 'roxma/vim-hug-neovim-rpc'
         endif
 
+        Plug 'zchee/deoplete-jedi', {'for':'python'} 
+
       " Autosave:
         Plug '907th/vim-auto-save'
 
