@@ -80,6 +80,7 @@
       " Auto Closing: quotes, parentheses, etc. (TODO: find a way to fix the
       " undo using the vim-repeat plugin)
         " Plug 'Townk/vim-autoclose'
+        Plug 'jiangmiao/auto-pairs'
 
       " Autocompletion:
         if has('nvim')
