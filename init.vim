@@ -1,50 +1,50 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer:
-"       Amir Salihefendic
-"       http://amix.dk - amix@amix.dk
-"       This build by Jesse Frohlich
+" Amir Salihefendic
+" http://amix.dk - amix@amix.dk
+" This build by Jesse Frohlich
 "
 " Version:
-"       5.0 - 29/05/12 15:43:36
+" 5.0 - 29/05/12 15:43:36
 "
 " Blog_post:
-"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
+" http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
+" Get this config, nice color schemes and lots of plugins!
 "
-"       Install the awesome version from:
+" Install the awesome version from:
 "
-"           https://github.com/amix/vimrc
+" https://github.com/amix/vimrc
 "
 " Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
+" http://amix.dk/vim/vimrc.html
 "
 " Raw_version:
-"       http://amix.dk/vim/vimrc.txt
+" http://amix.dk/vim/vimrc.txt
 " To Do:
-"   - TODO: Remove unused content (or incorporate into your workflow)
-"   - TODO: Reorganize plugin settings to immediately after the plugged section.
-"   - TODO: Update the fold-method to be filetype specific (or manual)
-"   - TODO: Update the table of contents below:
-"   - TODO: improve syntax highlighting of comments
+" - TODO: Remove unused content (or incorporate into your workflow)
+" - TODO: Reorganize plugin settings to immediately after the plugged section.
+" - TODO: Update the fold-method to be filetype specific (or manual)
+" - TODO: Update the table of contents below:
+" - TODO: improve syntax highlighting of comments
 "
 " Sections:
-"    -> Vim-plug configuration
-"    -> General
-"    -> NeoComplete configuration settings
-"    -> VIM user interface
-"    -> Colors and fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs, windows, and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> Vimgrep searching and cope displaying
-"    -> Spell checking
-"    -> Misc
-"    -> Helper functions
+" -> Vim-plug configuration
+" -> General
+" -> NeoComplete configuration settings
+" -> VIM user interface
+" -> Colors and fonts
+" -> Files and backups
+" -> Text, tab and indent related
+" -> Visual mode related
+" -> Moving around, tabs, windows, and buffers
+" -> Status line
+" -> Editing mappings
+" -> Vimgrep searching and cope displaying
+" -> Spell checking
+" -> Misc
+" -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -63,7 +63,8 @@
         Plug 'neovimhaskell/haskell-vim'
 
       " LaTeX Support: Vimtex
-        Plug 'lervag/vimtex', {'for': 'tex'} | Plug 'KeitaNakamura/tex-conceal.vim'
+        Plug 'lervag/vimtex', {'for': 'tex'}
+              \ | Plug 'KeitaNakamura/tex-conceal.vim'
 
       " Markdown Syntax:
         " TODO: This is still not adequate,
@@ -77,9 +78,8 @@
 
     " Editor Specific:
 
-      " Auto Closing: quotes, parentheses, etc. (TODO: find a way to fix the
-      " undo using the vim-repeat plugin)
-        " Plug 'Townk/vim-autoclose'
+      " Auto Closing: quotes, parentheses, etc. 
+        " This *will* get annoying in TeX with csquotes and the "" mapping.
         Plug 'jiangmiao/auto-pairs'
 
       " Autocompletion:
@@ -121,7 +121,8 @@
 
       " Filesystem Navigation: NERDtree
         " TODO: investigate how to break long lines in vimscript.
-        Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+        Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin',
+              \ { 'on': 'NERDTreeToggle' }
 
       " Git: Fugitive
         Plug 'tpope/vim-fugitive'
@@ -225,12 +226,12 @@
 
         "" <C-h>, <BS>: close popup and delete backword char.
         inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
 
-        " <CR>: close popup and save indent.
-        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+        " <cr>: close popup and save indent.
+        inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<cr>
         function! s:my_cr_function() abort
-          return deoplete#close_popup() . "\<CR>"
+          return deoplete#close_popup() . "\<cr>"
         endfunction
 
         "" deoplete tab-complete
@@ -275,7 +276,10 @@
 
       " NERDtree
         autocmd StdinReadPre * let s:std_in=1
-        autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+        autocmd VimEnter * if argc() == 0
+              \ && !exists("s:std_in")
+              \ | NERDTree
+              \ | endif
         nnoremap <localleader>n :NERDTreeToggle<cr>
 
       " NERDcommenter
@@ -286,7 +290,8 @@
         " Enable trimming of trailing whitespace when uncommenting
         let g:NERDTrimTrailingWhitespace = 1
 
-        " Enable NERDCommenterToggle to check all selected lines is commented or not
+        " Enable NERDCommenterToggle to check all selected lines is commented
+        " or not
         let g:NERDToggleCheckAllLines = 1
 
         " Swap the default mappings (since 'append' is used more often here)
@@ -327,7 +332,8 @@
         set completefunc=emoji#complete
 
         " Substitute Emoji
-        nnoremap <LocalLeader>se :%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<cr>
+        nnoremap <LocalLeader>se 
+              \:%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<cr>
 
 " => General
 
@@ -356,7 +362,8 @@
     "let mapleader = "\<space>"
     map <Space> <Leader>
 
-    " This should fix the strange delay occurring in when the escape (^[) key is pressed.
+    " This should fix the strange delay occurring in when the escape (^[) key
+    " is pressed.
     set ttimeout
     set ttimeoutlen=0
     set notimeout
@@ -457,8 +464,11 @@
     noremap <localleader>_ :call Solarized8Contrast(+v:count1)<cr>
 
     function! Solarized8Contrast(delta)
-      let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
-      exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
+      let l:schemes =\map(
+            \ ["_low", "_flat", "", "_high"],
+            \ '"solarized8_".(&background).v:val')
+      exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4
+            \ + 4) % 4]
       echom g:colors_name
     endfunction
 
@@ -483,9 +493,9 @@
       " Asymptote
       au BufRead,BufNewFile *.asy setfiletype asy
       " Mathematica (default is matlab)
-      au BufRead,BufNewFile *.m   setfiletype mma
+      au BufRead,BufNewFile *.m setfiletype mma
       " No plaintex, please.
-      au BufRead,BufNewFile *.tex  setfiletype tex
+      au BufRead,BufNewFile *.tex setfiletype tex
     augroup end
 
     " .tex files now are interpreted as not plaintex.
@@ -517,7 +527,8 @@
     " Use spaces instead of tabs
     set expandtab
 
-    command! -nargs=1 -range SuperRetab <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
+    command! -nargs=1 -range SuperRetab
+          \ <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
     " Be smart when using tabs ;)
     set smarttab
 
@@ -532,15 +543,17 @@
     set lbr
     set wrap " Wrap lines
     set tw=0 " Set this to a non-null number for *non*-TeX files
+    set breakindent
+    set showbreak=>\ 
 
     set ai " Auto indent
     set si " Smart indent
 
     " Copy to clipboard
-    vnoremap  <leader>y  "+y
-    nnoremap  <leader>Y  "+yg_
-    nnoremap  <leader>y  "+y
-    nnoremap  <leader>yy  "+yy
+    vnoremap <leader>y "+y
+    nnoremap <leader>Y "+yg_
+    nnoremap <leader>y "+y
+    nnoremap <leader>yy "+yy
 
     " Paste from clipboard
     nnoremap <leader>p "+p
@@ -551,8 +564,8 @@
 " => Visual mode related
     " Visual mode pressing * or # searches for the current selection
     " Super useful! From an idea by Michael Naumann
-    vnoremap <silent> * :call VisualSelection('f')<CR>
-    vnoremap <silent> # :call VisualSelection('b')<CR>
+    vnoremap <silent> * :call VisualSelection('f')<cr>
+    vnoremap <silent> # :call VisualSelection('b')<cr>
 
 " => Moving around, tabs, windows, and buffers
     " Treat long lines as break lines (useful when moving around in them)
@@ -565,7 +578,7 @@
 
     " Escape exits terminal
     tnoremap <Esc> <C-\><C-n>
-    vnoremap // y/<C-R>"<CR>
+    vnoremap // y/<C-R>"<cr>
 
     " Make the mouse more useful in vim
     set mouse=a
@@ -615,11 +628,11 @@
     "noremap y+ :%y+<cr>
 
     " NOTE: the function <C-W>i searches for the first occurrence of a variable
-    " in a file (i.e. it's first declaration / definition). However, this search
-    " is smart-cased (by the settings laid out in this .vimrc). A mod should be
-    " introduced to change the case rules for this search to be case-sensitive,
-    " since the majority of programming languages have case-sensitive variable
-    " definitions.
+    " in a file (i.e. it's first declaration / definition). However, this
+    " search is smart-cased (by the settings laid out in this .vimrc). A mod
+    " should be introduced to change the case rules for this search to be
+    " case-sensitive, since the majority of programming languages have
+    " case-sensitive variable definitions.
 
     " Scroll through files quicker with option-j & option-k
     nnoremap ∆ 4<c-e>
@@ -632,7 +645,7 @@
     noremap <LocalLeader>ba :1,1000 bd!<cr>
 
     " Open alternate buffer (can be used to reopen a closed tab)
-    noremap <LocalLeader>br :vs<Bar>:b#<CR>
+    noremap <LocalLeader>br :vs<Bar>:b#<cr>
 
     " Useful mappings for managing tabs:
     " NOTE: Either delete these or fix them and start using them.
@@ -658,7 +671,7 @@
     " Return to last edit position when opening files (You want this!)
     autocmd BufReadPost *
          \ if line("'\"") > 0 && line("'\"") <= line("$") |
-         \   exe "normal! g`\"" |
+         \ exe "normal! g`\"" |
          \ endif
     " Remember info about open buffers on close
     set viminfo^=%
@@ -726,8 +739,8 @@
       exe "b".l:cur_buf
     endfunc
 
-    noremap mt :call MoveToNextTab()<CR>
-    noremap mT :call MoveToPrevTab()<CR>
+    noremap mt :call MoveToNextTab()<cr>
+    noremap mT :call MoveToPrevTab()<cr>
 
     "=> Status line
  "
@@ -752,7 +765,7 @@
 " => Editing mappings
 
     inoremap ,, ̌
-    inoremap ,.  ̆
+    inoremap ,. ̆
     nmap ga <Plug>(UnicodeGA)
     " Remap VIM 0 to first non-blank character. Do I really want this now that
     " it's really easy to reach the "^" key? I really need to deactivate the
@@ -767,7 +780,8 @@
     onoremap : ;
     "set langmap=:\\;,\\;:
 
-    " Remap p to paste to the current indentation, wheras ctrl-p maps to normal paste.
+    " Remap p to paste to the current indentation, wheras ctrl-p maps to normal
+    " paste.
     noremap p ]p
     " May be overridden if CtrlP is introduced (a file/buffer editor/ viewer)
     noremap <C-P> p
@@ -796,16 +810,17 @@
     vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
     vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-    if has("mac") || has("macunix") " If using a linux distribution with the same .vimrc, this is helpful
+    " If using a linux distribution with the same .vimrc, this is helpful
+    if has("mac") || has("macunix")
       nmap <D-j> <M-j>
       nmap <D-k> <M-k>
       vmap <D-j> <M-j>
       vmap <D-k> <M-k>
     endif
 
-    noremap <LocalLeader>ts :call DeleteTrailingWS()<CR>
-    noremap <LocalLeader>tS :call DeleteInternalWS()<CR>
-    noremap <LocalLeader>T  :call DeleteInternalWS()<CR>
+    noremap <LocalLeader>ts :call DeleteTrailingWS()<cr>
+    noremap <LocalLeader>tS :call DeleteInternalWS()<cr>
+    noremap <LocalLeader>T :call DeleteInternalWS()<cr>
     " Good regex for removing superfluous spaces: be careful for table
     " alignment in, say TeX documents: \v([^ ]@<=) +
 
@@ -836,19 +851,24 @@
         exe "normal! `z"
     endfunc
 
-    " Here, ideally git commands would no longer need a capital 'G', but I'm not quite sure how to enforce this.
-    "cabbrev git <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "Rename" : "rename"<CR>   autocmd BufWrite * call DeleteTrailingWS()
+    " Here, ideally git commands would no longer need a capital 'G', but I'm
+    " not quite sure how to enforce this.
+    " cabbrev git <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ?
+    " \ "Rename" : "rename"<cr> autocmd BufWrite * call DeleteTrailingWS()
 
     " Maps <option-l> to <Esc>
     inoremap ¬ <Esc>
 
-    " If <Esc> is used in a mapping here, then the command is executed (an old vi-compatability 'feature')
+    " If <Esc> is used in a mapping here, then the command is executed (an old
+    " vi-compatability 'feature')
     cnoremap ¬ <c-c>
     noremap! ® <c-r>
     noremap ® <c-r>
-    " Maps <option-w> to <ctrl-w> (Remove this once Caps-lock is remapped to ctrl)
+    " Maps <option-w> to <ctrl-w> (Remove this once Caps-lock is remapped to
+    " ctrl)
     noremap ∑ <C-w>
-    " Maps <option-f/b> to <ctrl-f/b> (Remove this once Caps-lock is remapped to ctrl)
+    " Maps <option-f/b> to <ctrl-f/b> (Remove this once Caps-lock is remapped
+    " to ctrl)
     " (Page up-down)
     noremap ƒ <C-f>
     noremap ∫ <C-b>
@@ -860,7 +880,7 @@
     noremap <LocalLeader>; mqA;<Esc>`q
 
     " Go to the link under the cursor (browser-dependant)
-    " noremap gl ml"lyiW:!chromium-browser <c-r>l<CR>`l
+    " noremap gl ml"lyiW:!chromium-browser <c-r>l<cr>`l
 
     " This could also be removed once ctrl is made more accesible. However, it
     " *does* match nicely with the already in place tab...
@@ -883,27 +903,28 @@
 
 " => Vimgrep searching and cope displaying
     " When you press gv you vimgrep after the selected text
-    vnoremap <silent> gv :call VisualSelection('gv')<CR>
+    vnoremap <silent> gv :call VisualSelection('gv')<cr>
 
 
-    " When you press <LocalLeader>r you can search and replace the selected text
-    vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<CR>
+    " When you press <LocalLeader>r you can search and replace the selected
+    " text
+    vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
 
     " Do :help cope if you are unsure what cope is. It's super useful!
     "
     " When you search with vimgrep, display your results in cope by doing:
-    "   <LocalLeader>cc
+    " <LocalLeader>cc
     "
     " To go to the next search result do:
-    "   <LocalLeader>n
+    " <LocalLeader>n
     "
     " To go to the previous search results do:
-    "   <LocalLeader>p
+    " <LocalLeader>p
     "
     nnoremap <Leader>cc :rightbelow cope<cr>
     " Navigate through quickfix windows
-    "nnoremap <Leader>cn :cnewer<CR>
-    "nnoremap <Leader>cp :colder<CR>
+    "nnoremap <Leader>cn :cnewer<cr>
+    "nnoremap <Leader>cp :colder<cr>
     "noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
     "noremap <Leader>n :cn<cr>
     "noremap <Leader>p :cp<cr>
@@ -930,23 +951,26 @@
     " Quickly open a buffer for scribble
     noremap <LocalLeader>qb :e ~/buffer<cr>
     " Quickly (attempt to) quit vim
-    noremap <LocalLeader>qq :qall<CR>
-    " Save the current vim session and quit (warn if there are unsaved changes).
-    noremap <LocalLeader>qs :mksession!<CR>:qall<CR>
+    noremap <LocalLeader>qq :qall<cr>
+    " Save the current vim session and quit (warn if there are unsaved
+    " changes).
+    noremap <LocalLeader>qs :mksession!<cr>:qall<cr>
 
     " Start a web server in the current directory.
-    noremap <LocalLeader>aw :call jobstart('python -m SimpleHTTPServer')<CR>
+    noremap <LocalLeader>aw :call jobstart('python -m http.server')<cr>
 
     " Toggle paste mode on and off
     noremap <LocalLeader>Wp :setlocal paste!<cr>
 
     " Get day of week of date expression
-    noremap <LocalLeader>yd "dyiW:call GetDayOfWeek("<C-R>d")<CR>
+    noremap <LocalLeader>yd "dyiW:call GetDayOfWeek("<C-R>d")<cr>
 
-    " This fantastic vim-sed will take a title and capitalize all words that are
+    " This fantastic vim-sed will take a title and capitalize all words that
+    " are
     " at least 3 characters long!
     " 'Add Title'-case to the current line
-    noremap <silent> <LocalLeader>at guu:call setline(line('.'),substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<CR>
+    noremap <silent> <LocalLeader>at guu:call setline(line('.'),
+          \ substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<cr>
 
     " Underline the current line (with dashes "u", or equals "U").
     noremap <LocalLeader>au yypVr-
@@ -954,7 +978,7 @@
 
     " The following may not be that useful...
     " 'add date' at the cursor.
-    noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+    noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
     " 'ad name' after the cursor
     noremap <LocalLeader>an aJesse Frohlich<Esc>
 
@@ -1005,7 +1029,7 @@
     " Returns true if paste mode is enabled
     function! HasPaste()
         if &paste
-            return 'PASTE MODE  '
+            return 'PASTE MODE '
         en
         return ''
     endfunction
