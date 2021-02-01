@@ -3,7 +3,7 @@
   " Version: 1.0 (2020-01-21)
   " To Do:
     " TODO: Remove unused content (or incorporate into your workflow)
-    " TODO: Go through sections and organize them logically.
+    " TODO: FIX THE SECTION ORGANIZATION! IT'S BRUTAL! XD
     " TODO: Update the fold-method to be filetype specific (or manual)
     " TODO: Improve syntax highlighting of comments.
 
@@ -68,9 +68,8 @@
       " Extra Colorschemes:
         "Plug 'flazz/vim-colorschemes'
       " Filesystem Navigation: NERDtree
-        " TODO: investigate how to break long lines in vimscript.
-        Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin',
-              \ { 'on': 'NERDTreeToggle' }
+        " Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin',
+              " \ { 'on': 'NERDTreeToggle' }
       " Git: Fugitive
         Plug 'tpope/vim-fugitive'
       " Intelligent Dates: in/de-crementation' with <C-A>/<C-X>
@@ -136,10 +135,18 @@
 
         let g:vimtex_quickfix_mode = 0
 
+        nnoremap <LocalLeader>v <plug>(vimtex-view)
+
         nnoremap <c-S> <plug>(vimtex-delim-toggle-modifier)
         nnoremap <c-s-S> <plug>(vimtex-delim-toggle-modifier-reverse)
         let g:vimtex_compiler_latexmk = {
-            \ 'backend' : 'nvim'
+            \ 'backend' : 'nvim',
+            \ 'options' : [
+            \   '-pdflatex',
+            \   '-file-line-error',
+            \   '-synctex=1',
+            \   '-interaction=nonstopmode',
+            \  ],
             \}
       " Markdown: vim-markdown
         let g:markdown_enable_conceal = 1
@@ -241,12 +248,12 @@
         silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
         silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
       " NERDtree
-        autocmd StdinReadPre * let s:std_in=1
-        autocmd VimEnter * if argc() == 0
-              \ && !exists("s:std_in")
-              \ | NERDTree
-              \ | endif
-        nnoremap <localleader>n :NERDTreeToggle<cr>
+        " autocmd StdinReadPre * let s:std_in=1
+        " autocmd VimEnter * if argc() == 0
+              " \ && !exists("s:std_in")
+              " \ | NERDTree
+              " \ | endif
+        " nnoremap <localleader>n :NERDTreeToggle<cr>
       " ultisnips
         "set runtimepath+=~/.config/nvim/my-snippets/
         "let g:UltiSnipsExpandTrigger="<C-s>"
@@ -415,6 +422,8 @@
     au BufRead,BufNewFile *.asy setfiletype asy
     " Mathematica (default is matlab)
     au BufRead,BufNewFile *.m setfiletype mma
+    " Sagemath
+    au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
     " No plaintex, please.
     au BufRead,BufNewFile *.tex setfiletype tex
   augroup end
@@ -428,13 +437,13 @@
 
     " FIXME
     " Automatically enter insert mode when entering terminal buffers
-    " autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
-    " autocmd BufEnter term:// startinsrt
+    autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
+    autocmd BufEnter term:// startinsrt
   augroup END
 
   " Open a terminal at the bottom
   noremap <localleader>tl :belowright 5split +term<cr>
-  noremap <localleader>tn :vs +term<cr>
+  noremap <localleader>tn :vs +term<cr>i
   noremap <localleader>tt :tabedit +term<cr>
 
   " Make <c-r> act like normal.
@@ -839,6 +848,10 @@
   " When you press gv you vimgrep after the selected text
   vnoremap <silent> gv :call VisualSelection('gv')<cr>
 
+  " Alternatively, see the following link for a (non-default) alternative:
+  " https://github.com/markonm/traces.vim
+  set inccommand=split
+
   " When you press <LocalLeader>r you can search and replace the selected
   " text
   vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
@@ -876,6 +889,8 @@
   noremap <Leader>sa zg
   noremap <Leader>s? z=
 " Misc
+  " Redraw the screen
+  noremap <LocalLeader>r :mode<cr>
   " Quickly (attempt to) quit vim
   noremap <LocalLeader>qq :qall<cr>
   " Save the current vim session and quit (warn if there are unsaved
