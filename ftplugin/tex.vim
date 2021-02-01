@@ -1,15 +1,19 @@
-setlocal makeprg=latexmk\ -pdflatex=lualatex\ -silent\ -pdf\ %
+" setlocal makeprg=latexmk\ -pdflatex=lualatex\ -silent\ -pdf\ %
+" setlocal makeprg=latexmk\ -pdflatex=lualatex\ -pdf\ %
+setlocal makeprg=latexmk\ -pdflatex=pdflatex\ -pdf\ %
 setlocal errorformat=%f:\ %l.%c:\ %m
 setlocal fdm=syntax
 "setlocal textwidth=0 " For long paragraphs.
 nnoremap <buffer> <LocalLeader>w :make <cr>:!mupdf -C FF9800 %<.pdf&<CR>
-"nnoremap <LocalLeader>v :!mupdf -C FF9800 %<.pdf&<cr><cr>
-nnoremap <LocalLeader>v <plug>(vimtex-view)
+nnoremap <LocalLeader>v :!see  %<.pdf&<cr><cr>
+" nnoremap <LocalLeader>v <plug>(vimtex-view)
 " This is for math
 " Open the math cls file for editing
-nnoremap <LocalLeader>em :vs ~/texmf/tex/latex/math.cls<cr>
+nnoremap <LocalLeader>em :vs ~/texmf/tex/latex/math/math.sty<cr>
+" Open a downloaded reference file
+nnoremap <LocalLeader>er :! see ~/texmf/tex/latex/ref//&<Left><BS>
 " Open the snippets files *and* the math cls file for editing
-nnoremap <LocalLeader>es :vs ~/.config/nvim/plugged/vim-snippets/UltiSnips/tex.snippets<cr>:sp ~/.config/nvim/plugged/vim-snippets/UltiSnips/texmath.snippets<cr>:sp ~/.config/nvim/UltiSnips/tex.snippets<cr>:sp ~/texmf/tex/latex/math.cls<cr><c-w>_
+nnoremap <LocalLeader>es :vs ~/.config/nvim/plugged/vim-snippets/UltiSnips/tex.snippets<cr>:sp ~/.config/nvim/plugged/vim-snippets/UltiSnips/texmath.snippets<cr>:sp ~/.config/nvim/UltiSnips/tex.snippets<cr>:sp ~/texmf/tex/latex/math/math.sty<cr><c-w>_
 "nnoremap <buffer> <LocalLeader>M :call ForceMake()<cr>
 "unmap <LocalLeader>m
 
