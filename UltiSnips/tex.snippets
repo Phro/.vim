@@ -11,38 +11,42 @@ endsnippet
 ## Environments
 snippet eg "Example"
 \begin{example}
-	$0
+  $0
 \end{example}
 endsnippet
 
 snippet q "Question"
-\begin{question}
-	$0
-\end{question}
+\question 
 endsnippet
+# snippet q "Question"
+# \begin{question}
+  # $0
+# \end{question}
+# endsnippet
 
 snippet an "Answer"
 \begin{answer}
-	$0
+  $0
 \end{answer}
 endsnippet
 
 snippet resp "Response"
 \begin{response}
-	$0
+  $0
 \end{response}
 endsnippet
 
 snippet fact "Fact"
 \begin{fact}
-	$0
+  $0
 \end{fact}
 endsnippet
 
 snippet doc "Document Class"
-\\documentclass${2:[${3:options}]}{${1:math}}
-\\title{$4}
-\\author{${5:Jesse Frohlich}}
+\\documentclass${2:[${3:options}]}{${1:article}}
+${4:\usepackage{math}}
+\\title{$5}
+\\author{${6:Jesse Frohlich}}
 
 \\begin{document}
 \maketitle
@@ -56,43 +60,43 @@ endsnippet
 
 snippet prop "Proposition"
 \begin{proposition}
-	$0
+  $0
 \end{proposition}
 endsnippet
 
 snippet cor "Corollary"
 \begin{corollary}
-	$0
+  $0
 \end{corollary}
 endsnippet
 
 snippet thm "Theorem"
 \begin{theorem}
-	$0
+  $0
 \end{theorem}
 endsnippet
 
 snippet conj "Conjecture"
 \begin{conjecture}
-	$0
+  $0
 \end{conjecture}
 endsnippet
 
 snippet lem "Lemma"
 \begin{lemma}
-	$0
+  $0
 \end{lemma}
 endsnippet
 
 snippet rem "Remark"
 \begin{remark}
-	$0
+  $0
 \end{remark}
 endsnippet
 
 snippet def "Definition"
 \begin{definition}
-	$0
+  $0
 \end{definition}
 endsnippet
 
@@ -102,25 +106,25 @@ endsnippet
 
 snippet "p(roo)?f" "Proof" r
 \begin{proof}
-	$0
+  $0
 \end{proof}
 endsnippet
 
 snippet prob "Problem"
 \begin{problem}${1:[${2:description}]}
-	$0
+  $0
 \end{problem}
 endsnippet
 
 snippet prob* "Unnumbered Problem"
 \begin{problem*}${1:[${2:description}]}
-	$0
+  $0
 \end{problem*}
 endsnippet
 
 snippet sol "Solution"
 \begin{solution}[\solspace]
-	$0
+  $0
 \end{solution}
 endsnippet
 
@@ -226,6 +230,9 @@ endsnippet
 snippet ,t "τ" Ai
 τ
 endsnippet
+snippet ,H "Θ" Ai
+Θ
+endsnippet
 snippet ,h "θ" Ai
 θ
 endsnippet
@@ -283,7 +290,7 @@ endsnippet
 snippet ,c "χ" Ai
 χ
 endsnippet
-	
+  
 
 snippet "\\?smap" "Function notation (self map)" wr
 \selfmap {$1} {$2} ${3:[${4:\to}] }
@@ -313,7 +320,7 @@ snippet /\\?nuc/ "\newunicodechar" r
 endsnippet
 
 # Automatically expand quotes to the proper command.
-snippet /""/ "enquote" rA
+snippet /c'/ "enquote" rA
 \\enquote{$1}
 endsnippet
 
@@ -331,6 +338,10 @@ endsnippet
 
 snippet /\\?ld/ "Lie Derivative" wr
 \\liederiv{$1}
+endsnippet
+
+snippet /\\?pol/ "Polynomial Ring" wr
+\\polyring{${1:ring}}{${2:variables}}
 endsnippet
 
 snippet /\\?ps/ "Power Series" wr
@@ -376,15 +387,71 @@ endsnippet
 
 snippet fb "Feedback Page"
 \feedbackpage{${1:Name}}{ % Remove braces for a checkmark
-	\objective{Verbal     }${2:\{$3\}}
-	\objective{Persistence}{}
-	\objective{Strategies }{}
+  \objective{Verbal     }${2:\{$3\}}
+  \objective{Persistence}{}
+  \objective{Strategies }{}
 }
 {\begin{itemize}
   \item $4
 \end{itemize}} % Remove braces to hide
 $0
 endsnippet
+
+snippet P "P-co-matrix" w
+\P{$1}{$2}
+endsnippet
+
+snippet R "R-matrix" w
+\R{$1}{$2}
+endsnippet
+
+snippet bm "b-multiplication" w
+\bm{$1}{$2}{$3}
+endsnippet
+  
+snippet am "a-multiplication" w
+\am{$1}{$2}{$3}
+endsnippet
+
+snippet Error "error term" w
+\Error{$1}{$2}{$3}{$4}
+endsnippet
+
+snippet E "error term" w
+\E{$1}{$2}{$3}{$4}
+endsnippet
+  
+snippet fr "slide frame"
+\begin{frame}
+  \frametitle{$1}
+	$0
+\end{frame}
+
+%------------------------------------------------
+endsnippet
+
+# Exam environment
+
+snippet part "Parts evironment"
+\begin{parts}
+  \part $1
+\end{parts}
+endsnippet
+
+snippet pa "Part item"
+\part 
+endsnippet
+
+snippet cho "Choices evironment"
+\begin{choices}
+  \choice $1
+\end{choices}
+endsnippet
+
+snippet ch "Choice item"
+\choice 
+endsnippet
+
 	
 
 # What about automatic quote surrounding? One day.
