@@ -1,0 +1,49 @@
+# Todo: change ${2:type} to a list of possibilities I choose from (see
+# screencast 3 or 4).
+
+global !p
+def complete(t, opts):
+	if t:
+		# Find a way to automatically recapitalize the options (esp. for TA work)
+		opts = [ m[len(t):] for m in opts if m.startswith(t) ]
+	if len(opts) == 1:
+		return opts[0]
+	return "(" + '|'.join(opts) + ')'
+
+activities= ['research'
+						,'TA work'
+						,'lecture'
+						,'coursework'
+						,'seminar'
+						,'outreach'
+						,'talk'
+						,'meeting'
+						,'misc'
+						]
+endglobal
+
+pre_expand "snip.buffer[snip.line] = ''; snip.cursor.set(snip.line, 0)"
+snippet en "Math log entry"
+- date   : ${1:`date +%Y-%m-%d`}
+  outline:
+    - - $2`!p snip.rv=complete(t[2], activities)`
+      - ${3:time (h)}
+      - >
+        ${4:outline}
+
+endsnippet
+
+# Replace the current line with four spaces to fix indentation.
+pre_expand "snip.buffer[snip.line] = ' '*4; snip.cursor.set(snip.line, 4)"
+snippet it "Entry item"
+- - $2`!p snip.rv=complete(t[2], activities)`
+	- ${3:time (h)}
+	- >
+		${4:outline}
+endsnippet
+
+pre_expand "snip.buffer[snip.line] = ''; snip.cursor.set(snip.line, 0)"
+snippet gr "Group of students"
+- - $1
+  - $2
+endsnippet
