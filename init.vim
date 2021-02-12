@@ -86,7 +86,7 @@
         Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
       " Status Line:
         " TODO: customize to the information I care about.
-        " Plug 'bling/vim-airline'
+        Plug 'bling/vim-airline'
       " Surround Objects: with quotes, parentheses, etc.
         Plug 'tpope/vim-surround'
       " Undo Last Closed Window:
@@ -202,7 +202,7 @@
         nmap ga <Plug>(UnicodeGA)
       " gitgutter
         set updatetime=100
-      " NERDcommenter
+      " NERDcommenter:
 
         " Add a space after the opening delimiter of a comment.
         let g:NERDSpaceDelims=1
@@ -254,7 +254,9 @@
               " \ | NERDTree
               " \ | endif
         " nnoremap <localleader>n :NERDTreeToggle<cr>
-      " ultisnips
+      " Vim Airline:
+        let g:airline_powerline_fonts = 1
+      " ultisnips:
         "set runtimepath+=~/.config/nvim/my-snippets/
         "let g:UltiSnipsExpandTrigger="<C-s>"
         let g:UltiSnipsExpandTrigger="<Tab>"
