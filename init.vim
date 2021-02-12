@@ -49,9 +49,10 @@
         Plug '907th/vim-auto-save'
       " Colorschemes:
         " TODO: Choose / build theme
+        Plug 'altercation/vim-colors-solarized'
       " Color Table Viewer:
         "Plug 'guns/xterm-color-table.vim'
-        Plug 'lifepillar/vim-solarized8'
+        " Plug 'lifepillar/vim-solarized8'
         " Plug 'rakr/vim-one'
         " Plug 'cocopon/iceberg.vim'
         " Plug 'vim-scripts/clarity.vim'
@@ -86,7 +87,8 @@
         Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
       " Status Line:
         " TODO: customize to the information I care about.
-        Plug 'bling/vim-airline'
+        Plug 'vim-airline/vim-airline'
+        Plug 'vim-airline/vim-airline-themes'
       " Surround Objects: with quotes, parentheses, etc.
         Plug 'tpope/vim-surround'
       " Undo Last Closed Window:
@@ -123,7 +125,7 @@
         " Set viewer to mupdf
         let g:vimtex_view_method = 'mupdf'
         " Make the colour of mupdf easier on the eyes.
-        let g:vimtex_view_mupdf_options = '-C DF4700'
+        let g:vimtex_view_mupdf_options = '-C DF8700'
 
         " For scrolling between various parenthesis sizes
         let g:vimtex_delim_toggle_mod_list = [
@@ -256,6 +258,7 @@
         " nnoremap <localleader>n :NERDTreeToggle<cr>
       " Vim Airline:
         let g:airline_powerline_fonts = 1
+        let g:airline_theme='solarized'
       " ultisnips:
         "set runtimepath+=~/.config/nvim/my-snippets/
         "let g:UltiSnipsExpandTrigger="<C-s>"
@@ -363,16 +366,9 @@
   " Decrease the length of many prompts:
   set shortmess=atI
 " Colors and Fonts
-  set termguicolors
-  let g:solarized_term_italics = 1
-
-  " If you want a transparent editor
-  let g:solarized_termtrans=0
-
   set background=dark
-  colorscheme solarized8
-  "colorscheme solarized8_light
-
+  " let g:solarized_underline=0
+  colorscheme solarized
 
   " Set the colorscheme based on the time of day. Between 06:00 and 18:00
   " it is light, otherwise, it's dark. However, this is super annoying.
