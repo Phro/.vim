@@ -1,9 +1,9 @@
 " Summary:
   " Maintainer: Jesse Frohlich
-  " Version: 1.0 (2020-01-21)
+  " Version: 1.1 (2021-02-24)
   " To Do:
     " TODO: Remove unused content (or incorporate into your workflow)
-    " TODO: FIX THE SECTION ORGANIZATION! IT'S BRUTAL! XD
+    " TODO: FIX THE SECTION ORGANIZATION! IT'S becoming less BRUTAL! XD
     " TODO: Update the fold-method to be filetype specific (or manual)
     " TODO: Improve syntax highlighting of comments.
 
@@ -32,7 +32,7 @@
         " syntax-highlighting.
         Plug 'stephpy/vim-yaml'
     " Editor Specific:
-      " Auto Closing: quotes, parentheses, etc. 
+      " Auto Closing: quotes, parentheses, etc.
         " This *will* get annoying in TeX with csquotes and the "" mapping.
         Plug 'jiangmiao/auto-pairs'
       " Autocompletion:
@@ -47,32 +47,26 @@
         Plug 'zchee/deoplete-jedi', {'for':'python'} 
       " Autosave:
         Plug '907th/vim-auto-save'
-      " Colorschemes:
-        " TODO: Choose / build theme
-        Plug 'altercation/vim-colors-solarized'
-      " Color Table Viewer:
-        "Plug 'guns/xterm-color-table.vim'
-        " Plug 'lifepillar/vim-solarized8'
-        " Plug 'rakr/vim-one'
-        " Plug 'cocopon/iceberg.vim'
-        " Plug 'vim-scripts/clarity.vim'
+      " Colorscheme:
+        " The altercation repository has an ugly sign column; this plays nicer
+        " with gitgutter.
+        Plug 'jwhitley/vim-colors-solarized'
       " Comment Handling Keymaps:
         Plug 'phro/nerdcommenter'
-      " Display Unstaged git Changes: git-gutter
-        Plug 'airblade/vim-gitgutter'
       " Entering Unicode:
         Plug 'chrisbra/unicode.vim'
       " Emoji Support:
         Plug 'junegunn/vim-emoji'
       " Expand 'ga':
         Plug 'tpope/vim-characterize'
-      " Extra Colorschemes:
-        "Plug 'flazz/vim-colorschemes'
       " Filesystem Navigation: NERDtree
         " Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin',
               " \ { 'on': 'NERDTreeToggle' }
-      " Git: Fugitive
-        Plug 'tpope/vim-fugitive'
+      " Git:
+        " Fugitive:
+          Plug 'tpope/vim-fugitive'
+        " git-gutter: (Display unstaged changes)
+          Plug 'airblade/vim-gitgutter'
       " Intelligent Dates: in/de-crementation' with <C-A>/<C-X>
         Plug 'tpope/vim-speeddating'
       " Intelligent Repeating: for 'speeddating' and 'surround'
@@ -204,6 +198,7 @@
         nmap ga <Plug>(UnicodeGA)
       " gitgutter
         set updatetime=100
+        " let g:gitgutter_set_sign_backgrounds=1
       " NERDcommenter:
 
         " Add a space after the opening delimiter of a comment.
@@ -270,7 +265,7 @@
         set completefunc=emoji#complete
 
         " Substitute Emoji
-        nnoremap <LocalLeader>se 
+        nnoremap <LocalLeader>se
               \:%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<cr>
 " General:
   "let $EDITOR = '~/bin/e'
@@ -367,35 +362,16 @@
   set shortmess=atI
 " Colors and Fonts
   set background=dark
-  " let g:solarized_underline=0
+  let g:solarized_underline=0
   colorscheme solarized
 
-  " Set the colorscheme based on the time of day. Between 06:00 and 18:00
-  " it is light, otherwise, it's dark. However, this is super annoying.
-  "let time = strftime("%H")
-  "if 5 < time && time < 19;
-    "exe "colorscheme" substitute(g:colors_name, 'dark', 'light', '')
-  "else
-    "exe "colorscheme" substitute(g:colors_name, 'light', 'dark', '')
-  "endif
-
   nnoremap <Leader>as :call ChangeBackground()<cr>
-  "nnoremap <Leader>as :<c-u>exe "colors" (g:colors_name =~# "dark"
-  "\ ? substitute(g:colors_name, 'dark', 'light', '')
-  "\ : substitute(g:colors_name, 'light', 'dark', '')
-  "\ )<cr>
-
-
-  noremap <localleader>- :call Solarized8Contrast(-v:count1)<cr>
-  noremap <localleader>_ :call Solarized8Contrast(+v:count1)<cr>
-
-  function! Solarized8Contrast(delta)
-    let l:schemes =\map(
-          \ ["_low", "_flat", "", "_high"],
-          \ '"solarized8_".(&background).v:val')
-    exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4
-          \ + 4) % 4]
-    echom g:colors_name
+  function! ChangeBackground()
+    if &background == "dark"
+      set background=light
+    else
+      set background=dark
+    endif
   endfunction
 
   " Expand spell-checking to multiple languages (Be careful with this...)
@@ -404,11 +380,7 @@
 
   " Use Unix as the standard file type
   set ffs=unix,dos,mac
-
-  " Resolve an issue with autocompletion YCM
-  "let g:clang_user_options='|| exit 0'
-
-  " Filetypes, backups and undo
+" Filetypes, backups and undo
   " Turn backup off, since most stuff is in SVN, git et.c anyway...
   set nobackup
   set nowb
@@ -427,7 +399,7 @@
   augroup end
 
   " .tex files now are interpreted as not plaintex.
-  let g:tex_flavor='tex'
+  let g:tex_flavor='latex'
 
   augroup terminal
     " No spellcheck in terminals
@@ -458,6 +430,7 @@
   " Use spaces instead of tabs
   set expandtab
 
+  " TODO: add this command to a keymap or action hook.
   command! -nargs=1 -range SuperRetab
     \ <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
   " Be smart when using tabs ;)
@@ -475,7 +448,7 @@
   set wrap " Wrap lines
   set tw=0 " Set this to a non-null number for *non*-TeX files
   set breakindent
-  set showbreak=>\ 
+  set showbreak=>\
 
   set ai " Auto indent
   set si " Smart indent
@@ -529,9 +502,6 @@
   noremap <C-h> <C-W>h
   noremap <C-l> <C-W>l
 
-  " As cute as this is, don't use it.
-  "inoremap <C-h> <c-o><C-W>h
-  "inoremap <C-l> <c-o><C-W>l
   tnoremap <C-h> <c-\><c-n><C-W>h
   tnoremap <C-l> <c-\><c-n><C-W>l
   tnoremap <C-j> <c-\><c-n><C-W>j
@@ -562,10 +532,6 @@
   " should be introduced to change the case rules for this search to be
   " case-sensitive, since the majority of programming languages have
   " case-sensitive variable definitions.
-
-  " Scroll through files quicker with option-j & option-k
-  nnoremap ∆ 4<c-e>
-  nnoremap ˚ 4<c-y>
 
   " Close the current buffer
   noremap <LocalLeader>bd :Bclose<cr>
@@ -707,8 +673,8 @@
   set laststatus=2
   set showcmd
 " Editing mappings
-  inoremap ,, ̌
-  inoremap ,. ̆
+  " inoremap ,,
+  " inoremap ,.
   " Remap VIM 0 to first non-blank character. Do I really want this now that
   " it's really easy to reach the "^" key? I really need to deactivate the
   " numlock feature on this keyboard... :P
@@ -925,13 +891,6 @@
 " Helper functions
   function! GetDayOfWeek(str)
     exe "!date +\\\%A -d" . a:str
-  endfunction
-  function! ChangeBackground()
-    if &background == "dark"
-      set background=light
-    else
-      set background=dark
-    endif
   endfunction
   function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
