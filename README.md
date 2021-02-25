@@ -17,3 +17,11 @@ $ git clone --recurse-submodules git@github.com:phro/.vim
   - Color any phrase which precedes a colon
   - Specify what summary text should appear in a closed fold
 - Reorganize sections to be more intuitive
+- Fix bug: when a terminal is opened, insert mode is not begun
+- Fix bug: when deleting whitespace after the beginning of a comment, the
+  following newline is also deleted
+- Fix bug: in vimtex, when starting auto-background compiling, the pdf document
+  is opened twice for viewing (yet only once thereafter)
+- The highlight color of parentheses contrasts poorly with the red foreground
+- Many TeX snippets appear to be missing from before (perhaps they were not
+  added to the repository?)
