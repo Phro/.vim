@@ -2,11 +2,7 @@
   " Maintainer: Jesse Frohlich
   " Version: 1.1 (2021-02-24)
   " To Do:
-    " TODO: Remove unused content (or incorporate into your workflow)
-    " TODO: FIX THE SECTION ORGANIZATION! IT'S becoming less BRUTAL! XD
-    " TODO: Update the fold-method to be filetype specific (or manual)
-    " TODO: Improve syntax highlighting of comments.
-
+    " See README.md for list
 " Vim Plug:
   " Boilerplate:
     set nocompatible
@@ -14,23 +10,6 @@
     let g:plug_threads=2
     call plug#begin('~/.config/nvim/plugged')
   " Plugins:
-    " Language Specific:
-      " Haskell:
-        " Display symbols prettily
-        Plug 'Twinside/vim-haskellConceal'
-        " Expansion, highlighting, and indentation
-        Plug 'neovimhaskell/haskell-vim'
-      " LaTeX Support: Vimtex
-        Plug 'lervag/vimtex', {'for': 'tex'}
-              \ | Plug 'KeitaNakamura/tex-conceal.vim'
-      " Markdown Syntax:
-        " TODO: This is still not adequate,
-        Plug 'gabrielelana/vim-markdown'
-      " YAML Syntax Highlighting:
-        " TODO: find / create one which handles muliline strings with colons.
-        " This is also an indentation issue, which has less to do with
-        " syntax-highlighting.
-        Plug 'stephpy/vim-yaml'
     " Editor Specific:
       " Auto Closing: quotes, parentheses, etc.
         " This *will* get annoying in TeX with csquotes and the "" mapping.
@@ -43,8 +22,7 @@
           Plug 'roxma/nvim-yarp'
           Plug 'roxma/vim-hug-neovim-rpc'
         endif
-
-        Plug 'zchee/deoplete-jedi', {'for':'python'} 
+        Plug 'zchee/deoplete-jedi', {'for':'python'}
       " Autosave:
         Plug '907th/vim-auto-save'
       " Colorscheme:
@@ -56,7 +34,7 @@
       " Entering Unicode:
         Plug 'chrisbra/unicode.vim'
       " Emoji Support:
-        Plug 'junegunn/vim-emoji'
+        Plug 'fszymanski/deoplete-emoji'
       " Expand 'ga':
         Plug 'tpope/vim-characterize'
       " Filesystem Navigation: NERDtree
@@ -89,6 +67,23 @@
         " TODO: do you actually use this? No.
         " TODO: does this actually work?
         Plug 'AndrewRadev/undoquit.vim'
+    " Language Specific:
+      " Haskell:
+        " Display symbols prettily
+        Plug 'Twinside/vim-haskellConceal'
+        " Expansion, highlighting, and indentation
+        Plug 'neovimhaskell/haskell-vim'
+      " LaTeX Support: Vimtex
+        Plug 'lervag/vimtex', {'for': 'tex'}
+              \ | Plug 'KeitaNakamura/tex-conceal.vim'
+      " Markdown Syntax:
+        " TODO: This is still not adequate,
+        Plug 'gabrielelana/vim-markdown'
+      " YAML Syntax Highlighting:
+        " TODO: find / create one which handles muliline strings with colons.
+        " This is also an indentation issue, which has less to do with
+        " syntax-highlighting.
+        Plug 'stephpy/vim-yaml'
     " Vim Plug Examples:
 
       " On-demand loading
@@ -114,6 +109,95 @@
       " filetype plugin indent on
       " syntax enable}}}
   " Plugin Settings:
+    " Editor Specific:
+      " Autosave: vim-auto-save
+        " Fast saving, somewhat nulled by the following autosave:
+          nnoremap <LocalLeader>w :w!<cr>
+          nnoremap <LocalLeader>Wt :AutoSaveToggle<cr>
+        " Autosave after leaving insert mode and making a change in normal mode
+          let g:auto_save = 1
+        let g:auto_save_silent = 1
+      " Deoplete:
+        " Enable at startup
+          let g:deoplete#enable_at_startup = 1
+        " Use smartcase.
+          call deoplete#custom#option({'smart_case': v:true})
+        " Play well with backspace
+          "" <C-h>, <BS>: close popup and delete backword char.
+          inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+          inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+        " <cr>: close popup and save indent.
+          inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<cr>
+          function! s:my_cr_function() abort
+            return deoplete#close_popup() . "\<cr>"
+          endfunction
+        " tab-complete instead of just <c-n>
+          inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+      " Expand 'ga'
+        nmap ga <Plug>(UnicodeGA)
+      " gitgutter
+        set updatetime=100
+      " NERDcommenter:
+        " Add a space after the opening delimiter of a comment.
+          let g:NERDSpaceDelims=1
+        " Enable trimming of trailing whitespace when uncommenting
+          let g:NERDTrimTrailingWhitespace = 1
+        " Let NERDCommenterToggle check if all selected lines are commented
+          let g:NERDToggleCheckAllLines = 1
+        " Swap the default mappings (since 'append' is used more often here)
+          map <Leader>ca <Plug>NERDCommenterAppend
+          map <Leader>cA <Plug>NERDCommenterAltDelims
+        " Non-toggling comment
+          map <LocalLeader>co <Plug>NERDCommenterComment
+        " Recursive comment
+          map <LocalLeader>cr <Plug>NERDCommenterNested
+        " Repeat commands
+          silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterAltDelims", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterToEOL", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
+          silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
+      " NERDtree:
+        " autocmd StdinReadPre * let s:std_in=1
+        " autocmd VimEnter * if argc() == 0
+              " \ && !exists("s:std_in")
+              " \ | NERDTree
+              " \ | endif
+        " nnoremap <localleader>n :NERDTreeToggle<cr>
+      " Vim Airline:
+        let g:airline_powerline_fonts = 1
+        let g:airline_theme='solarized'
+      " Ultisnips:
+        "set runtimepath+=~/.config/nvim/my-snippets/
+        "let g:UltiSnipsExpandTrigger="<C-s>"
+        let g:UltiSnipsExpandTrigger="<Tab>"
+        let g:UltiSnipsJumpForwardTrigger="<Tab>"
+        let g:UltiSnipsJumpBackwardTrigger="<C-x>"
+        let g:UltiSnipsEditSplit="context"
+      " Emoji
+        " Automatically convert emoji-codes to their unicode representation
+          call deoplete#custom#source('emoji', 'converters', ['converter_emoji'])
+        " Allow emoji in all filetypes
+          " Note: consider removing TeX from this list.
+          call deoplete#custom#source('emoji', 'filetypes', [])
     " Language Specific:
       " Vimtex:
         " Set viewer to mupdf
@@ -148,428 +232,238 @@
         let g:markdown_enable_conceal = 1
         let g:markdown_enable_mappings = 0
         let g:markdown_include_jekyll_support = 0
-    " Editor Specific:
-      " Autosave: vim-auto-save
-        " Fast saving, somewhat nulled by the following autosave:
-        nnoremap <LocalLeader>w :w!<cr>
-        nnoremap <LocalLeader>Wt :AutoSaveToggle<cr>
-
-        " Autosave after leaving insert mode and making a change in normal mode
-        let g:auto_save = 1
-        "let g:auto_save_presave_hook = 'call AbortIfMountPoint()'
-        " let g:auto_save_events = ["InsertLeave", "TextChanged"]
-        let g:auto_save_silent = 1
-
-        function! AbortIfMountPoint()
-          silent execute "! mountpoint ."
-          if v:shell_error =~ 0
-            let g:auto_save_abort = 1
-          else
-            let g:auto_save_abort = 0
-          endif
-        endfunction
-        "augroup AutoSave
-          "au!
-          "autocmd InsertLeave * silent! update
-          "autocmd TextChanged * silent! update
-        "augroup END
-
-        "nnoremap <LoralLeader>aw augroup
-      " Deoplete:
-        " Enable at startup
-        let g:deoplete#enable_at_startup = 1
-
-        " Use smartcase.
-        call deoplete#custom#option({'smart_case': v:true})
-
-        "" <C-h>, <BS>: close popup and delete backword char.
-        inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
-
-        " <cr>: close popup and save indent.
-        inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<cr>
-        function! s:my_cr_function() abort
-          return deoplete#close_popup() . "\<cr>"
-        endfunction
-
-        "" deoplete tab-complete
-        " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-      " Expand 'ga'
-        nmap ga <Plug>(UnicodeGA)
-      " gitgutter
-        set updatetime=100
-        " let g:gitgutter_set_sign_backgrounds=1
-      " NERDcommenter:
-
-        " Add a space after the opening delimiter of a comment.
-        let g:NERDSpaceDelims=1
-
-        " Enable trimming of trailing whitespace when uncommenting
-        let g:NERDTrimTrailingWhitespace = 1
-
-        " Enable NERDCommenterToggle to check all selected lines is commented
-        " or not
-        let g:NERDToggleCheckAllLines = 1
-
-        " Swap the default mappings (since 'append' is used more often here)
-        map <Leader>ca <Plug>NERDCommenterAppend
-        map <Leader>cA <Plug>NERDCommenterAltDelims
-        " Non-toggling comment
-        map <LocalLeader>co <Plug>NERDCommenterComment
-        " Recursive comment
-        map <LocalLeader>cr <Plug>NERDCommenterNested
-        " More convenient comment toggle
-        " noremap gc <Plug>NERDCommenterToggle
-
-        silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterAppend", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterUncomment", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterAlignBoth", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterAlignLeft", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterAltDelims", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterYank", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterSexy", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterInvert", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterToEOL", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterNested", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterMinimal", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterToggle", v:count)
-        silent! call repeat#set("\<Plug>NERDCommenterComment", v:count)
-      " NERDtree
-        " autocmd StdinReadPre * let s:std_in=1
-        " autocmd VimEnter * if argc() == 0
-              " \ && !exists("s:std_in")
-              " \ | NERDTree
-              " \ | endif
-        " nnoremap <localleader>n :NERDTreeToggle<cr>
-      " Vim Airline:
-        let g:airline_powerline_fonts = 1
-        let g:airline_theme='solarized'
-      " ultisnips:
-        "set runtimepath+=~/.config/nvim/my-snippets/
-        "let g:UltiSnipsExpandTrigger="<C-s>"
-        let g:UltiSnipsExpandTrigger="<Tab>"
-        let g:UltiSnipsJumpForwardTrigger="<Tab>"
-        let g:UltiSnipsJumpBackwardTrigger="<C-x>"
-        let g:UltiSnipsEditSplit="context"
-      " Vim-Emoji
-        set completefunc=emoji#complete
-
-        " Substitute Emoji
-        nnoremap <LocalLeader>se
-              \:%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<cr>
 " General:
-  "let $EDITOR = '~/bin/e'
-
   set shell=zsh
-
-  " Sets how many lines of history VIM has to remember
-  set history=700
-
   " Set to auto read when a file is changed from the outside
-  set autoread
-
+    set autoread
   " Set the window title to the current file being edited.
-  set title
-
+    set title
   " Line numbering
-  set number
-  set relativenumber
-  " Don't add extra padding if not necessary.
-  set numberwidth=3
-
-  " Set the leader to space (backslash will still work).
-  "map <Space> <Leader>
-  "nnoremap <Space> <Nop>
-  "let mapleader = "\<space>"
-  map <Space> <Leader>
-
-  " This should fix the strange delay occurring in when the escape (^[) key
-  " is pressed.
-  set ttimeout
-  set ttimeoutlen=0
-  set notimeout
-
-  set autochdir
+    set number
+    set relativenumber
+  " Set the number column width to at least two (default: 4)
+    set numberwidth=2
+  " Set the leader to space
+    " Note: Backslash (the default leader) will still work
+    map <Space> <Leader>
+  " Reduce timeout length
+    " This should fix the strange delay occurring in when the escape (^[) key
+    " is pressed.
+    set ttimeout
+    set ttimeoutlen=0
+    set notimeout
+  " Set pwd to location of file of current window
+    " The second command should be superfluous
+    set autochdir
+    " autocmd BufEnter * silent! lcd %:p:h
 " Vim User Interface:
-  " Set 4 lines to the cursor - when moving vertically using j/k
-  set so=4
-
-  " Turn on the WiLd menu
-  set wildmenu
-  "set wildmode=list:longest
-
+  " Keep 4 lines around the cursor at all times
+    set scrolloff=4
+  " Set wildmode to complete to the next common match
+    set wildmode=list:longest
   " Ignore compiled files
-  set wildignore=*.o,*~,*.pyc
-
-  "Always show current position
-  set ruler
-
-  " Height of the command bar
-  set cmdheight=1
-
+    set wildignore=*.o,*~,*.pyc
+  " Height of the command bar.
+    " If you have space, you may wish this to be larger to avoid hit-enter
+    " prompts.
+    set cmdheight=1
   " A buffer becomes hidden when it is abandoned
-  set hid
-
+    set hid
   " Configure backspace so it acts as it should act
-  set backspace=eol,start,indent
-  set whichwrap+=<,>,h,l
-
-  " Ignore case when searching
-  set ignorecase
-
+    set backspace=eol,start,indent
+  " Allow arrowkeys and h and l to move between lines when at extreme ends.
+    set whichwrap+=<,>,h,l
   " When searching try to be smart about cases
-  set smartcase
-
-  " Would it be possible to enable all searches to use the \Z flag (i.e.,
-  " make searches blind to accents and umlauts (e.g. ü, á)?
-
-  " Highlight search results
-  set hlsearch
-  nohlsearch
-
+    set ignorecase
+    set smartcase
+  " Dream: Would it be possible to enable all searches to use the \Z flag
+    " (i.e., make searches blind to accents and umlauts (e.g. ü, á)?
+  " Highlight search results only while searching
+    augroup vimrc-incsearch-highlight
+      autocmd!
+      autocmd CmdlineEnter /,\? :set hlsearch
+      autocmd CmdlineLeave /,\? :set nohlsearch
+    augroup END
+    " Toggle search highlighting if desired
+      noremap <silent> <LocalLeader><cr> :set hlsearch!<cr>
   " Makes search act like search in modern browsers
-  set incsearch
-
-  " Don't redraw while executing macros (good performance config)
-  set lazyredraw
-
-  " For regular expressions turn magic on
-  set magic
-
+    set incsearch
+  " Don't redraw while executing macros (activate if performance is low)
+    " set lazyredraw
   " Show matching brackets when text indicator is over them
-  set showmatch
-  " How many tenths of a second to blink when matching brackets
-  set mat=1
-
+    set showmatch
+    " How many tenths of a second to blink when matching brackets
+      set matchtime=1
   " No annoying sound on errors
-  set noerrorbells
-  set novisualbell
-  set noerrorbells visualbell t_vb=
-  set t_vb=
-  set tm=500
-
+    set noerrorbells
+    set novisualbell
+    set noerrorbells visualbell t_vb=
+    set t_vb=
+    set tm=500
   " Decrease the length of many prompts:
-  set shortmess=atI
-" Colors and Fonts
-  set background=dark
-  let g:solarized_underline=0
-  colorscheme solarized
-
-  nnoremap <Leader>as :call ChangeBackground()<cr>
-  function! ChangeBackground()
-    if &background == "dark"
-      set background=light
-    else
-      set background=dark
-    endif
-  endfunction
-
-  " Expand spell-checking to multiple languages (Be careful with this...)
-  set spelllang=en
-  "set spelllang=en,es,de
-
-  " Use Unix as the standard file type
-  set ffs=unix,dos,mac
+    set shortmess=atI
+" Colors
+  " Set dark solarized theme
+    set background=dark
+    let g:solarized_underline=0
+    colorscheme solarized
+  " Toggle background color
+    nnoremap <Leader>as :call ToggleBackground()<cr>
+    " Copied from solarized's togglebg.vim
+    function! ToggleBackground()
+      let &background = ( &background == "dark"? "light" : "dark" )
+      if exists("g:colors_name")
+          exe "colorscheme " . g:colors_name
+      endif
+    endfunction
 " Filetypes, backups and undo
   " Turn backup off, since most stuff is in SVN, git et.c anyway...
-  set nobackup
-  set nowb
-  set noswapfile
-
+    set nobackup
+    set nowb
+    set noswapfile
   " New filetype detection
-  augroup filetypedetect
-    " Asymptote
-    au BufRead,BufNewFile *.asy setfiletype asy
-    " Mathematica (default is matlab)
-    au BufRead,BufNewFile *.m setfiletype mma
-    " Sagemath
-    au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
-    " No plaintex, please.
-    au BufRead,BufNewFile *.tex setfiletype tex
-  augroup end
-
-  " .tex files now are interpreted as not plaintex.
-  let g:tex_flavor='latex'
-
+    augroup filetypedetect
+      " Asymptote
+        au BufRead,BufNewFile *.asy setfiletype asy
+      " Mathematica (default is matlab)
+        au BufRead,BufNewFile *.m setfiletype mma
+      " Sagemath
+        au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+    augroup end
+    " Interpret .tex files as LaTeX by default
+      let g:tex_flavor='latex'
   augroup terminal
     " No spellcheck in terminals
-    autocmd TermOpen * setlocal nospell nonumber norelativenumber modifiable
-
-    " FIXME
-    " Automatically enter insert mode when entering terminal buffers
-    autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
-    autocmd BufEnter term:// startinsrt
+      autocmd TermOpen * setlocal nospell nonumber norelativenumber modifiable
+    " Automatically enter insert mode when entering terminal buffers FIXME
+      autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
+      autocmd BufEnter term:// startinsrt
   augroup END
-
   " Open a terminal at the bottom
-  noremap <localleader>tl :belowright 5split +term<cr>
-  noremap <localleader>tn :vs +term<cr>i
-  noremap <localleader>tt :tabedit +term<cr>
-
-  " Make <c-r> act like normal.
-  tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+    noremap <localleader>tl :belowright 5split +term<cr>
+    noremap <localleader>tn :vs +term<cr>i
+    noremap <localleader>tt :tabedit +term<cr>
+  " For git commit messages, limit line width.
+    autocmd Filetype gitcommit setlocal spell textwidth=72
+  " Make <c-r> act like normal in a terminal.
+    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " Text, Tab, and Indent Related
+  " Append mac to the list of file formats (if such a file would be edited)
+    set fileformats=unix,dos,mac
   " In the IBLLinearAlgebra directory, don't use expandtab
-  autocmd BufEnter ~/edu/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
-
-  " Sets the current working directory to the location of the file being
-  " edited. Wasn't there already something like this somewhere else, except
-  " as a mapping?
-  autocmd BufEnter * silent! lcd %:p:h
-
-  " Use spaces instead of tabs
-  set expandtab
-
-  " TODO: add this command to a keymap or action hook.
-  command! -nargs=1 -range SuperRetab
-    \ <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
-  " Be smart when using tabs ;)
-  set smarttab
-
-  " 1 tab == 2 spaces
-  set shiftwidth=2
-  set tabstop=2
-
-  " Highlight whitespace accordingly
-  set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
-
+    autocmd BufEnter ~/ed/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
+  " Use two spaces instead of tabs in all contexts
+    set expandtab
+    set smarttab
+    set shiftwidth=2
+    set tabstop=2
+  " SuperRetab function
+    " TODO: add this command to a keymap or action hook.
+    command! -nargs=1 -range SuperRetab
+      \ <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
+  " Whitespace highlighting
+    nnoremap <leader>S :set list!<cr>
+    set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
   " Linebreak more cleanly
-  set lbr
-  set wrap " Wrap lines
-  set tw=0 " Set this to a non-null number for *non*-TeX files
-  set breakindent
-  set showbreak=>\
-
-  set ai " Auto indent
-  set si " Smart indent
-
-  " Copy to clipboard
-  vnoremap <leader>y "+y
-  nnoremap <leader>Y "+yg_
-  nnoremap <leader>y "+y
-  nnoremap <leader>yy "+yy
-
+    set lbr
+    set wrap " Wrap lines
+    set tw=0 " Set this to a non-null number for *non*-TeX files
+    set breakindent
+    let &showbreak= '> '
+  " Intelligent indenting
+    set autoindent
+    set smartindent
+  " Make capital Y act as one would expect, but better
+    noremap Y yg_
+  " Copy to system clipboard
+    vnoremap <leader>y "+y
+    nnoremap <leader>Y "+yg_
+    nnoremap <leader>y "+y
+    nnoremap <leader>yy "+yy
   " Paste from clipboard
-  nnoremap <leader>p "+p
-  nnoremap <leader>P "+P
-  vnoremap <leader>p "+p
-  vnoremap <leader>P "+P
+    nnoremap <leader>p "+p
+    nnoremap <leader>P "+P
+    vnoremap <leader>p "+p
+    vnoremap <leader>P "+P
 " Visual mode related
   " Visual mode pressing * or # searches for the current selection
-  " Super useful! From an idea by Michael Naumann
-  vnoremap <silent> * :call VisualSelection('f')<cr>
-  vnoremap <silent> # :call VisualSelection('b')<cr>
+    " Super useful! From an idea by Michael Naumann
+    vnoremap <silent> * :call VisualSelection('f')<cr>
+    vnoremap <silent> # :call VisualSelection('b')<cr>
 " Moving around, tabs, windows, and buffers
-  " Treat long lines as break lines (useful when moving around in them)
-  noremap j gj
-  noremap k gk
-  noremap gj j
-  noremap gk k
-  noremap ' `
-  noremap ` '
-
-  " Escape exits terminal
-  tnoremap <Esc> <C-\><C-n>
-  vnoremap // y/<C-R>"<cr>
-
-  " Make the mouse more useful in vim
-  set mouse=a
-
-  " By default, open new windows to the right.
-  set splitright
-
-  " Deactivate search highlighting until the next search
-  noremap <silent> <LocalLeader><cr> :noh<cr>
-
-  " Smart way to move between windows
-  noremap <C-S-J> <C-W>J
-  noremap <C-S-K> <C-W>K
-  noremap <C-S-H> <C-W>H
-  noremap <C-S-L> <C-W>L
-
-  noremap <C-j> <C-W>j
-  noremap <C-k> <C-W>k
-  noremap <C-h> <C-W>h
-  noremap <C-l> <C-W>l
-
-  tnoremap <C-h> <c-\><c-n><C-W>h
-  tnoremap <C-l> <c-\><c-n><C-W>l
-  tnoremap <C-j> <c-\><c-n><C-W>j
-  tnoremap <C-k> <c-\><c-n><C-W>k
-  tnoremap <c-o> <c-\><c-n>
-
-  " More accesible than the control key:
-  " noremap <Leader>h <C-W>h
-  " noremap <Leader>l <C-W>l
-  " noremap <Leader>j <C-W>j
-  " noremap <Leader>k <C-W>k
-
-  noremap <Leader>H <C-w>H
-  noremap <Leader>L <C-w>L
-  noremap <Leader>J <C-w>J
-  noremap <Leader>K <C-w>K
-
-  noremap <Leader>d :q<cr>
-  noremap <Leader>D :bdelete<cr>
-
-  "noremap <localleader>f
-
-  "noremap y+ :%y+<cr>
-
   " NOTE: the function <C-W>i searches for the first occurrence of a variable
   " in a file (i.e. it's first declaration / definition). However, this
   " search is smart-cased (by the settings laid out in this .vimrc). A mod
   " should be introduced to change the case rules for this search to be
   " case-sensitive, since the majority of programming languages have
   " case-sensitive variable definitions.
+  " Treat long lines as break lines
+    noremap j gj
+    noremap gj j
+    noremap k gk
+    noremap gk k
+  " Cause ' to return you to the exact cursor position, rather than `
+    noremap ' `
+    noremap ` '
+  " Escape exits terminal
+    tnoremap <Esc> <C-\><C-n>
+    vnoremap // y/<C-R>"<cr>
+  " Enable the mouse in vim (disable with shift)
+    set mouse=a
+  " By default, open new windows to the right.
+    set splitright
+  " Smart way to move between windows
+    noremap <C-S-J> <C-W>J
+    noremap <C-S-K> <C-W>K
+    noremap <C-S-H> <C-W>H
+    noremap <C-S-L> <C-W>L
 
-  " Close the current buffer
-  noremap <LocalLeader>bd :Bclose<cr>
+    noremap <C-j> <C-W>j
+    noremap <C-k> <C-W>k
+    noremap <C-h> <C-W>h
+    noremap <C-l> <C-W>l
 
-  " Close all the buffers
-  noremap <LocalLeader>ba :1,1000 bd!<cr>
+    tnoremap <C-h> <c-\><c-n><C-W>h
+    tnoremap <C-l> <c-\><c-n><C-W>l
+    tnoremap <C-j> <c-\><c-n><C-W>j
+    tnoremap <C-k> <c-\><c-n><C-W>k
+    tnoremap <c-o> <c-\><c-n>
 
-  " Open alternate buffer (can be used to reopen a closed tab)
-  noremap <LocalLeader>br :vs<Bar>:b#<cr>
-
+    noremap <Leader>H <C-w>H
+    noremap <Leader>L <C-w>L
+    noremap <Leader>J <C-w>J
+    noremap <Leader>K <C-w>K
+  " Close windows with one fewer keystroke
+    noremap <Leader>d :q<cr>
+    noremap <Leader>D :bdelete<cr>
+  " Buffer maps
+    " Close the current buffer
+      noremap <LocalLeader>bd :Bclose<cr>
+    " Close all the buffers
+      noremap <LocalLeader>ba :1,1000 bd!<cr>
+    " Open alternate buffer (can be used to reopen a closed tab)
+      noremap <LocalLeader>br :vs<Bar>:b#<cr>
   " Useful mappings for managing tabs:
-  " NOTE: Either delete these or fix them and start using them.
-  "noremap <LocalLeader>tn :tabnew<cr>
-  "noremap <LocalLeader>to :tabonly<cr>
-  "noremap <LocalLeader>tc :tabclose<cr>
-  "noremap <LocalLeader>tm :tabmove
-
-  " Opens a new tab with the current buffer's path
-  " Super useful when editing files in the same directory
-  noremap <LocalLeader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-  " Switch CWD to the directory of the open buffer
-  noremap <LocalLeader>cd :cd %:p:h<cr>:pwd<cr>
-
+    noremap <LocalLeader>tn :tabnew<cr>
+    noremap <LocalLeader>tc :tabclose<cr>
+    noremap <LocalLeader>tm :-tabmove<cr>
+    noremap <LocalLeader>tM :+tabmove<cr>
+  " Open a new tab with the current buffer's path
+    " Super useful when editing files in the same directory
+    noremap <LocalLeader>te :tabedit <c-r>=expand("%:p:h")<cr>/
   " Specify the behavior when switching between buffers
-  try
-    set switchbuf=useopen,usetab,newtab
-    set stal=2
-  catch
-  endtry
-
+    try
+      set switchbuf=useopen,usetab,newtab
+      set showtabline=2
+    catch
+    endtry
   " Return to last edit position when opening files (You want this!)
-  autocmd BufReadPost *
-       \ if line("'\"") > 0 && line("'\"") <= line("$") |
-       \ exe "normal! g`\"" |
-       \ endif
+    autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \ exe "normal! g`\"" |
+      \ endif
   " Remember info about open buffers on close
-  set viminfo^=%
+    set shada^=%
 
   set foldexpr=GetVimrcFold(v:lnum)
 
@@ -673,230 +567,153 @@
   set laststatus=2
   set showcmd
 " Editing mappings
-  " inoremap ,,
-  " inoremap ,.
-  " Remap VIM 0 to first non-blank character. Do I really want this now that
-  " it's really easy to reach the "^" key? I really need to deactivate the
-  " numlock feature on this keyboard... :P
-  noremap 0 ^
-
-  " Swap ; and : in normal mode (and vise-versa)
-  " Note: Or should this be implemented always?
-  noremap ; :
-  noremap : ;
-  onoremap ; :
-  onoremap : ;
-  "set langmap=:\\;,\\;:
-
-  " Remap p to paste to the current indentation, wheras ctrl-p maps to normal
-  " paste.
-  noremap p ]p
-  " May be overridden if CtrlP is introduced (a file/buffer editor/ viewer)
-  noremap <C-P> p
-
-  noremap <LocalLeader>o moo<Esc>`o
-  noremap <LocalLeader>O moO<Esc>`o
-
-  " Say Date
-  noremap <localleader>sd !date<cr>
-
+  " Swap go-to's for beginning of line and beginning of non-whitespace line.
+    noremap 0 ^
+    noremap ^ 0
+  " Swap ; and : in normal mode (and vice-versa)
+    " Note: Or should this be implemented always?
+    noremap ; :
+    noremap : ;
+    onoremap ; :
+    onoremap : ;
+    "set langmap=:\\;,\\;:
+  " p pastes to current indentation, whereas <c-p> pastes exactly.
+    noremap p ]p
+    noremap <C-p> p
+  " Insert lines above or below current line.
+    noremap <LocalLeader>O moO<Esc>`o
+    noremap <LocalLeader>o moo<Esc>`o
   " This still must be fixed
-  silent! call repeat#set("<LocalLeader>O", v:count)
-  silent! call repeat#set("<LocalLeader>o", v:count)
-
-  " Move lines upwards / downwards
-  " Note: Perhaps use some insight from below?
-  " TODO: replace with a funciton
-  noremap - "ddd"dp
-  noremap _ "dddk"dP
-
-  " Make capital Y act as one would expect, but better
-  noremap Y yg_
-  " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-  nnoremap <M-j> mz:m+<cr>`z
-  nnoremap <M-k> mz:m-2<cr>`z
-  vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-  vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-  " If using a linux distribution with the same .vimrc, this is helpful
-  if has("mac") || has("macunix")
-    nmap <D-j> <M-j>
-    nmap <D-k> <M-k>
-    vmap <D-j> <M-j>
-    vmap <D-k> <M-k>
-  endif
-
-  noremap <LocalLeader>ts :call DeleteTrailingWS()<cr>
-  noremap <LocalLeader>tS :call DeleteInternalWS()<cr>
-  noremap <LocalLeader>T :call DeleteInternalWS()<cr>
-  " Good regex for removing superfluous spaces: be careful for table
-  " alignment in, say TeX documents: \v([^ ]@<=) +
-
-
-  " For git commit messages, limit line width.
-  autocmd Filetype gitcommit setlocal spell textwidth=72
-
+    silent! call repeat#set("<LocalLeader>O", v:count)
+    silent! call repeat#set("<LocalLeader>o", v:count)
+  " Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac
+    " TODO: if desired, also add '-' and '_' mappings
+    nnoremap <M-j> mz:m+<cr>`z
+    nnoremap <M-k> mz:m-2<cr>`z
+    vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+    vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+  " Clean up extraneous whitespace
+    " Note: Good regex for removing superfluous spaces: be careful for table
+    " alignment in, say TeX documents: \v([^ ]@<=) +
+    noremap <LocalLeader>ts :call DeleteTrailingWS()<cr>
+    noremap <LocalLeader>tS :call DeleteInternalWS()<cr>
+    noremap <LocalLeader>T :call DeleteInternalWS()<cr>
+    func! DeleteTrailingWS()
+        " Add files from which you don't want to remove whitespace.
+        if &filetype =~ 'vim'
+            return
+        endif
+        exe "normal! mz"
+        %s/\s\+$//e
+        " %s/\v(\.)@<=\s{2,}/ /e
+        exe "normal! `z"
+    endfunc
+    func! DeleteInternalWS()
+        " Add files from which you don't want to remove whitespace.
+        "if &filetype =~ 'vim'
+            "return
+        "endif
+        exe "normal! mz"
+        %s/\v[^ ]@<= {2,}/ /ge
+        exe "normal! `z"
+    endfunc
   " Don't insert two spaces after a '.', '!', or '?'
-  set nojoinspaces
-  " Delete trailing white space
-  func! DeleteTrailingWS()
-      " Add files from which you don't want to remove whitespace.
-      "if &filetype =~ 'vim'
-          "return
-      "endif
-      exe "normal! mz"
-      %s/\s\+$//e
-      " %s/\v(\.)@<=\s{2,}/ /e
-      exe "normal! `z"
-  endfunc
-  func! DeleteInternalWS()
-      " Add files from which you don't want to remove whitespace.
-      "if &filetype =~ 'vim'
-          "return
-      "endif
-      exe "normal! mz"
-      %s/\v[^ ]@<= {2,}/ /ge
-      exe "normal! `z"
-  endfunc
-
-  " Here, ideally git commands would no longer need a capital 'G', but I'm
-  " not quite sure how to enforce this.
-  " cabbrev git <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ?
-  " \ "Rename" : "rename"<cr> autocmd BufWrite * call DeleteTrailingWS()
-
-  " Maps <option-l> to <Esc>
-  inoremap ¬ <Esc>
-
-  " If <Esc> is used in a mapping here, then the command is executed (an old
-  " vi-compatability 'feature')
-  cnoremap ¬ <c-c>
-  noremap! ® <c-r>
-  noremap ® <c-r>
-  " Maps <option-w> to <ctrl-w> (Remove this once Caps-lock is remapped to
-  " ctrl)
-  noremap ∑ <C-w>
-  " Maps <option-f/b> to <ctrl-f/b> (Remove this once Caps-lock is remapped
-  " to ctrl)
-  " (Page up-down)
-  noremap ƒ <C-f>
-  noremap ∫ <C-b>
-
+    set nojoinspaces
   " Save and run the :make command
-  nnoremap <LocalLeader>m :w!<cr>:make<cr>
-
-  " Append a semicolon to the end of a line
-  noremap <LocalLeader>; mqA;<Esc>`q
-
+    nnoremap <LocalLeader>m :w!<cr>:make<cr>
   " Go to the link under the cursor (browser-dependant)
-  " noremap gl ml"lyiW:!chromium-browser <c-r>l<cr>`l
+    noremap gl ml"lyiW:!vimb <c-r>l<cr>`l
+  " Use backspace to move through jumplist
+    " This could also be removed once ctrl is made more accesible. However, it
+    " *does* match nicely with the already in place tab...
+    noremap <S-Tab> <C-o>
+    noremap <bs> <C-o>
+    noremap <s-bs> <C-i>
+  " Quick access to config files
+    " Edit and source this file and edit current filetype settings.
+    nnoremap <Leader>ef :call EditFiletype()<cr>
+    nnoremap <Leader>es :UltiSnipsEdit<cr>
+    nnoremap <Leader>ev :tabedit $MYVIMRC<cr>
+    nnoremap <Leader>sv :source $MYVIMRC<cr>
 
-  " This could also be removed once ctrl is made more accesible. However, it
-  " *does* match nicely with the already in place tab...
-  noremap <S-Tab> <C-o>
-  noremap <bs> <C-o>
-  noremap <s-bs> <C-i>
-
-  function! EditFiletype()
-    let configdir = fnamemodify(expand("$MYVIMRC"),":p:h")
-    execute ":tabedit" . configdir . "/ftplugin/" . &filetype .".vim"
-  endfunction
-
-  " Quickly edit init.vim or the .vimrc (i.e. likely this file) with ' ev'
-  " and source it with ' sv'. Edit your current filetype settings with '
-  " ef'.
-  nnoremap <LocalLeader>ef :call EditFiletype()<cr>
-  nnoremap <LocalLeader>es :UltiSnipsEdit<cr>
-  nnoremap <LocalLeader>ev :tabedit $MYVIMRC<cr>
-  nnoremap <LocalLeader>sv :source $MYVIMRC<cr>
+    function! EditFiletype()
+      let configdir = fnamemodify(expand("$MYVIMRC"),":p:h")
+      execute ":tabedit" . configdir . "/ftplugin/" . &filetype .".vim"
+    endfunction
+  " Open a quick buffer with currently defined mappings
+    nnoremap <Leader>sm :call SeeMap(0)<cr>
+    nnoremap <Leader>sM :call SeeMap(1)<cr>
+    function! SeeMap(verbose)
+      let l:filepath = "/tmp/vim-map-keys"
+      execute "redir! > " . l:filepath
+      execute "silent " . (a:verbose==1? "verbose":"") . " map"
+      execute "redir END"
+      execute "silent belowright 10split " . l:filepath
+    endfunction
 " Vimgrep searching and cope displaying
   " When you press gv you vimgrep after the selected text
-  vnoremap <silent> gv :call VisualSelection('gv')<cr>
-
-  " Alternatively, see the following link for a (non-default) alternative:
-  " https://github.com/markonm/traces.vim
-  set inccommand=split
-
-  " When you press <LocalLeader>r you can search and replace the selected
-  " text
-  vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
-
-  " TODO: clean up
-  " Do :help cope if you are unsure what cope is. It's super useful!
-  "
-  " When you search with vimgrep, display your results in cope by doing:
-  " <LocalLeader>cc
-  "
-  " To go to the next search result do:
-  " <LocalLeader>n
-  "
-  " To go to the previous search results do:
-  " <LocalLeader>p
-  "
-  nnoremap <Leader>cc :rightbelow cope<cr>
-  " Navigate through quickfix windows
-  "nnoremap <Leader>cn :cnewer<cr>
-  "nnoremap <Leader>cp :colder<cr>
-  "noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
-  "noremap <Leader>n :cn<cr>
-  "noremap <Leader>p :cp<cr>
-" Spell checking
-  " Start vim with automatic spell checking. Move this line into local files
-  " (esp. for .csv, .tex, etc.)
-  set spell
-
-  " Pressing ,ss will toggle spell checking
-  noremap <Leader>ss :setlocal spell!<cr>
-
-  " Shortcuts using <Leader>
-  noremap <Leader>sn ]s
-  noremap <Leader>sp [s
-  noremap <Leader>sa zg
-  noremap <Leader>s? z=
+    vnoremap <silent> gv :call VisualSelection('gv')<cr>
+  " When running :s(ubstitute), show incremental changes.
+    set inccommand=split
+  " Search and replace selected text (FIXME: non-functional!)
+    vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
+  " Quickfix TODO: clean up
+    " Do :help cope if you are unsure what cope is. It's super useful!
+    "
+    " When you search with vimgrep, display your results in cope by doing:
+    " <LocalLeader>cc
+    "
+    " To go to the next search result do:
+    " <LocalLeader>n
+    "
+    " To go to the previous search results do:
+    " <LocalLeader>p
+    "
+    nnoremap <Leader>cc :rightbelow cope<cr>
+    " Navigate through quickfix windows
+    "nnoremap <Leader>cn :cnewer<cr>
+    "nnoremap <Leader>cp :colder<cr>
+    "noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
+    "noremap <Leader>n :cn<cr>
+    "noremap <Leader>p :cp<cr>
+" Spell-checking
+  " Check spelling by default
+    " Disable in specific filetype configs if desired (esp. for .csv, .tex, etc.)
+    set spell
+  " Expand spell-checking to multiple languages (Be careful with this...)
+    set spelllang=en
+    "set spelllang=en,es,de
+  " Toggle spell checking
+    noremap <Leader>ss :setlocal spell!<cr>
+  " Shortcuts using <LocalLeader>
+    noremap <LocalLeader>sn ]s
+    noremap <LocalLeader>sp [s
+    noremap <LocalLeader>sa zg
+    noremap <LocalLeader>s? z=
 " Misc
   " Redraw the screen
-  noremap <LocalLeader>r :mode<cr>
+    noremap <LocalLeader>r :mode<cr>
   " Quickly (attempt to) quit vim
-  noremap <LocalLeader>qq :qall<cr>
-  " Save the current vim session and quit (warn if there are unsaved
-  " changes).
-  noremap <LocalLeader>qs :mksession!<cr>:qall<cr>
-
+    noremap <LocalLeader>qq :qall<cr>
+  " Save the current vim session and quit (warn if there are unsaved changes).
+    noremap <LocalLeader>qs :mksession!<cr>:qall<cr>
   " Start a web server in the current directory.
-  noremap <LocalLeader>aw :call jobstart('python -m http.server')<cr>
-
+    noremap <LocalLeader>aw :call jobstart('python -m http.server')<cr>
   " Toggle paste mode on and off
-  noremap <LocalLeader>Wp :setlocal paste!<cr>
-
-  " Get day of week of date expression
-  noremap <LocalLeader>yd "dyiW:call GetDayOfWeek("<C-R>d")<cr>
-
-  " This fantastic vim-sed will take a title and capitalize all words that are
-  " at least 3 characters long!
+    noremap <LocalLeader>Wp :setlocal paste!<cr>
   " 'Add Title'-case to the current line
-  noremap <silent> <LocalLeader>at guu:call setline(line('.'),
+    " This fantastic vim-sed will take a title and capitalize all words that are
+    " at least 3 characters long!
+    noremap <silent> <LocalLeader>at guu:call setline(line('.'),
         \ substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<cr>
-
   " Underline the current line (with dashes "u", or equals "U").
-  noremap <LocalLeader>au yypVr-
-  noremap <LocalLeader>aU yypVr=
-
-  " The following may not be that useful...
-  " 'add date' at the cursor.
-  noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
-  " 'ad name' after the cursor
-  noremap <LocalLeader>an aJesse Frohlich<Esc>
-
+    noremap <LocalLeader>au yypVr-
+    noremap <LocalLeader>aU yypVr=
+  " 'Add Date' at the cursor (not very useful)
+    noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
   " Yank file name to unnamed register
-  noremap <LocalLeader>gf :let @" = expand("%")<cr>
+    noremap <LocalLeader>gf :let @" = expand("%")<cr>
 " Helper functions
-  function! GetDayOfWeek(str)
-    exe "!date +\\\%A -d" . a:str
-  endfunction
-  function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-  endfunction
   function! VisualSelection(direction) range
       let l:saved_reg = @"
       execute "normal! vgvy"
@@ -917,31 +734,29 @@
       let @/ = l:pattern
       let @" = l:saved_reg
   endfunction
-  " Returns true if paste mode is enabled
-  function! HasPaste()
-      if &paste
-          return 'PASTE MODE '
-      en
-      return ''
+  function! CmdLine(str)
+    exe "menu Foo.Bar :" . a:str
+    emenu Foo.Bar
+    unmenu Foo
   endfunction
-  " Don't close window, when deleting a buffer
-  command! Bclose call <SID>BufcloseCloseIt()
-  function! <SID>BufcloseCloseIt()
-     let l:currentBufNum = bufnr("%")
-     let l:alternateBufNum = bufnr("#")
+  " Don't close window when deleting a buffer
+    command! Bclose call <SID>BufcloseCloseIt()
+    function! <SID>BufcloseCloseIt()
+       let l:currentBufNum = bufnr("%")
+       let l:alternateBufNum = bufnr("#")
 
-     if buflisted(l:alternateBufNum)
-       buffer #
-     else
-       bnext
-     endif
+       if buflisted(l:alternateBufNum)
+         buffer #
+       else
+         bnext
+       endif
 
-     if bufnr("%") == l:currentBufNum
-       new
-     endif
+       if bufnr("%") == l:currentBufNum
+         new
+       endif
 
-     if buflisted(l:currentBufNum)
-       execute("bdelete! ".l:currentBufNum)
-     endif
-  endfunction
+       if buflisted(l:currentBufNum)
+         execute("bdelete! ".l:currentBufNum)
+       endif
+    endfunction
 " vim: foldmethod=expr
