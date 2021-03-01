@@ -7,7 +7,7 @@
   " Boilerplate:
     set nocompatible
     let g:plug_shallow=0
-    let g:plug_threads=2
+    " let g:plug_threads=4
     call plug#begin('~/.config/nvim/plugged')
   " Plugins:
     " Editor Specific:
