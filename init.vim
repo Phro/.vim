@@ -79,6 +79,8 @@
       " Markdown Syntax:
         " TODO: This is still not adequate,
         Plug 'gabrielelana/vim-markdown'
+      " Mathematica:
+        Plug 'rsmenon/vim-mathematica'
       " YAML Syntax Highlighting:
         " TODO: find / create one which handles muliline strings with colons.
         " This is also an indentation issue, which has less to do with
@@ -232,6 +234,9 @@
         let g:markdown_enable_conceal = 1
         let g:markdown_enable_mappings = 0
         let g:markdown_include_jekyll_support = 0
+      " vim-mathematica
+        let g:mma_highlight_option = "solarized"
+        let g:mma_candy = 2
 " General:
   set shell=zsh
   " Set to auto read when a file is changed from the outside
@@ -326,10 +331,12 @@
       " Asymptote
         au BufRead,BufNewFile *.asy setfiletype asy
       " Mathematica (default is matlab)
-        au BufRead,BufNewFile *.m setfiletype mma
+        au BufRead,BufNewFile *.m setfiletype=mma
       " Sagemath
         au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
     augroup end
+    " Interpret .m files as mathematica by default
+      let filetype_m = "mma"
     " Interpret .tex files as LaTeX by default
       let g:tex_flavor='latex'
   augroup terminal
@@ -340,9 +347,9 @@
       autocmd BufEnter term:// startinsrt
   augroup END
   " Open a terminal at the bottom
-    noremap <localleader>tl :belowright 5split +term<cr>
-    noremap <localleader>tn :vs +term<cr>i
-    noremap <localleader>tt :tabedit +term<cr>
+    noremap <localleader>tl :belowright 5split +term<cr>i
+    noremap <localleader>tv :vs +term<cr>i
+    noremap <localleader>tt :tabedit +term<cr>i
   " For git commit messages, limit line width.
     autocmd Filetype gitcommit setlocal spell textwidth=72
   " Make <c-r> act like normal in a terminal.
@@ -413,15 +420,20 @@
   " By default, open new windows to the right.
     set splitright
   " Smart way to move between windows
-    noremap <C-S-J> <C-W>J
-    noremap <C-S-K> <C-W>K
-    noremap <C-S-H> <C-W>H
-    noremap <C-S-L> <C-W>L
+    noremap <a-S-J> <C-w>J
+    noremap <a-S-K> <C-w>K
+    noremap <a-S-H> <C-w>H
+    noremap <a-S-L> <C-w>L
 
-    noremap <C-j> <C-W>j
-    noremap <C-k> <C-W>k
-    noremap <C-h> <C-W>h
-    noremap <C-l> <C-W>l
+    noremap <C-j> <C-w>j
+    noremap <C-k> <C-w>k
+    noremap <C-h> <C-w>h
+    noremap <C-l> <C-w>l
+
+    noremap <m-j> <C-w>j
+    noremap <m-k> <C-w>k
+    noremap <m-h> <C-w>h
+    noremap <m-l> <C-w>l
 
     tnoremap <C-h> <c-\><c-n><C-W>h
     tnoremap <C-l> <c-\><c-n><C-W>l
@@ -588,10 +600,10 @@
     silent! call repeat#set("<LocalLeader>o", v:count)
   " Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac
     " TODO: if desired, also add '-' and '_' mappings
-    nnoremap <M-j> mz:m+<cr>`z
-    nnoremap <M-k> mz:m-2<cr>`z
-    vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-    vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+    nnoremap - mz:m+<cr>`z
+    nnoremap _ mz:m-2<cr>`z
+    vnoremap - :m'>+<cr>`<my`>mzgv`yo`z
+    vnoremap _ :m'<-2<cr>`>my`<mzgv`yo`z
   " Clean up extraneous whitespace
     " Note: Good regex for removing superfluous spaces: be careful for table
     " alignment in, say TeX documents: \v([^ ]@<=) +
