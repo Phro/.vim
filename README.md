@@ -25,3 +25,7 @@ $ git clone --recurse-submodules git@github.com:phro/.vim
 - The highlight color of parentheses contrasts poorly with the red foreground
 - Many TeX snippets appear to be missing from before (perhaps they were not
   added to the repository?)
+- Move the filetype-specific content such as:
+  - the makeprg
+  - the "run file then enter interactive mode" command
+  into a consolidated location, and ideally remove the redundancy
