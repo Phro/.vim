@@ -265,7 +265,7 @@
   " Keep 4 lines around the cursor at all times
     set scrolloff=4
   " Set wildmode to complete to the next common match
-    set wildmode=list:longest
+    set wildmode=list:full
   " Ignore compiled files
     set wildignore=*.o,*~,*.pyc
   " Height of the command bar.
@@ -425,15 +425,27 @@
     noremap <a-S-H> <C-w>H
     noremap <a-S-L> <C-w>L
 
+    " TODO: test the terminal usefulness
+    tnoremap <a-S-J> <C-w>J
+    tnoremap <a-S-K> <C-w>K
+    tnoremap <a-S-H> <C-w>H
+    tnoremap <a-S-L> <C-w>L
+
     noremap <C-j> <C-w>j
     noremap <C-k> <C-w>k
     noremap <C-h> <C-w>h
     noremap <C-l> <C-w>l
 
-    noremap <m-j> <C-w>j
-    noremap <m-k> <C-w>k
-    noremap <m-h> <C-w>h
-    noremap <m-l> <C-w>l
+    noremap <a-j> <C-w>j
+    noremap <a-k> <C-w>k
+    noremap <a-h> <C-w>h
+    noremap <a-l> <C-w>l
+
+    " TODO: test the terminal usefulness
+    tnoremap <a-j> <C-w>j
+    tnoremap <a-k> <C-w>k
+    tnoremap <a-h> <C-w>h
+    tnoremap <a-l> <C-w>l
 
     tnoremap <C-h> <c-\><c-n><C-W>h
     tnoremap <C-l> <c-\><c-n><C-W>l
