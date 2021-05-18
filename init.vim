@@ -25,6 +25,8 @@
         Plug 'zchee/deoplete-jedi', {'for':'python'}
       " Autosave:
         Plug '907th/vim-auto-save'
+      " Browser-embedding plugins:
+        Plug 'glacambre/firenvim', {'do': { _ -> firenvim#install(0) }}
       " Colorscheme:
         " The altercation repository has an ugly sign column; this plays nicer
         " with gitgutter.
