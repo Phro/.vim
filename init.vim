@@ -344,14 +344,15 @@
   augroup terminal
     " No spellcheck in terminals
       autocmd TermOpen * setlocal nospell nonumber norelativenumber modifiable
-    " Automatically enter insert mode when entering terminal buffers FIXME
+    " Automatically enter insert mode when entering terminal buffers
       autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
-      autocmd BufEnter term:// startinsrt
+      autocmd BufEnter term:// startinsert
+      autocmd TermOpen * startinsert
   augroup END
   " Open a terminal at the bottom
-    noremap <localleader>tl :belowright 5split +term<cr>i
-    noremap <localleader>tv :vs +term<cr>i
-    noremap <localleader>tt :tabedit +term<cr>i
+    noremap <localleader>tl :belowright 5split +term<cr>
+    noremap <localleader>tv :vs +term<cr>
+    noremap <localleader>tt :tabedit +term<cr>
   " For git commit messages, limit line width.
     autocmd Filetype gitcommit setlocal spell textwidth=72
   " Make <c-r> act like normal in a terminal.
@@ -444,10 +445,10 @@
     noremap <a-l> <C-w>l
 
     " TODO: test the terminal usefulness
-    tnoremap <a-j> <C-w>j
-    tnoremap <a-k> <C-w>k
-    tnoremap <a-h> <C-w>h
-    tnoremap <a-l> <C-w>l
+    tnoremap <a-j> <c-\><c-n><C-w>j
+    tnoremap <a-k> <c-\><c-n><C-w>k
+    tnoremap <a-h> <c-\><c-n><C-w>h
+    tnoremap <a-l> <c-\><c-n><C-w>l
 
     tnoremap <C-h> <c-\><c-n><C-W>h
     tnoremap <C-l> <c-\><c-n><C-W>l
