@@ -28,9 +28,10 @@
       " Browser-embedding plugins:
         Plug 'glacambre/firenvim', {'do': { _ -> firenvim#install(0) }}
       " Colorscheme:
-        " The altercation repository has an ugly sign column; this plays nicer
-        " with gitgutter.
-        Plug 'jwhitley/vim-colors-solarized'
+        " The altercation repo does not support true colors.  
+        Plug 'frankier/neovim-colors-solarized-truecolor-only'
+      " Colorizing:
+        Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
       " Comment Handling Keymaps:
         Plug 'phro/nerdcommenter'
       " Entering Unicode:
@@ -121,6 +122,8 @@
         " Autosave after leaving insert mode and making a change in normal mode
           let g:auto_save = 1
         let g:auto_save_silent = 1
+        " Colorizing
+        let g:Hexokinase_highlighters = [ 'backgroundfull' ] " Default
       " Deoplete:
         " Enable at startup
           let g:deoplete#enable_at_startup = 1
@@ -267,7 +270,7 @@
   " Keep 4 lines around the cursor at all times
     set scrolloff=4
   " Set wildmode to complete to the next common match
-    set wildmode=list:full
+    set wildmode=longest:list
   " Ignore compiled files
     set wildignore=*.o,*~,*.pyc
   " Height of the command bar.
@@ -313,6 +316,7 @@
   " Set dark solarized theme
     set background=dark
     let g:solarized_underline=0
+    set termguicolors
     colorscheme solarized
   " Toggle background color
     nnoremap <Leader>as :call ToggleBackground()<cr>
@@ -323,7 +327,9 @@
           exe "colorscheme " . g:colors_name
       endif
     endfunction
-" Filetypes, backups and undo
+  " Toggle Hexokinase (color display) [Show Colors]
+    noremap <localleader>sc :HexokinaseToggle<cr>
+  " Filetypes, backups and undo
   " Turn backup off, since most stuff is in SVN, git et.c anyway...
     set nobackup
     set nowb
