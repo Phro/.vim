@@ -123,7 +123,8 @@
           let g:auto_save = 1
         let g:auto_save_silent = 1
         " Colorizing
-        let g:Hexokinase_highlighters = [ 'backgroundfull' ] " Default
+        let g:Hexokinase_highlighters = [ 'backgroundfull' ]
+        let g:Hexokinase_optInPatterns = 'full_hex,rgb,rgba,hsl,hsla'
       " Deoplete:
         " Enable at startup
           let g:deoplete#enable_at_startup = 1
@@ -597,7 +598,10 @@
   noremap mt :call MoveToNextTab()<cr>
   noremap mT :call MoveToPrevTab()<cr>
 " Status line
+  " Always show a status line for every window
   set laststatus=2
+  " Only show the tabline if there are multiple tabs
+  set showtabline=1
   set showcmd
 " Editing mappings
   " Swap go-to's for beginning of line and beginning of non-whitespace line.
