@@ -12,7 +12,7 @@ nnoremap <buffer> <LocalLeader>m :w!<cr>:make<cr>
 " nnoremap <buffer> <LocalLeader>V :below 5new\|0read !./#:r<cr>:set nomod<cr>
 nnoremap <buffer> <LocalLeader>V :!%< && see %<.ppm&<cr>
 nnoremap <buffer> <LocalLeader>v :!%<<cr>
-nnoremap <buffer> <localleader>w :vs +term\ ghci\ %:r<cr>
+nnoremap <buffer> <localleader>w :rightbelow sp +term\ ghci\ %:r<cr>
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
