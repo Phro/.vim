@@ -316,7 +316,6 @@
 " Colors
   " Set dark solarized theme
     set background=dark
-    let g:solarized_underline=0
     set termguicolors
     colorscheme solarized
   " Toggle background color
