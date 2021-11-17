@@ -10,9 +10,12 @@ nnoremap <buffer> <LocalLeader>m :w!<cr>:make<cr>
 "nnoremap <buffer> <LocalLeader>v :belowright 10split +term\ %:r<cr>
 " nnoremap <buffer> <LocalLeader>v :belowright 15split +term\ runhaskell\ %<cr>
 " nnoremap <buffer> <LocalLeader>V :below 5new\|0read !./#:r<cr>:set nomod<cr>
-nnoremap <buffer> <LocalLeader>V :!%< && see %<.ppm&<cr>
-nnoremap <buffer> <LocalLeader>v :!%<<cr>
-nnoremap <buffer> <localleader>w :rightbelow sp +term\ ghci\ %:r<cr>
+" nnoremap <buffer> <LocalLeader>V :!%< && see %<.ppm&<cr>
+" nnoremap <buffer> <LocalLeader>v :!%<<cr>
+nnoremap <buffer> <localleader>v :vs +term\ stack\ test<cr>
+nnoremap <buffer> <localleader>V :vs +term\ stack\ build<cr>
+nnoremap <buffer> <localleader>W :rightbelow sp +term\ ghci\ %:r<cr>
+nnoremap <buffer> <localleader>w :vs +term\ ghci\ %:r<cr>
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`

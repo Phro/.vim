@@ -52,6 +52,8 @@
         Plug 'tpope/vim-speeddating'
       " Intelligent Repeating: for 'speeddating' and 'surround'
         Plug 'tpope/vim-repeat'
+      " LSP Configuration:
+        Plug 'neovim/nvim-lspconfig'
       " Rename Files:
         Plug 'danro/rename.vim'
       " Set $EDITOR to current neovim instance.
@@ -145,6 +147,8 @@
         nmap ga <Plug>(UnicodeGA)
       " gitgutter
         set updatetime=100
+      " LSP Configuration:
+        lua require'lspconfig'.hls.setup{} 
       " NERDcommenter:
         " Add a space after the opening delimiter of a comment.
           let g:NERDSpaceDelims=1
