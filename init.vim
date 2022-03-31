@@ -37,7 +37,7 @@
       " Entering Unicode:
         Plug 'chrisbra/unicode.vim'
       " Emoji Support:
-        Plug 'fszymanski/deoplete-emoji'
+        Plug 'bew/deoplete-emoji-backup'
       " Expand 'ga':
         Plug 'tpope/vim-characterize'
       " Filesystem Navigation: NERDtree
@@ -213,7 +213,7 @@
     " Language Specific:
       " Vimtex:
         " Set viewer to mupdf
-        let g:vimtex_view_method = 'mupdf'
+        let g:vimtex_view_method = 'zathura'
         " Make the colour of mupdf easier on the eyes.
         let g:vimtex_view_mupdf_options = '-C DF8700'
 
@@ -275,7 +275,8 @@
   " Keep 4 lines around the cursor at all times
     set scrolloff=4
   " Set wildmode to complete to the next common match
-    set wildmode=longest:list
+    set wildmode=list:longest
+    set wildignorecase
   " Ignore compiled files
     set wildignore=*.o,*~,*.pyc
   " Height of the command bar.
