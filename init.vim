@@ -53,8 +53,9 @@
       " Intelligent Repeating: for 'speeddating' and 'surround'
         Plug 'tpope/vim-repeat'
       " LSP Configuration:
-        Plug 'neovim/nvim-lspconfig'
-      " Rename Files:
+        " Plug 'neovim/nvim-lspconfig'
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        " Rename Files:
         Plug 'danro/rename.vim'
       " Set $EDITOR to current neovim instance.
         " TODO: set editor to edit vim files (almost) always in the same
@@ -73,6 +74,8 @@
         " TODO: does this actually work?
         Plug 'AndrewRadev/undoquit.vim'
     " Language Specific:
+      " Dhall:
+        Plug 'vmchale/dhall-vim'
       " Haskell:
         " Display symbols prettily
         Plug 'Twinside/vim-haskellConceal'
@@ -85,7 +88,7 @@
         " TODO: This is still not adequate,
         Plug 'gabrielelana/vim-markdown'
       " Mathematica:
-        Plug 'rsmenon/vim-mathematica'
+        Plug 'voldikss/vim-mma'
       " YAML Syntax Highlighting:
         " TODO: find / create one which handles muliline strings with colons.
         " This is also an indentation issue, which has less to do with
@@ -148,7 +151,7 @@
       " gitgutter
         set updatetime=100
       " LSP Configuration:
-        lua require'lspconfig'.hls.setup{} 
+        " lua require'lspconfig'.hls.setup{}
       " NERDcommenter:
         " Add a space after the opening delimiter of a comment.
           let g:NERDSpaceDelims=1
@@ -323,6 +326,8 @@
     set background=dark
     set termguicolors
     colorscheme solarized
+  " Coc highlight color
+  
   " Toggle background color
     nnoremap <Leader>as :call ToggleBackground()<cr>
     " Copied from solarized's togglebg.vim
@@ -334,7 +339,7 @@
     endfunction
   " Toggle Hexokinase (color display) [Show Colors]
     noremap <localleader>sc :HexokinaseToggle<cr>
-  " Filetypes, backups and undo
+" Filetypes, backups and undo
   " Turn backup off, since most stuff is in SVN, git et.c anyway...
     set nobackup
     set nowb
@@ -343,11 +348,10 @@
     augroup filetypedetect
       " Asymptote
         au BufRead,BufNewFile *.asy setfiletype asy
-      " Mathematica (default is matlab)
-        au BufRead,BufNewFile *.m setfiletype=mma
       " Sagemath
         au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
     augroup end
+    autocmd FileType json syntax match Comment +//.\+$+
     " Interpret .m files as mathematica by default
       let filetype_m = "mma"
     " Interpret .tex files as LaTeX by default
