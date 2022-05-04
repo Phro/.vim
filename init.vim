@@ -78,7 +78,7 @@
         Plug 'vmchale/dhall-vim'
       " Haskell:
         " Display symbols prettily
-        Plug 'Twinside/vim-haskellConceal'
+        " Plug 'Twinside/vim-haskellConceal'
         " Expansion, highlighting, and indentation
         Plug 'neovimhaskell/haskell-vim'
       " LaTeX Support: Vimtex
