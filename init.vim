@@ -28,7 +28,7 @@
       " Browser-embedding plugins:
         Plug 'glacambre/firenvim', {'do': { _ -> firenvim#install(0) }}
       " Colorscheme:
-        " The altercation repo does not support true colors.  
+        " The altercation repo does not support true colors.
         Plug 'frankier/neovim-colors-solarized-truecolor-only'
       " Colorizing:
         Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
@@ -55,7 +55,7 @@
       " LSP Configuration:
         " Plug 'neovim/nvim-lspconfig'
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        " Rename Files:
+      " Rename Files:
         Plug 'danro/rename.vim'
       " Set $EDITOR to current neovim instance.
         " TODO: set editor to edit vim files (almost) always in the same
@@ -200,6 +200,12 @@
       " Vim Airline:
         let g:airline_powerline_fonts = 1
         let g:airline_theme='solarized'
+        if !exists('g:airline_symbols')
+          let g:airline_symbols = {}
+        endif
+        let g:airline_symbols.colnr = ' C:'
+        let g:airline_symbols.linenr = ' L:'
+        let g:airline_symbols.maxlinenr = ''
       " Ultisnips:
         "set runtimepath+=~/.config/nvim/my-snippets/
         "let g:UltiSnipsExpandTrigger="<C-s>"
@@ -327,7 +333,7 @@
     set termguicolors
     colorscheme solarized
   " Coc highlight color
-  
+
   " Toggle background color
     nnoremap <Leader>as :call ToggleBackground()<cr>
     " Copied from solarized's togglebg.vim
@@ -645,9 +651,9 @@
     noremap <LocalLeader>T :call DeleteInternalWS()<cr>
     func! DeleteTrailingWS()
         " Add files from which you don't want to remove whitespace.
-        if &filetype =~ 'vim'
-            return
-        endif
+        " if &filetype =~ 'vim'
+            " return
+        " endif
         exe "normal! mz"
         %s/\s\+$//e
         " %s/\v(\.)@<=\s{2,}/ /e
