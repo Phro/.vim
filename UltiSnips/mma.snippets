@@ -97,3 +97,17 @@ endsnippet
 snippet ,c "χ" Ai
 χ
 endsnippet
+snippet vt "Verification Test"
+VerificationTest[
+	${1:actual},
+	${2:expected},
+TestID->"${3:Test ID}"]
+endsnippet
+snippet vtm "Verification Test with Module"
+Module[
+	{${1:local vars}},
+	VerificationTest[
+		${2:actual},
+		${3:expected},
+TestID->"${4:Test ID}"]]
+endsnippet

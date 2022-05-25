@@ -6,7 +6,7 @@ setlocal tw=80
 noremap <buffer> <LocalLeader>aw :%g-write(-call NERDComment(0,'toggle')<CR>:noh<cr>
 "nnoremap <buffer> <LocalLeader>mv :w!<cr>:make -V<cr>
 nnoremap <buffer> <LocalLeader>m :w!<cr>:make<cr>
-nnoremap <buffer> <LocalLeader>v :make<cr>:!xreader %<.pdf &<cr>
+nnoremap <buffer> <LocalLeader>v :make<cr>:!zathura %<.pdf &<cr>
 "nnoremap <buffer> <LocalLeader>V :!asy -V % &<cr>
 
 nnoremap <buffer> <LocalLeader>V :call See3D()<cr>
