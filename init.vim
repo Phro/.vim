@@ -398,8 +398,9 @@
   " Linebreak more cleanly
     set lbr
     set wrap " Wrap lines
-    set tw=0 " Set this to a non-null number for *non*-TeX files
     set breakindent
+    set textwidth=80
+    set colorcolumn=+1,+2,+3
     let &showbreak= '> '
   " Intelligent indenting
     set autoindent
