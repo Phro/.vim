@@ -255,7 +255,7 @@
         let g:markdown_include_jekyll_support = 0
       " vim-mathematica
         let g:mma_highlight_option = "solarized"
-        let g:mma_candy = 2
+        let g:mma_candy = 1
 " General:
   set shell=zsh
   " Set to auto read when a file is changed from the outside
@@ -383,11 +383,11 @@
     set fileformats=unix,dos,mac
   " In the IBLLinearAlgebra directory, don't use expandtab
     autocmd BufEnter ~/ed/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
-  " Use two spaces instead of tabs in all contexts
+  " Use eight spaces instead of tabs in all contexts
     set expandtab
     set smarttab
-    set shiftwidth=2
-    set tabstop=2
+    set shiftwidth=8
+    set tabstop=8
   " SuperRetab function
     " TODO: add this command to a keymap or action hook.
     command! -nargs=1 -range SuperRetab
