@@ -401,7 +401,7 @@
     set breakindent
     set textwidth=80
     set colorcolumn=+1,+2,+3
-    let &showbreak= '> '
+    let &showbreak= '-> '
   " Intelligent indenting
     set autoindent
     set smartindent
