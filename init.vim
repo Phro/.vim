@@ -690,6 +690,7 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
         " Yank file name to unnamed register {{{2
                 noremap <LocalLeader>gf :let @" = expand("%")<cr>
 " Helper functions {{{1
+" Visual selection function {{{2
         function! VisualSelection(direction) range
                         let l:saved_reg = @"
                         execute "normal! vgvy"
@@ -715,7 +716,7 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
                 emenu Foo.Bar
                 unmenu Foo
         endfunction
-        " Don't close window when deleting a buffer
+        " Don't close window when deleting a buffer {{{2
                 command! Bclose call <SID>BufcloseCloseIt()
                 function! <SID>BufcloseCloseIt()
                          let l:currentBufNum = bufnr("%")
