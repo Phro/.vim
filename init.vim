@@ -322,11 +322,11 @@ endfunction
 " Toggle Hexokinase (color display) [Show Colors] {{{2
 noremap <localleader>sc :HexokinaseToggle<cr>
 " Filetypes, backups and undo: {{{1
-        " Turn backup off, since most stuff is in SVN, git et.c anyway...
+        " Turn backup off, since most stuff is in SVN, git et.c anyway... {{{2
                 set nobackup
                 set nowb
                 set noswapfile
-        " New filetype detection
+        " New filetype detection {{{2
                 augroup filetypedetect
                         " Asymptote
                                 au BufRead,BufNewFile *.asy setfiletype asy
@@ -346,58 +346,58 @@ noremap <localleader>sc :HexokinaseToggle<cr>
                         autocmd BufEnter term:// startinsert
                         autocmd TermOpen * startinsert
         augroup END
-        " Open a terminal at the bottom
+        " Open a terminal at the bottom {{{2
                 noremap <localleader>tl :belowright 5split +term<cr>
                 noremap <localleader>tv :vs +term<cr>
                 noremap <localleader>tt :tabedit +term<cr>
-        " For git commit messages, limit line width.
+        " For git commit messages, limit line width. {{{2
                 autocmd Filetype gitcommit setlocal spell textwidth=72
-        " Make <c-r> act like normal in a terminal.
+        " Make <c-r> act like normal in a terminal. {{{2
                 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " Text, Tab, and Indent Related {{{1
-        " Append mac to the list of file formats (if such a file would be edited)
+        " Append mac to the list of file formats (if such a file would be edited) {{{2
                 set fileformats=unix,dos,mac
-        " In the IBLLinearAlgebra directory, don't use expandtab
+        " In the IBLLinearAlgebra directory, don't use expandtab {{{2
                 autocmd BufEnter ~/ed/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
-        " Use eight spaces instead of tabs in all contexts
+        " Use eight spaces instead of tabs in all contexts {{{2
                 set expandtab
                 set smarttab
                 set shiftwidth=8
                 set tabstop=8
-        " SuperRetab function
+        " SuperRetab function {{{2
                 " TODO: add this command to a keymap or action hook.
                 command! -nargs=1 -range SuperRetab
                         \ <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
-        " Whitespace highlighting
+        " Whitespace highlighting {{{2
                 nnoremap <leader>S :set list!<cr>
                 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
-        " Linebreak more cleanly
+        " Linebreak more cleanly {{{2
                 set lbr
                 set wrap " Wrap lines
                 set breakindent
                 set textwidth=80
                 set colorcolumn=+1,+2,+3
                 let &showbreak= '-> '
-        " Intelligent indenting
+        " Intelligent indenting {{{2
                 set autoindent
                 set smartindent
-        " Make capital Y act as one would expect, but better
+        " Make capital Y act as one would expect, but better {{{2
                 noremap Y yg_
-        " Copy to system clipboard
+        " Copy to system clipboard {{{2
                 vnoremap <leader>y "+y
                 nnoremap <leader>Y "+yg_
                 nnoremap <leader>y "+y
                 nnoremap <leader>yy "+yy
-        " Paste from clipboard
+        " Paste from clipboard {{{2
                 nnoremap <leader>p "+p
                 nnoremap <leader>P "+P
                 vnoremap <leader>p "+p
                 vnoremap <leader>P "+P
 " Visual mode related {{{1
-        " Visual mode pressing * or # searches for the current selection
-                " Super useful! From an idea by Michael Naumann
-                vnoremap <silent> * :call VisualSelection('f')<cr>
-                vnoremap <silent> # :call VisualSelection('b')<cr>
+" Visual mode pressing * or # searches for the current selection {{{2
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<cr>
+vnoremap <silent> # :call VisualSelection('b')<cr>
 " Moving around, tabs, windows, and buffers {{{1
         " NOTE: the function <C-W>i searches for the first occurrence of a variable
         " in a file (i.e. it's first declaration / definition). However, this
@@ -405,22 +405,22 @@ noremap <localleader>sc :HexokinaseToggle<cr>
         " should be introduced to change the case rules for this search to be
         " case-sensitive, since the majority of programming languages have
         " case-sensitive variable definitions.
-        " Treat long lines as break lines
+        " Treat long lines as break lines {{{2
                 noremap j gj
                 noremap gj j
                 noremap k gk
                 noremap gk k
-        " Cause ' to return you to the exact cursor position, rather than `
+        " Cause ' to return you to the exact cursor position, rather than ` {{{2
                 noremap ' `
                 noremap ` '
-        " Escape exits terminal
+        " Escape exits terminal {{{2
                 tnoremap <Esc> <C-\><C-n>
                 vnoremap // y/<C-R>"<cr>
-        " Enable the mouse in vim (disable with shift)
+        " Enable the mouse in vim (disable with shift) {{{2
                 set mouse=a
-        " By default, open new windows to the right.
+        " By default, open new windows to the right. {{{2
                 set splitright
-        " Smart way to move between windows
+        " Smart way to move between windows {{{2
                 noremap <a-S-J> <C-w>J
                 noremap <a-S-K> <C-w>K
                 noremap <a-S-H> <C-w>H
@@ -458,90 +458,38 @@ noremap <localleader>sc :HexokinaseToggle<cr>
                 noremap <Leader>L <C-w>L
                 noremap <Leader>J <C-w>J
                 noremap <Leader>K <C-w>K
-        " Close windows with one fewer keystroke
+        " Close windows with one fewer keystroke {{{2
                 noremap <Leader>d :q<cr>
                 noremap <Leader>D :bdelete<cr>
-        " Buffer maps
+        " Buffer maps {{{2
                 " Close the current buffer
                         noremap <LocalLeader>bd :Bclose<cr>
                 " Close all the buffers
                         noremap <LocalLeader>ba :1,1000 bd!<cr>
                 " Open alternate buffer (can be used to reopen a closed tab)
                         noremap <LocalLeader>br :vs<Bar>:b#<cr>
-        " Useful mappings for managing tabs:
+        " Useful mappings for managing tabs: {{{2
                 noremap <LocalLeader>tn :tabnew<cr>
                 noremap <LocalLeader>tc :tabclose<cr>
                 noremap <LocalLeader>tm :-tabmove<cr>
                 noremap <LocalLeader>tM :+tabmove<cr>
-        " Open a new tab with the current buffer's path
+        " Open a new tab with the current buffer's path {{{2
                 " Super useful when editing files in the same directory
                 noremap <LocalLeader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-        " Specify the behavior when switching between buffers
+        " Specify the behavior when switching between buffers {{{2
                 try
                         set switchbuf=useopen,usetab,newtab
                         set showtabline=2
                 catch
                 endtry
-        " Return to last edit position when opening files (You want this!)
+        " Return to last edit position when opening files (You want this!) {{{2
                 autocmd BufReadPost *
                         \ if line("'\"") > 0 && line("'\"") <= line("$") |
                         \ exe "normal! g`\"" |
                         \ endif
-        " Remember info about open buffers on close
+        " Remember info about open buffers on close {{{2
                 set shada^=%
-
-        set foldexpr=GetVimrcFold(v:lnum)
-
-        function! GetVimrcFold(lnum)
-                if getline(a:lnum) =~? '\v^\s*$'
-                        return '-1'
-                endif
-
-                let this_indent=IndentLevel(a:lnum)
-                let next_indent=IndentLevel(NextNonBlankLine(a:lnum))
-
-                if next_indent <= this_indent
-                        return this_indent
-                elseif next_indent > this_indent
-                        return '>' . next_indent
-                return '0'
-        endfunction
-
-        function! IndentLevel(lnum)
-                        return indent(a:lnum) / &shiftwidth
-        endfunction
-
-        function! NextNonBlankLine(lnum)
-                let numlines = line('$')
-                let current = a:lnum + 1
-
-                while current <= numlines
-                        if getline(current) =~ '\v\S'
-                                return current
-                        endif
-
-                        let current += 1
-                endwhile
-
-                return -2
-        endfunction
-
-        function! MyFoldText()
-                let line = substitute(getline(v:foldstart),
-                        \       '\v%(^\s*)@<="|:$', ' ', 'g') . ' '
-                let lines_count = v:foldend - v:foldstart + 1
-                let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
-                " let foldchar = matchstr(&fillchars, 'fold:\zs.')
-                let foldchar = ' '
-                let foldtextstart = strpart(line, 0, (winwidth(0)*2)/3)
-                let foldtextend = lines_count_text . repeat(foldchar, 8)
-                let foldtextlength = strlen(substitute(foldtextstart . foldtextend,
-                        \ '.', 'x', 'g')) + &foldcolumn
-                return foldtextstart . repeat(' ', winwidth(0)-foldtextlength)
-                        \ . foldtextend
-        endfunction
-        set foldtext=MyFoldText()
-
+        " }}}2
         function! MoveToPrevTab()
                 "there is only one window
                 if tabpagenr('$') == 1 && winnr('$') == 1
