@@ -235,95 +235,93 @@ let g:markdown_include_jekyll_support = 0
 let g:mma_highlight_option = "solarized"
 let g:mma_candy = 1
 " General: {{{1
-        set shell=zsh
-        " Set to auto read when a file is changed from the outside
-                set autoread
-        " Set the window title to the current file being edited.
-                set title
-        " Line numbering
-                set number
-                set relativenumber
-        " Set the number column width to at least two (default: 4)
-                set numberwidth=2
-        " Set the leader to space
-                " Note: Backslash (the default leader) will still work
-                map <Space> <Leader>
-        " Reduce timeout length
-                " This should fix the strange delay occurring in when the escape (^[) key
-                " is pressed.
-                set ttimeout
-                set ttimeoutlen=0
-                set notimeout
-        " Set pwd to location of file of current window
-                " The second command should be superfluous
-                set autochdir
-                " autocmd BufEnter * silent! lcd %:p:h
-" Vim User Interface:
-        " Keep 4 lines around the cursor at all times
-                set scrolloff=4
-        " Set wildmode to complete to the next common match
-                set wildmode=list:longest
-                set wildignorecase
-        " Ignore compiled files
-                set wildignore=*.o,*~,*.pyc
-        " Height of the command bar.
-                " If you have space, you may wish this to be larger to avoid hit-enter
-                " prompts.
-                set cmdheight=1
-        " A buffer becomes hidden when it is abandoned
-                set hid
-        " Configure backspace so it acts as it should act
-                set backspace=eol,start,indent
-        " Allow arrowkeys and h and l to move between lines when at extreme ends.
-                set whichwrap+=<,>,h,l
-        " When searching try to be smart about cases
-                set ignorecase
-                set smartcase
-        " Dream: Would it be possible to enable all searches to use the \Z flag
-                " (i.e., make searches blind to accents and umlauts (e.g. ü, á)?
-        " Highlight search results only while searching
-                augroup vimrc-incsearch-highlight
-                        autocmd!
-                        autocmd CmdlineEnter /,\? :set hlsearch
-                        autocmd CmdlineLeave /,\? :set nohlsearch
-                augroup END
-                " Toggle search highlighting if desired
-                        noremap <silent> <LocalLeader><cr> :set hlsearch!<cr>
-        " Makes search act like search in modern browsers
-                set incsearch
-        " Don't redraw while executing macros (activate if performance is low)
-                " set lazyredraw
-        " Show matching brackets when text indicator is over them
-                set showmatch
-                " How many tenths of a second to blink when matching brackets
-                        set matchtime=1
-        " No annoying sound on errors
-                set noerrorbells
-                set novisualbell
-                set noerrorbells visualbell t_vb=
-                set t_vb=
-                set tm=500
-        " Decrease the length of many prompts:
-                set shortmess=atI
-" Colors
-        " Set dark solarized theme
-                set background=dark
-                set termguicolors
-                colorscheme solarized
-        " Coc highlight color
+set shell=zsh
+" Automatically read a file when it is changed from the outside {{{2
+set autoread
+" Set the window title to the current file being edited. {{{2
+set title
+" Line numbering {{{2
+set number
+set relativenumber
+" Set the number column width to at least two (default: 4) {{{2
+set numberwidth=2
+" Set the leader to space {{{2
+" Note: Backslash (the default leader) will still work
+map <Space> <Leader>
+" Reduce timeout length {{{2
+" This should fix the strange delay occurring in when the escape (^[) key
+" is pressed.
+set ttimeout
+set ttimeoutlen=0
+set notimeout
+" Set pwd to location of file of current window {{{2
+set autochdir
+" Vim User Interface: {{{2
+" Keep 4 lines around the cursor at all times {{{3
+set scrolloff=4
+" Set wildmode to complete to the next common match {{{3
+set wildmode=list:longest
+set wildignorecase
+" Ignore compiled files {{{3
+set wildignore=*.o,*~,*.pyc
+" Height of the command bar. {{{3
+" If you have space, you may wish this to be larger to avoid hit-enter
+" prompts.
+set cmdheight=1
+" A buffer becomes hidden when it is abandoned {{{3
+set hid
+" Configure backspace so it acts as it should act {{{3
+set backspace=eol,start,indent
+" Allow arrowkeys and h and l to move between lines when at extreme ends. {{{3
+set whichwrap+=<,>,h,l
+" When searching, try to be smart about cases {{{3
+set ignorecase
+set smartcase
+" Dream: Would it be possible to enable all searches to use the
+" \Z flag (i.e., make searches blind to accents and umlauts
+" (e.g. ü, á)?
+" Highlight search results only while searching {{{3
+augroup vimrc-incsearch-highlight
+        autocmd!
+        autocmd CmdlineEnter /,\? :set hlsearch
+        autocmd CmdlineLeave /,\? :set nohlsearch
+augroup END
+" Toggle search highlighting if desired {{{3
+noremap <silent> <LocalLeader><cr> :set hlsearch!<cr>
+" Makes search act like search in modern browsers {{{3
+set incsearch
+" Show matching brackets when text indicator is over them {{{3
+set showmatch
+" How many tenths of a second to blink when matching brackets {{{3
+set matchtime=1
+" No annoying sound on errors {{{3
+" set noerrorbells
+" set novisualbell
+" set noerrorbells visualbell t_vb=
+" set t_vb=
+" }}}3
+set timeoutlen=500
+" Decrease the length of many prompts: {{{3
+set shortmess=atI
+" Colors: {{{1
+" Set dark solarized theme {{{2
+set background=dark
+set termguicolors
+colorscheme solarized
+" Coc highlight color {{{2
 
-        " Toggle background color
-                nnoremap <Leader>as :call ToggleBackground()<cr>
-                " Copied from solarized's togglebg.vim
-                function! ToggleBackground()
-                        let &background = ( &background == "dark"? "light" : "dark" )
-                        if exists("g:colors_name")
-                                        exe "colorscheme " . g:colors_name
-                        endif
-                endfunction
-        " Toggle Hexokinase (color display) [Show Colors]
-                noremap <localleader>sc :HexokinaseToggle<cr>
-" Filetypes, backups and undo
+" Toggle background color {{{2
+nnoremap <Leader>as :call ToggleBackground()<cr>
+" Copied from solarized's togglebg.vim {{{2
+function! ToggleBackground()
+        let &background = ( &background == "dark"? "light" : "dark" )
+        if exists("g:colors_name")
+                        exe "colorscheme " . g:colors_name
+        endif
+endfunction
+" Toggle Hexokinase (color display) [Show Colors] {{{2
+noremap <localleader>sc :HexokinaseToggle<cr>
+" Filetypes, backups and undo: {{{1
         " Turn backup off, since most stuff is in SVN, git et.c anyway...
                 set nobackup
                 set nowb
@@ -356,7 +354,7 @@ let g:mma_candy = 1
                 autocmd Filetype gitcommit setlocal spell textwidth=72
         " Make <c-r> act like normal in a terminal.
                 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-" Text, Tab, and Indent Related
+" Text, Tab, and Indent Related {{{1
         " Append mac to the list of file formats (if such a file would be edited)
                 set fileformats=unix,dos,mac
         " In the IBLLinearAlgebra directory, don't use expandtab
@@ -395,12 +393,12 @@ let g:mma_candy = 1
                 nnoremap <leader>P "+P
                 vnoremap <leader>p "+p
                 vnoremap <leader>P "+P
-" Visual mode related
+" Visual mode related {{{1
         " Visual mode pressing * or # searches for the current selection
                 " Super useful! From an idea by Michael Naumann
                 vnoremap <silent> * :call VisualSelection('f')<cr>
                 vnoremap <silent> # :call VisualSelection('b')<cr>
-" Moving around, tabs, windows, and buffers
+" Moving around, tabs, windows, and buffers {{{1
         " NOTE: the function <C-W>i searches for the first occurrence of a variable
         " in a file (i.e. it's first declaration / definition). However, this
         " search is smart-cased (by the settings laid out in this .vimrc). A mod
@@ -590,13 +588,13 @@ let g:mma_candy = 1
 
         noremap mt :call MoveToNextTab()<cr>
         noremap mT :call MoveToPrevTab()<cr>
-" Status line
+" Status line {{{1
         " Always show a status line for every window
         set laststatus=2
         " Only show the tabline if there are multiple tabs
         set showtabline=1
         set showcmd
-" Editing mappings
+" Editing mappings {{{1
         " Swap go-to's for beginning of line and beginning of non-whitespace line.
                 noremap 0 ^
                 noremap ^ 0
@@ -680,7 +678,7 @@ let g:mma_candy = 1
                         execute "redir END"
                         execute "silent belowright 10split " . l:filepath
                 endfunction
-" Vimgrep searching and cope displaying
+" Vimgrep searching and cope displaying {{{1
         " When you press gv you vimgrep after the selected text
                 vnoremap <silent> gv :call VisualSelection('gv')<cr>
         " When running :s(ubstitute), show incremental changes.
@@ -706,7 +704,7 @@ let g:mma_candy = 1
                 "noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
                 "noremap <Leader>n :cn<cr>
                 "noremap <Leader>p :cp<cr>
-" Spell-checking
+" Spell-checking {{{1
         " Check spelling by default
                 " Disable in specific filetype configs if desired (esp. for .csv, .tex, etc.)
                 set spell
@@ -720,7 +718,7 @@ let g:mma_candy = 1
                 noremap <LocalLeader>sp [s
                 noremap <LocalLeader>sa zg
                 noremap <LocalLeader>s? z=
-" Misc
+" Misc {{{1
         " Redraw the screen
                 noremap <LocalLeader>r :mode<cr>
         " Quickly (attempt to) quit vim
@@ -743,7 +741,7 @@ let g:mma_candy = 1
                 noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
         " Yank file name to unnamed register
                 noremap <LocalLeader>gf :let @" = expand("%")<cr>
-" Helper functions
+" Helper functions {{{1
         function! VisualSelection(direction) range
                         let l:saved_reg = @"
                         execute "normal! vgvy"
