@@ -1,6 +1,6 @@
 " Summary: {{{1
 " Maintainer: Jesse Frohlich
-" Version: 1.1.1 (2022-06-02)
+" Version: 1.2.0 (2022-06-02)
 
 " Vim Plug: {{{1
 " Boilerplate: {{{2
@@ -294,12 +294,6 @@ set incsearch
 set showmatch
 " How many tenths of a second to blink when matching brackets {{{3
 set matchtime=1
-" No annoying sound on errors {{{3
-" set noerrorbells
-" set novisualbell
-" set noerrorbells visualbell t_vb=
-" set t_vb=
-" }}}3
 set timeoutlen=500
 " Decrease the length of many prompts: {{{3
 set shortmess=atI
@@ -322,418 +316,419 @@ endfunction
 " Toggle Hexokinase (color display) [Show Colors] {{{2
 noremap <localleader>sc :HexokinaseToggle<cr>
 " Filetypes, backups and undo: {{{1
-        " Turn backup off, since most stuff is in SVN, git et.c anyway... {{{2
-                set nobackup
-                set nowb
-                set noswapfile
-        " New filetype detection {{{2
-                augroup filetypedetect
-                        " Asymptote
-                                au BufRead,BufNewFile *.asy setfiletype asy
-                        " Sagemath
-                                au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
-                augroup end
-                autocmd FileType json syntax match Comment +//.\+$+
-                " Interpret .m files as mathematica by default
-                        let filetype_m = "mma"
-                " Interpret .tex files as LaTeX by default
-                        let g:tex_flavor='latex'
-        augroup terminal
-                " No spellcheck in terminals
-                        autocmd TermOpen * setlocal nospell nonumber norelativenumber modifiable
-                " Automatically enter insert mode when entering terminal buffers
-                        autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
-                        autocmd BufEnter term:// startinsert
-                        autocmd TermOpen * startinsert
-        augroup END
-        " Open a terminal at the bottom {{{2
-                noremap <localleader>tl :belowright 5split +term<cr>
-                noremap <localleader>tv :vs +term<cr>
-                noremap <localleader>tt :tabedit +term<cr>
-        " For git commit messages, limit line width. {{{2
-                autocmd Filetype gitcommit setlocal spell textwidth=72
-        " Make <c-r> act like normal in a terminal. {{{2
-                tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+" Turn backup off, since most stuff is in SVN, git etc. anyway. {{{2
+set nobackup
+set nowb
+set noswapfile
+" New filetype detection {{{2
+" Filetype detect autocmd group {{{3
+augroup filetypedetect 
+" Asymptote {{{4
+au BufRead,BufNewFile *.asy setfiletype asy
+" Sagemath {{{4
+au BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+" }}}4
+augroup end
+" Add comment syntax for json {{{3
+autocmd FileType json syntax match Comment +//.\+$+
+" Interpret .m files as mathematica by default {{{3
+let filetype_m = "mma"
+" Interpret .tex files as LaTeX by default {{{3
+let g:tex_flavor='latex'
+" Terminal settings  {{{3
+augroup terminal
+" No spellcheck in terminals {{{4
+autocmd TermOpen * setlocal nospell nonumber norelativenumber modifiable
+" Automatically enter insert mode when entering terminal buffers {{{4
+autocmd BufEnter * if &l:buftype ==# 'terminal' | startinsert | endif
+autocmd BufEnter term:// startinsert
+autocmd TermOpen * startinsert
+augroup END
+" Open a terminal at the bottom {{{2
+noremap <localleader>tl :belowright 5split +term<cr>
+noremap <localleader>tv :vs +term<cr>
+noremap <localleader>tt :tabedit +term<cr>
+" For git commit messages, limit line width. {{{2
+autocmd Filetype gitcommit setlocal spell textwidth=72
+" Make <c-r> act like normal in a terminal. {{{2
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " Text, Tab, and Indent Related {{{1
-        " Append mac to the list of file formats (if such a file would be edited) {{{2
-                set fileformats=unix,dos,mac
-        " In the IBLLinearAlgebra directory, don't use expandtab {{{2
-                autocmd BufEnter ~/ed/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
-        " Use eight spaces instead of tabs in all contexts {{{2
-                set expandtab
-                set smarttab
-                set shiftwidth=8
-                set tabstop=8
-        " SuperRetab function {{{2
-                " TODO: add this command to a keymap or action hook.
-                command! -nargs=1 -range SuperRetab
-                        \ <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
-        " Whitespace highlighting {{{2
-                nnoremap <leader>S :set list!<cr>
-                set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
-        " Linebreak more cleanly {{{2
-                set lbr
-                set wrap " Wrap lines
-                set breakindent
-                set textwidth=80
-                set colorcolumn=+1,+2,+3
-                let &showbreak= '-> '
-        " Intelligent indenting {{{2
-                set autoindent
-                set smartindent
-        " Make capital Y act as one would expect, but better {{{2
-                noremap Y yg_
-        " Copy to system clipboard {{{2
-                vnoremap <leader>y "+y
-                nnoremap <leader>Y "+yg_
-                nnoremap <leader>y "+y
-                nnoremap <leader>yy "+yy
-        " Paste from clipboard {{{2
-                nnoremap <leader>p "+p
-                nnoremap <leader>P "+P
-                vnoremap <leader>p "+p
-                vnoremap <leader>P "+P
+" Append mac to the list of file formats (if such a file would be edited) {{{2
+set fileformats=unix,dos,mac
+" In the IBLLinearAlgebra directory, don't use expandtab {{{2
+autocmd BufEnter ~/ed/ta/223/wb/IBLLinearAlgebra/* setlocal noexpandtab
+" Use eight spaces instead of tabs in all contexts {{{2
+set expandtab
+set smarttab
+set shiftwidth=8
+set tabstop=8
+" SuperRetab function {{{2
+" TODO: add this command to a keymap or action hook.
+command! -nargs=1 -range SuperRetab  <line1>,<line2>s/\v%(^ *)@<= {<args>}/\t/g
+" Whitespace highlighting {{{2
+nnoremap <leader>S :set list!<cr>
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
+" Linebreak more cleanly {{{2
+set lbr
+set wrap " Wrap lines
+set breakindent
+set textwidth=80
+set colorcolumn=+1,+2,+3
+let &showbreak= '-> '
+" Intelligent indenting {{{2
+set autoindent
+set smartindent
+" Make capital Y act as one would expect, but better {{{2
+noremap Y yg_
+" Copy to system clipboard {{{2
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+yg_
+nnoremap <leader>y "+y
+nnoremap <leader>yy "+yy
+" Paste from clipboard {{{2
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
 " Visual mode related {{{1
 " Visual mode pressing * or # searches for the current selection {{{2
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f')<cr>
 vnoremap <silent> # :call VisualSelection('b')<cr>
 " Moving around, tabs, windows, and buffers {{{1
-        " NOTE: the function <C-W>i searches for the first occurrence of a variable
-        " in a file (i.e. it's first declaration / definition). However, this
-        " search is smart-cased (by the settings laid out in this .vimrc). A mod
-        " should be introduced to change the case rules for this search to be
-        " case-sensitive, since the majority of programming languages have
-        " case-sensitive variable definitions.
-        " Treat long lines as break lines {{{2
-                noremap j gj
-                noremap gj j
-                noremap k gk
-                noremap gk k
-        " Cause ' to return you to the exact cursor position, rather than ` {{{2
-                noremap ' `
-                noremap ` '
-        " Escape exits terminal {{{2
-                tnoremap <Esc> <C-\><C-n>
-                vnoremap // y/<C-R>"<cr>
-        " Enable the mouse in vim (disable with shift) {{{2
-                set mouse=a
-        " By default, open new windows to the right. {{{2
-                set splitright
-        " Smart way to move between windows {{{2
-                noremap <a-S-J> <C-w>J
-                noremap <a-S-K> <C-w>K
-                noremap <a-S-H> <C-w>H
-                noremap <a-S-L> <C-w>L
+" NOTE: the function <C-W>i searches for the first occurrence of a variable
+" in a file (i.e. it's first declaration / definition). However, this
+" search is smart-cased (by the settings laid out in this .vimrc). A mod
+" should be introduced to change the case rules for this search to be
+" case-sensitive, since the majority of programming languages have
+" case-sensitive variable definitions.
+" Treat long lines as break lines {{{2
+noremap j gj
+noremap gj j
+noremap k gk
+noremap gk k
+" Cause ' to return you to the exact cursor position, rather than ` {{{2
+noremap ' `
+noremap ` '
+" Escape exits terminal {{{2
+tnoremap <Esc> <C-\><C-n>
+vnoremap // y/<C-R>"<cr>
+" Enable the mouse in vim (disable with shift) {{{2
+set mouse=a
+" By default, open new windows to the right. {{{2
+set splitright
+" Smart way to move between windows {{{2
+noremap <a-S-J> <C-w>J
+noremap <a-S-K> <C-w>K
+noremap <a-S-H> <C-w>H
+noremap <a-S-L> <C-w>L
 
-                " TODO: test the terminal usefulness
-                tnoremap <a-S-J> <C-w>J
-                tnoremap <a-S-K> <C-w>K
-                tnoremap <a-S-H> <C-w>H
-                tnoremap <a-S-L> <C-w>L
+" TODO: test the terminal usefulness
+tnoremap <a-S-J> <C-w>J
+tnoremap <a-S-K> <C-w>K
+tnoremap <a-S-H> <C-w>H
+tnoremap <a-S-L> <C-w>L
 
-                noremap <C-j> <C-w>j
-                noremap <C-k> <C-w>k
-                noremap <C-h> <C-w>h
-                noremap <C-l> <C-w>l
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
 
-                noremap <a-j> <C-w>j
-                noremap <a-k> <C-w>k
-                noremap <a-h> <C-w>h
-                noremap <a-l> <C-w>l
+noremap <a-j> <C-w>j
+noremap <a-k> <C-w>k
+noremap <a-h> <C-w>h
+noremap <a-l> <C-w>l
 
-                " TODO: test the terminal usefulness
-                tnoremap <a-j> <c-\><c-n><C-w>j
-                tnoremap <a-k> <c-\><c-n><C-w>k
-                tnoremap <a-h> <c-\><c-n><C-w>h
-                tnoremap <a-l> <c-\><c-n><C-w>l
+" TODO: test the terminal usefulness
+tnoremap <a-j> <c-\><c-n><C-w>j
+tnoremap <a-k> <c-\><c-n><C-w>k
+tnoremap <a-h> <c-\><c-n><C-w>h
+tnoremap <a-l> <c-\><c-n><C-w>l
 
-                tnoremap <C-h> <c-\><c-n><C-W>h
-                tnoremap <C-l> <c-\><c-n><C-W>l
-                tnoremap <C-j> <c-\><c-n><C-W>j
-                tnoremap <C-k> <c-\><c-n><C-W>k
-                tnoremap <c-o> <c-\><c-n>
+tnoremap <C-h> <c-\><c-n><C-W>h
+tnoremap <C-l> <c-\><c-n><C-W>l
+tnoremap <C-j> <c-\><c-n><C-W>j
+tnoremap <C-k> <c-\><c-n><C-W>k
+tnoremap <c-o> <c-\><c-n>
 
-                noremap <Leader>H <C-w>H
-                noremap <Leader>L <C-w>L
-                noremap <Leader>J <C-w>J
-                noremap <Leader>K <C-w>K
-        " Close windows with one fewer keystroke {{{2
-                noremap <Leader>d :q<cr>
-                noremap <Leader>D :bdelete<cr>
-        " Buffer maps {{{2
-                " Close the current buffer
-                        noremap <LocalLeader>bd :Bclose<cr>
-                " Close all the buffers
-                        noremap <LocalLeader>ba :1,1000 bd!<cr>
-                " Open alternate buffer (can be used to reopen a closed tab)
-                        noremap <LocalLeader>br :vs<Bar>:b#<cr>
-        " Useful mappings for managing tabs: {{{2
-                noremap <LocalLeader>tn :tabnew<cr>
-                noremap <LocalLeader>tc :tabclose<cr>
-                noremap <LocalLeader>tm :-tabmove<cr>
-                noremap <LocalLeader>tM :+tabmove<cr>
-        " Open a new tab with the current buffer's path {{{2
-                " Super useful when editing files in the same directory
-                noremap <LocalLeader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-        " Specify the behavior when switching between buffers {{{2
-                try
-                        set switchbuf=useopen,usetab,newtab
-                        set showtabline=2
-                catch
-                endtry
-        " Return to last edit position when opening files (You want this!) {{{2
-                autocmd BufReadPost *
-                        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                        \ exe "normal! g`\"" |
-                        \ endif
-        " Remember info about open buffers on close {{{2
-                set shada^=%
-        " }}}2
-        function! MoveToPrevTab()
-                "there is only one window
-                if tabpagenr('$') == 1 && winnr('$') == 1
-                        return
-                endif
-                "preparing new window
-                let l:tab_nr = tabpagenr('$')
-                let l:cur_buf = bufnr('%')
-                if tabpagenr() != 1
-                        close!
-                        if l:tab_nr == tabpagenr('$')
-                                tabprev
-                        endif
-                        sp
-                else
-                        close!
-                        exe "0tabnew"
-                endif
-                "opening current buffer in new window
-                exe "b".l:cur_buf
-        endfunc
-
-        function! MoveToNextTab()
-                " there is only one window
-                if tabpagenr('$') == 1 && winnr('$') == 1
-                        return
-                endif
-                "preparing new window
-                let l:tab_nr = tabpagenr('$')
-                let l:cur_buf = bufnr('%')
-                if tabpagenr() < tab_nr
-                        close!
-                        if l:tab_nr == tabpagenr('$')
-                                tabnext
-                        endif
-                        sp
-                else
-                        close!
-                        tabnew
-                endif
-                " opening current buffer in new window
-                exe "b".l:cur_buf
-        endfunc
-
-        noremap mt :call MoveToNextTab()<cr>
-        noremap mT :call MoveToPrevTab()<cr>
+noremap <Leader>H <C-w>H
+noremap <Leader>L <C-w>L
+noremap <Leader>J <C-w>J
+noremap <Leader>K <C-w>K
+" Close windows with one fewer keystroke {{{2
+noremap <Leader>d :q<cr>
+noremap <Leader>D :bdelete<cr>
+" Buffer maps {{{2
+" Close the current buffer {{{3
+noremap <LocalLeader>bd :Bclose<cr>
+" Close all the buffers {{{3
+noremap <LocalLeader>ba :1,1000 bd!<cr>
+" Open alternate buffer (can be used to reopen a closed tab) {{{3
+noremap <LocalLeader>br :vs<Bar>:b#<cr>
+" Useful mappings for managing tabs: {{{2
+noremap <LocalLeader>tn :tabnew<cr>
+noremap <LocalLeader>tc :tabclose<cr>
+noremap <LocalLeader>tm :-tabmove<cr>
+noremap <LocalLeader>tM :+tabmove<cr>
+" Open a new tab with the current buffer's path {{{2
+" Super useful when editing files in the same directory
+noremap <LocalLeader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+" Specify the behavior when switching between buffers {{{2
+try
+        set switchbuf=useopen,usetab,split
+        set showtabline=2
+catch
+endtry
+" Return to last edit position when opening files (You want this!) {{{2
+autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \ exe "normal! g`\"" |
+        \ endif
+" Remember info about open buffers on close {{{2
+        set shada^=%
+" }}}2
+" Move buffers between tabs {{{2
+noremap mt :call MoveToNextTab()<cr>
+noremap mT :call MoveToPrevTab()<cr>
 " Status line {{{1
-        " Always show a status line for every window  {{{2
-        set laststatus=2
-        " Only show the tabline if there are multiple tabs {{{2
-        set showtabline=1
-        set showcmd
+" Always show a status line for every window  {{{2
+set laststatus=2
+" Only show the tabline if there are multiple tabs {{{2
+set showtabline=1
+set showcmd
 " Editing mappings {{{1
-        " Swap go-to's for beginning of line and beginning of non-whitespace line. {{{2
-                noremap 0 ^
-                noremap ^ 0
-        " Swap ; and : in normal mode (and vice-versa) {{{2
-                " Note: Or should this be implemented always?
-                noremap ; :
-                noremap : ;
-                onoremap ; :
-                onoremap : ;
-                "set langmap=:\\;,\\;:
-        " p pastes to current indentation, whereas <c-p> pastes exactly. {{{2
-                noremap p ]p
-                noremap <C-p> p
-        " Insert lines above or below current line. {{{2
-                noremap <LocalLeader>O moO<Esc>`o
-                noremap <LocalLeader>o moo<Esc>`o
-        " This still must be fixed {{{2
-                silent! call repeat#set("<LocalLeader>O", v:count)
-                silent! call repeat#set("<LocalLeader>o", v:count)
-        " Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac {{{2
-                " TODO: if desired, also add '-' and '_' mappings
-                nnoremap - mz:m+<cr>`z
-                nnoremap _ mz:m-2<cr>`z
-                vnoremap - :m'>+<cr>`<my`>mzgv`yo`z
-                vnoremap _ :m'<-2<cr>`>my`<mzgv`yo`z
-        " Clean up extraneous whitespace {{{2
-                " Note: Good regex for removing superfluous spaces: be careful for table
-                " alignment in, say TeX documents: \v([^ ]@<=) +
-                noremap <LocalLeader>ts :call DeleteTrailingWS()<cr>
-                noremap <LocalLeader>tS :call DeleteInternalWS()<cr>
-                noremap <LocalLeader>T :call DeleteInternalWS()<cr>
-                func! DeleteTrailingWS()
-                                " Add files from which you don't want to remove whitespace.
-                                " if &filetype =~ 'vim'
-                                                " return
-                                " endif
-                                exe "normal! mz"
-                                %s/\s\+$//e
-                                " %s/\v(\.)@<=\s{2,}/ /e
-                                exe "normal! `z"
-                endfunc
-                func! DeleteInternalWS()
-                                " Add files from which you don't want to remove whitespace.
-                                "if &filetype =~ 'vim'
-                                                "return
-                                "endif
-                                exe "normal! mz"
-                                %s/\v[^ ]@<= {2,}/ /ge
-                                exe "normal! `z"
-                endfunc
-        " Don't insert two spaces after a '.', '!', or '?' {{{2
-                set nojoinspaces
-        " Save and run the :make command {{{2
-                nnoremap <LocalLeader>m :w!<cr>:make<cr>
-        " Go to the link under the cursor (browser-dependant) {{{2
-                noremap gl ml"lyiW:!vimb <c-r>l<cr>`l
-        " Use backspace to move through jumplist {{{2
-                " This could also be removed once ctrl is made more accesible. However, it
-                " *does* match nicely with the already in place tab...
-                noremap <S-Tab> <C-o>
-                noremap <bs> <C-o>
-                noremap <s-bs> <C-i>
-        " Quick access to config files {{{2
-                " Edit and source this file and edit current filetype settings.
-                nnoremap <Leader>ef :call EditFiletype()<cr>
-                nnoremap <Leader>es :UltiSnipsEdit<cr>
-                nnoremap <Leader>ev :tabedit $MYVIMRC<cr>
-                nnoremap <Leader>sv :source $MYVIMRC<cr>
+" Swap go-to's for beginning of line and beginning of non-whitespace line. {{{2
+noremap 0 ^
+noremap ^ 0
+" Swap ; and : in normal mode (and vice-versa) {{{2
+noremap ; :
+noremap : ;
+onoremap ; :
+onoremap : ;
+" p pastes to current indentation, whereas <c-p> pastes exactly. {{{2
+noremap p ]p
+noremap <C-p> p
+" Insert lines above or below current line. {{{2
+noremap <LocalLeader>O moO<Esc>`o
+noremap <LocalLeader>o moo<Esc>`o
+" TODO: This still must be fixed 
+silent! call repeat#set("<LocalLeader>O", v:count)
+silent! call repeat#set("<LocalLeader>o", v:count)
+" Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac {{{2
+nnoremap - mz:m+<cr>`z
+nnoremap _ mz:m-2<cr>`z
+vnoremap - :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap _ :m'<-2<cr>`>my`<mzgv`yo`z
+" Clean up extraneous whitespace {{{2
+" Note: Good regex for removing superfluous spaces: be careful for table
+" alignment in, say TeX documents: \v([^ ]@<=) +
+noremap <LocalLeader>ts :call DeleteTrailingWS()<cr>
+noremap <LocalLeader>tS :call DeleteInternalWS()<cr>
+noremap <LocalLeader>T :call DeleteInternalWS()<cr>
+func! DeleteTrailingWS()
+        " Add files from which you don't want to remove whitespace.
+        " if &filetype =~ 'vim'
+                        " return
+        " endif
+        exe "normal! mz"
+        %s/\s\+$//e
+        " %s/\v(\.)@<=\s{2,}/ /e
+        exe "normal! `z"
+endfunc
+func! DeleteInternalWS()
+        " Add files from which you don't want to remove whitespace.
+        "if &filetype =~ 'vim'
+                        "return
+        "endif
+        exe "normal! mz"
+        %s/\v[^ ]@<= {2,}/ /ge
+        exe "normal! `z"
+endfunc
+" Don't insert two spaces after a '.', '!', or '?' {{{2
+set nojoinspaces
+" Save and run the :make command {{{2
+nnoremap <LocalLeader>m :w!<cr>:make<cr>
+" Go to the link under the cursor (browser-dependant) {{{2
+noremap gl ml"lyiW:!vimb <c-r>l<cr>`l
+" Use backspace to move through jumplist {{{2
+" This could also be removed once ctrl is made more accesible. However, it
+" *does* match nicely with the already in place tab...
+noremap <S-Tab> <C-o>
+noremap <bs> <C-o>
+noremap <s-bs> <C-i>
+" Quick access to config files {{{2
+" Edit and source this file and edit current filetype settings.
+nnoremap <Leader>ef :call EditFiletype()<cr>
+nnoremap <Leader>es :UltiSnipsEdit<cr>
+nnoremap <Leader>ev :tabedit $MYVIMRC<cr>
+nnoremap <Leader>sv :source $MYVIMRC<cr>
 
-                function! EditFiletype()
-                        let configdir = fnamemodify(expand("$MYVIMRC"),":p:h")
-                        execute ":tabedit" . configdir . "/ftplugin/" . &filetype .".vim"
-                endfunction
-        " Open a quick buffer with currently defined mappings {{{2
-                nnoremap <Leader>sm :call SeeMap(0)<cr>
-                nnoremap <Leader>sM :call SeeMap(1)<cr>
-                function! SeeMap(verbose)
-                        let l:filepath = "/tmp/vim-map-keys"
-                        execute "redir! > " . l:filepath
-                        execute "silent " . (a:verbose==1? "verbose":"") . " map"
-                        execute "redir END"
-                        execute "silent belowright 10split " . l:filepath
-                endfunction
+function! EditFiletype()
+        let configdir = fnamemodify(expand("$MYVIMRC"),":p:h")
+        execute ":tabedit" . configdir . "/ftplugin/" . &filetype .".vim"
+endfunction
+" Open a quick buffer with currently defined mappings {{{2
+nnoremap <Leader>sm :call SeeMap(0)<cr>
+nnoremap <Leader>sM :call SeeMap(1)<cr>
+function! SeeMap(verbose)
+        let l:filepath = "/tmp/vim-map-keys"
+        execute "redir! > " . l:filepath
+        execute "silent " . (a:verbose==1? "verbose":"") . " map"
+        execute "redir END"
+        execute "silent belowright 10split " . l:filepath
+endfunction
 " Vimgrep searching and cope displaying {{{1
-        " When you press gv you vimgrep after the selected text {{{2
-                vnoremap <silent> gv :call VisualSelection('gv')<cr>
-        " When running :s(ubstitute), show incremental changes. {{{2
-                set inccommand=split
-        " Search and replace selected text (FIXME: non-functional!) {{{2
-                vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
-        " Quickfix TODO: clean up {{{2
-                " Do :help cope if you are unsure what cope is. It's super useful!
-                "
-                " When you search with vimgrep, display your results in cope by doing:
-                " <LocalLeader>cc
-                "
-                " To go to the next search result do:
-                " <LocalLeader>n
-                "
-                " To go to the previous search results do:
-                " <LocalLeader>p
-                "
-                nnoremap <Leader>cc :rightbelow cope<cr>
-                " Navigate through quickfix windows
-                "nnoremap <Leader>cn :cnewer<cr>
-                "nnoremap <Leader>cp :colder<cr>
-                "noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
-                "noremap <Leader>n :cn<cr>
-                "noremap <Leader>p :cp<cr>
+" When you press gv you vimgrep after the selected text {{{2
+vnoremap <silent> gv :call VisualSelection('gv')<cr>
+" When running :s(ubstitute), show incremental changes. {{{2
+set inccommand=split
+" Search and replace selected text (FIXME: non-functional!) {{{2
+vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
+" Quickfix TODO: clean up {{{2
+" Do :help cope if you are unsure what cope is. It's super useful!
+"
+" When you search with vimgrep, display your results in cope by doing:
+" <LocalLeader>cc
+"
+" To go to the next search result do:
+" <LocalLeader>n
+"
+" To go to the previous search results do:
+" <LocalLeader>p
+"
+nnoremap <Leader>cc :rightbelow cope<cr>
+" Navigate through quickfix windows
+"nnoremap <Leader>cn :cnewer<cr>
+"nnoremap <Leader>cp :colder<cr>
+"noremap <Leader>co :%y<cr>:tabnew<cr>:set syntax=qf<cr>pgg
+"noremap <Leader>n :cn<cr>
+"noremap <Leader>p :cp<cr>
 " Spell-checking {{{1
-        " Check spelling by default {{{2
-                " Disable in specific filetype configs if desired (esp. for .csv, .tex, etc.)
-                set spell
-        " Expand spell-checking to multiple languages (Be careful with this...) {{{2
-                set spelllang=en
-                "set spelllang=en,es,de
-        " Toggle spell checking {{{2
-                noremap <Leader>ss :setlocal spell!<cr>
-        " Shortcuts using <LocalLeader> {{{2
-                noremap <LocalLeader>sn ]s
-                noremap <LocalLeader>sp [s
-                noremap <LocalLeader>sa zg
-                noremap <LocalLeader>s? z=
+" Check spelling by default {{{2
+" Disable in specific filetype configs if desired (esp. for .csv, .tex, etc.)
+set spell
+" Expand spell-checking to multiple languages (Be careful with this...) {{{2
+set spelllang=en
+"set spelllang=en,es,de
+" Toggle spell checking {{{2
+noremap <Leader>ss :setlocal spell!<cr>
+" Shortcuts using <LocalLeader> {{{2
+noremap <LocalLeader>sn ]s
+noremap <LocalLeader>sp [s
+noremap <LocalLeader>sa zg
+noremap <LocalLeader>s? z=
 " Misc {{{1
-        " Redraw the screen {{{2
-                noremap <LocalLeader>r :mode<cr>
-        " Quickly (attempt to) quit vim {{{2
-                noremap <LocalLeader>qq :qall<cr>
-        " Save the current vim session and quit (warn if there are unsaved changes). {{{2
-                noremap <LocalLeader>qs :mksession!<cr>:qall<cr>
-        " Start a web server in the current directory. {{{2
-                noremap <LocalLeader>aw :call jobstart('python -m http.server')<cr>
-        " Toggle paste mode on and off {{{2
-                noremap <LocalLeader>Wp :setlocal paste!<cr>
-        " 'Add Title'-case to the current line {{{2
-                " This fantastic vim-sed will take a title and capitalize all words that are
-                " at least 3 characters long!
-                noremap <silent> <LocalLeader>at guu:call setline(line('.'),
-                                \ substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<cr>
-        " Underline the current line (with dashes "u", or equals "U"). {{{2
-                noremap <LocalLeader>au yypVr-
-                noremap <LocalLeader>aU yypVr=
-        " 'Add Date' at the cursor (not very useful) {{{2
-                noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
-        " Yank file name to unnamed register {{{2
-                noremap <LocalLeader>gf :let @" = expand("%")<cr>
+" Redraw the screen {{{2
+        noremap <LocalLeader>r :mode<cr>
+" Quickly (attempt to) quit vim {{{2
+noremap <LocalLeader>qq :qall<cr>
+" Save the current vim session and quit (warn if there are unsaved changes). {{{2
+noremap <LocalLeader>qs :mksession!<cr>:qall<cr>
+" Start a web server in the current directory. {{{2
+noremap <LocalLeader>aw :call jobstart('python -m http.server')<cr>
+" Toggle paste mode on and off {{{2
+noremap <LocalLeader>Wp :setlocal paste!<cr>
+" 'Add Title'-case to the current line {{{2
+" This fantastic vim-sed will take a title and capitalize all words that are
+" at least 3 characters long!
+noremap <silent> <LocalLeader>at guu:call setline(line('.'),
+        \ substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<cr>
+" Underline the current line (with dashes "u", or equals "U"). {{{2
+noremap <LocalLeader>au yypVr-
+noremap <LocalLeader>aU yypVr=
+" 'Add Date' at the cursor (not very useful) {{{2
+noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
+" Yank file name to unnamed register {{{2
+noremap <LocalLeader>gf :let @" = expand("%")<cr>
 " Helper functions {{{1
 " Visual selection function {{{2
-        function! VisualSelection(direction) range
-                        let l:saved_reg = @"
-                        execute "normal! vgvy"
+function! VisualSelection(direction) range
+        let l:saved_reg = @"
+        execute "normal! vgvy"
 
-                        let l:pattern = escape(@", '\\/.*$^~[]')
-                        let l:pattern = substitute(l:pattern, "\n$", "", "")
+        let l:pattern = escape(@", '\\/.*$^~[]')
+        let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-                        if a:direction == 'b'
-                                        execute "normal ?" . l:pattern . "^M"
-                        elseif a:direction == 'gv'
-                                        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-                        elseif a:direction == 'replace'
-                                        call CmdLine("%s" . '/'. l:pattern . '/')
-                        elseif a:direction == 'f'
-                                        execute "normal /" . l:pattern . "^M"
-                        endif
+        if a:direction == 'b'
+                execute "normal ?" . l:pattern . "^M"
+        elseif a:direction == 'gv'
+                call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+        elseif a:direction == 'replace'
+                call CmdLine("%s" . '/'. l:pattern . '/')
+        elseif a:direction == 'f'
+                execute "normal /" . l:pattern . "^M"
+        endif
 
-                        let @/ = l:pattern
-                        let @" = l:saved_reg
-        endfunction
-        function! CmdLine(str)
-                exe "menu Foo.Bar :" . a:str
-                emenu Foo.Bar
-                unmenu Foo
-        endfunction
-        " Don't close window when deleting a buffer {{{2
-                command! Bclose call <SID>BufcloseCloseIt()
-                function! <SID>BufcloseCloseIt()
-                         let l:currentBufNum = bufnr("%")
-                         let l:alternateBufNum = bufnr("#")
+        let @/ = l:pattern
+        let @" = l:saved_reg
+endfunction
+function! CmdLine(str)
+        exe "menu Foo.Bar :" . a:str
+        emenu Foo.Bar
+        unmenu Foo
+endfunction
+" Don't close window when deleting a buffer {{{2
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+         let l:currentBufNum = bufnr("%")
+         let l:alternateBufNum = bufnr("#")
 
-                         if buflisted(l:alternateBufNum)
-                                 buffer #
-                         else
-                                 bnext
-                         endif
+         if buflisted(l:alternateBufNum)
+                 buffer #
+         else
+                 bnext
+         endif
 
-                         if bufnr("%") == l:currentBufNum
-                                 new
-                         endif
+         if bufnr("%") == l:currentBufNum
+                 new
+         endif
 
-                         if buflisted(l:currentBufNum)
-                                 execute("bdelete! ".l:currentBufNum)
-                         endif
-                endfunction
+         if buflisted(l:currentBufNum)
+                 execute("bdelete! ".l:currentBufNum)
+         endif
+endfunction
+" Move files between tabs {{{2
+function! MoveToPrevTab()
+        "there is only one window
+        if tabpagenr('$') == 1 && winnr('$') == 1
+                return
+        endif
+        "preparing new window
+        let l:tab_nr = tabpagenr('$')
+        let l:cur_buf = bufnr('%')
+        if tabpagenr() != 1
+                close!
+                if l:tab_nr == tabpagenr('$')
+                        tabprev
+                endif
+                sp
+        else
+                close!
+                exe "0tabnew"
+        endif
+        "opening current buffer in new window
+        exe "b".l:cur_buf
+endfunc
+
+function! MoveToNextTab()
+        " there is only one window
+        if tabpagenr('$') == 1 && winnr('$') == 1
+                return
+        endif
+        "preparing new window
+        let l:tab_nr = tabpagenr('$')
+        let l:cur_buf = bufnr('%')
+        if tabpagenr() < tab_nr
+                close!
+                if l:tab_nr == tabpagenr('$')
+                        tabnext
+                endif
+                sp
+        else
+                close!
+                tabnew
+        endif
+        " opening current buffer in new window
+        exe "b".l:cur_buf
+endfunc
 " vim: foldmethod=marker
