@@ -537,38 +537,38 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
         noremap mt :call MoveToNextTab()<cr>
         noremap mT :call MoveToPrevTab()<cr>
 " Status line {{{1
-        " Always show a status line for every window
+        " Always show a status line for every window  {{{2
         set laststatus=2
-        " Only show the tabline if there are multiple tabs
+        " Only show the tabline if there are multiple tabs {{{2
         set showtabline=1
         set showcmd
 " Editing mappings {{{1
-        " Swap go-to's for beginning of line and beginning of non-whitespace line.
+        " Swap go-to's for beginning of line and beginning of non-whitespace line. {{{2
                 noremap 0 ^
                 noremap ^ 0
-        " Swap ; and : in normal mode (and vice-versa)
+        " Swap ; and : in normal mode (and vice-versa) {{{2
                 " Note: Or should this be implemented always?
                 noremap ; :
                 noremap : ;
                 onoremap ; :
                 onoremap : ;
                 "set langmap=:\\;,\\;:
-        " p pastes to current indentation, whereas <c-p> pastes exactly.
+        " p pastes to current indentation, whereas <c-p> pastes exactly. {{{2
                 noremap p ]p
                 noremap <C-p> p
-        " Insert lines above or below current line.
+        " Insert lines above or below current line. {{{2
                 noremap <LocalLeader>O moO<Esc>`o
                 noremap <LocalLeader>o moo<Esc>`o
-        " This still must be fixed
+        " This still must be fixed {{{2
                 silent! call repeat#set("<LocalLeader>O", v:count)
                 silent! call repeat#set("<LocalLeader>o", v:count)
-        " Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac
+        " Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac {{{2
                 " TODO: if desired, also add '-' and '_' mappings
                 nnoremap - mz:m+<cr>`z
                 nnoremap _ mz:m-2<cr>`z
                 vnoremap - :m'>+<cr>`<my`>mzgv`yo`z
                 vnoremap _ :m'<-2<cr>`>my`<mzgv`yo`z
-        " Clean up extraneous whitespace
+        " Clean up extraneous whitespace {{{2
                 " Note: Good regex for removing superfluous spaces: be careful for table
                 " alignment in, say TeX documents: \v([^ ]@<=) +
                 noremap <LocalLeader>ts :call DeleteTrailingWS()<cr>
@@ -593,19 +593,19 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
                                 %s/\v[^ ]@<= {2,}/ /ge
                                 exe "normal! `z"
                 endfunc
-        " Don't insert two spaces after a '.', '!', or '?'
+        " Don't insert two spaces after a '.', '!', or '?' {{{2
                 set nojoinspaces
-        " Save and run the :make command
+        " Save and run the :make command {{{2
                 nnoremap <LocalLeader>m :w!<cr>:make<cr>
-        " Go to the link under the cursor (browser-dependant)
+        " Go to the link under the cursor (browser-dependant) {{{2
                 noremap gl ml"lyiW:!vimb <c-r>l<cr>`l
-        " Use backspace to move through jumplist
+        " Use backspace to move through jumplist {{{2
                 " This could also be removed once ctrl is made more accesible. However, it
                 " *does* match nicely with the already in place tab...
                 noremap <S-Tab> <C-o>
                 noremap <bs> <C-o>
                 noremap <s-bs> <C-i>
-        " Quick access to config files
+        " Quick access to config files {{{2
                 " Edit and source this file and edit current filetype settings.
                 nnoremap <Leader>ef :call EditFiletype()<cr>
                 nnoremap <Leader>es :UltiSnipsEdit<cr>
@@ -616,7 +616,7 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
                         let configdir = fnamemodify(expand("$MYVIMRC"),":p:h")
                         execute ":tabedit" . configdir . "/ftplugin/" . &filetype .".vim"
                 endfunction
-        " Open a quick buffer with currently defined mappings
+        " Open a quick buffer with currently defined mappings {{{2
                 nnoremap <Leader>sm :call SeeMap(0)<cr>
                 nnoremap <Leader>sM :call SeeMap(1)<cr>
                 function! SeeMap(verbose)
@@ -627,13 +627,13 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
                         execute "silent belowright 10split " . l:filepath
                 endfunction
 " Vimgrep searching and cope displaying {{{1
-        " When you press gv you vimgrep after the selected text
+        " When you press gv you vimgrep after the selected text {{{2
                 vnoremap <silent> gv :call VisualSelection('gv')<cr>
-        " When running :s(ubstitute), show incremental changes.
+        " When running :s(ubstitute), show incremental changes. {{{2
                 set inccommand=split
-        " Search and replace selected text (FIXME: non-functional!)
+        " Search and replace selected text (FIXME: non-functional!) {{{2
                 vnoremap <silent> <LocalLeader>r :call VisualSelection('replace')<cr>
-        " Quickfix TODO: clean up
+        " Quickfix TODO: clean up {{{2
                 " Do :help cope if you are unsure what cope is. It's super useful!
                 "
                 " When you search with vimgrep, display your results in cope by doing:
@@ -653,41 +653,41 @@ vnoremap <silent> # :call VisualSelection('b')<cr>
                 "noremap <Leader>n :cn<cr>
                 "noremap <Leader>p :cp<cr>
 " Spell-checking {{{1
-        " Check spelling by default
+        " Check spelling by default {{{2
                 " Disable in specific filetype configs if desired (esp. for .csv, .tex, etc.)
                 set spell
-        " Expand spell-checking to multiple languages (Be careful with this...)
+        " Expand spell-checking to multiple languages (Be careful with this...) {{{2
                 set spelllang=en
                 "set spelllang=en,es,de
-        " Toggle spell checking
+        " Toggle spell checking {{{2
                 noremap <Leader>ss :setlocal spell!<cr>
-        " Shortcuts using <LocalLeader>
+        " Shortcuts using <LocalLeader> {{{2
                 noremap <LocalLeader>sn ]s
                 noremap <LocalLeader>sp [s
                 noremap <LocalLeader>sa zg
                 noremap <LocalLeader>s? z=
 " Misc {{{1
-        " Redraw the screen
+        " Redraw the screen {{{2
                 noremap <LocalLeader>r :mode<cr>
-        " Quickly (attempt to) quit vim
+        " Quickly (attempt to) quit vim {{{2
                 noremap <LocalLeader>qq :qall<cr>
-        " Save the current vim session and quit (warn if there are unsaved changes).
+        " Save the current vim session and quit (warn if there are unsaved changes). {{{2
                 noremap <LocalLeader>qs :mksession!<cr>:qall<cr>
-        " Start a web server in the current directory.
+        " Start a web server in the current directory. {{{2
                 noremap <LocalLeader>aw :call jobstart('python -m http.server')<cr>
-        " Toggle paste mode on and off
+        " Toggle paste mode on and off {{{2
                 noremap <LocalLeader>Wp :setlocal paste!<cr>
-        " 'Add Title'-case to the current line
+        " 'Add Title'-case to the current line {{{2
                 " This fantastic vim-sed will take a title and capitalize all words that are
                 " at least 3 characters long!
                 noremap <silent> <LocalLeader>at guu:call setline(line('.'),
                                 \ substitute(getline('.'), '\v<(.)(\w{3,})', '\u\1\L\2', 'g'))<cr>
-        " Underline the current line (with dashes "u", or equals "U").
+        " Underline the current line (with dashes "u", or equals "U"). {{{2
                 noremap <LocalLeader>au yypVr-
                 noremap <LocalLeader>aU yypVr=
-        " 'Add Date' at the cursor (not very useful)
+        " 'Add Date' at the cursor (not very useful) {{{2
                 noremap <LocalLeader>ad a<C-R>=strftime("%Y-%m-%d")<cr><Esc>
-        " Yank file name to unnamed register
+        " Yank file name to unnamed register {{{2
                 noremap <LocalLeader>gf :let @" = expand("%")<cr>
 " Helper functions {{{1
         function! VisualSelection(direction) range
