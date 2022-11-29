@@ -143,6 +143,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 nmap ga <Plug>(UnicodeGA)
 " gitgutter {{{4
 set updatetime=100
+let g:gitgutter_preview_win_floating = 0
 " LSP Configuration: {{{4
 " lua require'lspconfig'.hls.setup{}
 " NERDcommenter: {{{4
