@@ -47,8 +47,7 @@ Plug 'tpope/vim-speeddating'
 " Intelligent Repeating: for 'speeddating' & 'surround' {{{4
 Plug 'tpope/vim-repeat'
 " LSP Configuration: {{{4
-" Plug 'neovim/nvim-lspconfig'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
 " Rename Files: {{{4
 Plug 'danro/rename.vim'
 " Set $EDITOR to current neovim instance: {{{4
@@ -226,6 +225,7 @@ let g:vimtex_compiler_latexmk = {
                 \        '-file-line-error',
                 \        '-synctex=1',
                 \        '-interaction=nonstopmode',
+                \        '-shell-escape',
                 \       ],
                 \}
 " Markdown: vim-markdown {{{4
