@@ -15,7 +15,7 @@ nnoremap <buffer> <LocalLeader>m :w!<cr>:make<cr>
 nnoremap <buffer> <localleader>v :vs +term\ stack\ test<cr>
 nnoremap <buffer> <localleader>V :vs +term\ stack\ build<cr>
 nnoremap <buffer> <localleader>W :rightbelow sp +term\ ghci\ %:r<cr>
-nnoremap <buffer> <localleader>w :vs +term\ ghci\ %:r<cr>
+nnoremap <buffer> <localleader>w :vs term://stack\ ghci<cr>
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
