@@ -1,6 +1,6 @@
 " setlocal makeprg=latexmk\ -pdflatex=lualatex\ -silent\ -pdf\ %
-" setlocal makeprg=latexmk\ -pdflatex=lualatex\ -pdf\ %
-setlocal makeprg=latexmk\ -pdflatex=pdflatex\ -pdf\ %
+setlocal makeprg=latexmk\ -pdflatex=lualatex\ -pdf\ %
+" setlocal makeprg=latexmk\ -pdflatex=pdflatex\ -pdf\ %
 setlocal errorformat=%f:\ %l.%c:\ %m
 setlocal fdm=syntax
 "setlocal textwidth=0 " For long paragraphs.
