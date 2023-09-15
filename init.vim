@@ -4,9 +4,7 @@
 
 " Vim Plug: {{{1
 " Boilerplate: {{{2
-set nocompatible
 let g:plug_shallow=0
-" let g:plug_threads=4
 call plug#begin('~/.config/nvim/plugged')
 " Plugins: {{{2
 " Editor Specific: {{{3
