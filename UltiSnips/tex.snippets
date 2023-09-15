@@ -2,43 +2,38 @@
 
 snippet cs "Case Study"
 \caseStudy{
-  $1
+        $1
 }{
-  $2
+        $2
 }
 endsnippet
 
 ## Environments
 snippet eg "Example"
 \begin{example}
-  $0
+        $0
 \end{example}
 endsnippet
 
 snippet q "Question"
 \question
 endsnippet
-# snippet q "Question"
-# \begin{question}
-  # $0
-# \end{question}
-# endsnippet
 
 snippet an "Answer"
 \begin{answer}
-  $0
+        $0
 \end{answer}
 endsnippet
 
 snippet resp "Response"
 \begin{response}
-  $0
+        $0
 \end{response}
 endsnippet
 
 snippet fact "Fact"
 \begin{fact}
-  $0
+        $0
 \end{fact}
 endsnippet
 
@@ -60,37 +55,37 @@ endsnippet
 
 snippet prop "Proposition"
 \begin{proposition}
-  $0
+        $0
 \end{proposition}
 endsnippet
 
 snippet cor "Corollary"
 \begin{corollary}
-  $0
+        $0
 \end{corollary}
 endsnippet
 
 snippet thm "Theorem"
 \begin{theorem}
-  $0
+        $0
 \end{theorem}
 endsnippet
 
 snippet conj "Conjecture"
 \begin{conjecture}
-  $0
+        $0
 \end{conjecture}
 endsnippet
 
 snippet lem "Lemma"
 \begin{lemma}
-  $0
+        $0
 \end{lemma}
 endsnippet
 
 snippet rem "Remark"
 \begin{remark}
-  $0
+        $0
 \end{remark}
 endsnippet
 
@@ -112,19 +107,19 @@ endsnippet
 
 snippet prob "Problem"
 \begin{problem}${1:[${2:description}]}
-  $0
+        $0
 \end{problem}
 endsnippet
 
 snippet prob* "Unnumbered Problem"
 \begin{problem*}${1:[${2:description}]}
-  $0
+        $0
 \end{problem*}
 endsnippet
 
 snippet sol "Solution"
 \begin{solution}[\solspace]
-  $0
+        $0
 \end{solution}
 endsnippet
 
@@ -199,10 +194,6 @@ snippet invar "Invariant"
 \invariant{${1:space}}{${2:action}}
 endsnippet
 
-snippet /\$/ "Inline math" wAr
-\$$1\$$0
-endsnippet
-
 # TODO : deduplicate from TeX and mma™ files.
 # Greek letters
 snippet ,a "α" Ai
@@ -240,6 +231,9 @@ snippet ,t "τ" Ai
 endsnippet
 snippet ,H "Θ" Ai
 Θ
+endsnippet
+snippet ,n "ν" Ai
+ν
 endsnippet
 snippet ,h "θ" Ai
 θ
@@ -395,12 +389,12 @@ endsnippet
 
 snippet fb "Feedback Page"
 \feedbackpage{${1:Name}}{ % Remove braces for a checkmark
-  \objective{Verbal     }${2:\{$3\}}
-  \objective{Persistence}{}
-  \objective{Strategies }{}
+        \objective{Verbal     }${2:\{$3\}}
+        \objective{Persistence}{}
+        \objective{Strategies }{}
 }
 {\begin{itemize}
-  \item $4
+        \item $4
 \end{itemize}} % Remove braces to hide
 $0
 endsnippet
@@ -431,7 +425,7 @@ endsnippet
 
 snippet fr "slide frame"
 \begin{frame}
-  \frametitle{$1}
+        \frametitle{$1}
         $0
 \end{frame}
 
@@ -442,7 +436,7 @@ endsnippet
 
 snippet part "Parts evironment"
 \begin{parts}
-  \part $1
+        \part $1
 \end{parts}
 endsnippet
 
@@ -452,7 +446,7 @@ endsnippet
 
 snippet cho "Choices evironment"
 \begin{choices}
-  \choice $1
+        \choice $1
 \end{choices}
 endsnippet
 
