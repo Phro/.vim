@@ -101,7 +101,8 @@ snippet vt "Verification Test"
 VerificationTest[
         ${2:actual},
         ${3:expected},
-TestID->"${1:Test ID}"]
+TestID->"${1:Test ID}"${4:,SameTest->Congruent}]
+$0
 endsnippet
 snippet vtm "Verification Test with Module"
 Module[
@@ -109,5 +110,6 @@ Module[
         VerificationTest[
                 ${2:actual},
                 ${3:expected},
-TestID->"${1:Test ID}"]]
+TestID->"${1:Test ID}"${4:,SameTest->Congruent}]]
+$0
 endsnippet
