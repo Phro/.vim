@@ -554,7 +554,7 @@ noremap <C-p> p
 " Insert lines above or below current line. {{{2
 noremap <LocalLeader>O moO<Esc>`o
 noremap <LocalLeader>o moo<Esc>`o
-" TODO: This still must be fixed 
+" TODO: This still must be fixed
 silent! call repeat#set("<LocalLeader>O", v:count)
 silent! call repeat#set("<LocalLeader>o", v:count)
 " Move line(s) of text using ALT+[jk] or Comamnd+[jk] on mac {{{2
