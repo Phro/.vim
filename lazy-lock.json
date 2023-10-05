@@ -1,0 +1,4 @@
+{
+  "lazy.nvim": { "branch": "main", "commit": "2a9354c7d2368d78cbd5575a51a2af5bd8a6ad01" },
+  "neovim-colors-solarized-truecolor-only": { "branch": "master", "commit": "7474ba07580628cbf1ab2d0dc1a94a754bd4a447" }
+}
