@@ -62,3 +62,15 @@ keymap.set("v", "_", function ()
                 vim.v.count1 + 1 ..
                 "<cr>`>my`<mzgv`yo`z"
 end, { expr = true, })
+
+-- Toggle spell checking
+function ToggleSpell(scope)
+        return function ()
+                scope.spell = not scope.spell
+                vim.cmd("redraw")
+        end
+end
+keymap.set("", "<Leader>ss", ToggleSpell(vim.wo), { expr = true, })
+
+-- Redraw the screen
+keymap.set("", "<Leader>r", ":mode<CR>")
