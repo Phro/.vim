@@ -35,6 +35,30 @@ keymap.set("t", "<a-l>", "<c-\\><c-n><c-w>l")
 keymap.set("", "p", "]p")
 keymap.set("", "<c-p>", "p")
 
--- Insert lines above or below current line. {{{2
-keymap.set("","<Leader>O", "moO<Esc>`o")
-keymap.set("","<Leader>o", "moo<Esc>`o")
+-- Insert lines above or below current line.
+keymap.set("","<Leader>O", function()
+        return "mo" .. vim.v.count1 .. "O<Esc>`o"
+end, { expr = true, })
+keymap.set("","<Leader>o", function()
+        return "mo" .. vim.v.count1 .. "o<Esc>`o"
+end, {expr = true, })
+
+-- Move lines vertically.
+keymap.set("n", "-", function()
+        return "mz:silent! move+" .. vim.v.count1 .. "<cr>`z"
+end, { expr = true, })
+keymap.set("n", "_", function()
+        return "mz:silent! move-" .. vim.v.count1 + 1 .. "<cr>`z"
+end, { expr = true, })
+keymap.set("v", "-", function()
+        return
+                ":<c-u>silent!'<,'>move'>+" ..
+                vim.v.count1 ..
+                "<cr>`<my`>mzgv`yo`z"
+end, { expr = true, })
+keymap.set("v", "_", function ()
+        return
+                ":<c-u>silent!'<,'>move'<-" ..
+                vim.v.count1 + 1 ..
+                "<cr>`>my`<mzgv`yo`z"
+end, { expr = true, })
