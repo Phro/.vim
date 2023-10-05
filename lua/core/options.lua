@@ -23,6 +23,8 @@ opt.showbreak = "-> "
 opt.wrap = true
 opt.colorcolumn = {"+1","+2","+3"}
 opt.textwidth = 80
+opt.scrolloff = 4
+opt.sidescrolloff = 4
 
 -- keymap and key sequence timeouts
 opt.timeout = false
