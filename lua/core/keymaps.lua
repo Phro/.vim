@@ -64,13 +64,7 @@ keymap.set("v", "_", function ()
 end, { expr = true, })
 
 -- Toggle spell checking
-function ToggleSpell(scope)
-        return function ()
-                scope.spell = not scope.spell
-                vim.cmd("redraw")
-        end
-end
-keymap.set("", "<Leader>ss", ToggleSpell(vim.wo), { expr = true, })
+keymap.set("", "<Leader>ss", ":setlocal spell!<CR>")
 
 -- Redraw the screen
 keymap.set("", "<Leader>r", ":mode<CR>")
