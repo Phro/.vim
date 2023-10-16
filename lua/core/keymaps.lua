@@ -31,6 +31,17 @@ keymap.set("t", "<a-j>", "<c-\\><c-n><c-w>j")
 keymap.set("t", "<a-k>", "<c-\\><c-n><c-w>k")
 keymap.set("t", "<a-l>", "<c-\\><c-n><c-w>l")
 
+-- Move windows with shift-alt
+keymap.set("n", "<a-s-h>", "<c-w>H")
+keymap.set("n", "<a-s-j>", "<c-w>J")
+keymap.set("n", "<a-s-k>", "<c-w>K")
+keymap.set("n", "<a-s-l>", "<c-w>L")
+keymap.set("t", "<a-s-h>", "<c-\\><c-n><c-w>H")
+keymap.set("t", "<a-s-j>", "<c-\\><c-n><c-w>J")
+keymap.set("t", "<a-s-k>", "<c-\\><c-n><c-w>K")
+keymap.set("t", "<a-s-l>", "<c-\\><c-n><c-w>L")
+
+
 -- Paste to current indent level with p.
 keymap.set("", "p", "]p")
 keymap.set("", "<c-p>", "p")
