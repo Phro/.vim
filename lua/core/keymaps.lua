@@ -38,10 +38,10 @@ keymap.set("", "<c-p>", "p")
 -- Insert lines above or below current line.
 keymap.set("","<Leader>O", function()
         return "mo" .. vim.v.count1 .. "O<Esc>`o"
-end, { expr = true, })
+end, { expr = true, desc = "Insert blank line above", })
 keymap.set("","<Leader>o", function()
         return "mo" .. vim.v.count1 .. "o<Esc>`o"
-end, {expr = true, })
+end, {expr = true, desc = "Insert blank line below",})
 
 -- Move lines vertically.
 keymap.set("n", "-", function()
@@ -64,7 +64,9 @@ keymap.set("v", "_", function ()
 end, { expr = true, })
 
 -- Toggle spell checking
-keymap.set("", "<Leader>ss", ":setlocal spell!<CR>")
+keymap.set("", "<Leader>ss", ":setlocal spell!<CR>", {
+        desc = "Toggle spellcheck", 
+})
 
 -- Redraw the screen
-keymap.set("", "<Leader>r", ":mode<CR>")
+keymap.set("", "<Leader>r", ":mode<CR>", { desc = "Redraw screen", })
