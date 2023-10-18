@@ -1,8 +1,8 @@
 return {
-	"frankier/neovim-colors-solarized-truecolor-only",
-	lazy = false,    -- load during startup
-	priority = 1000, -- load first among plugins
-	config = function()
-		vim.cmd [[ colorscheme solarized ]]
-	end
+        "folke/tokyonight.nvim",
+        lazy = false,    -- load during startup
+        priority = 1000, -- load first among plugins
+        init = function()
+                vim.cmd.colorscheme "tokyonight"
+        end,
 }

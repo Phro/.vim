@@ -1,5 +1,5 @@
 {
-  "lazy.nvim": { "branch": "main", "commit": "3049575bd84335c63171282c1991089f80977620" },
-  "neovim-colors-solarized-truecolor-only": { "branch": "master", "commit": "7474ba07580628cbf1ab2d0dc1a94a754bd4a447" },
-  "which-key.nvim": { "branch": "main", "commit": "6962dae3565369363b59dd51fb206051555fcb4d" }
+  "lazy.nvim": { "branch": "main", "commit": "4c75c8eeb957a99aa44ce8e526c04340ab358c5e" },
+  "tokyonight.nvim": { "branch": "main", "commit": "633039585dff7fd2b9b62fb190bf768702609d95" },
+  "which-key.nvim": { "branch": "main", "commit": "ce741eb559c924d72e3a67d2189ad3771a231414" }
 }
