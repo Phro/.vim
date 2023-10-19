@@ -1,2 +1,2 @@
-require("core")
-require("lazyconfig")
+require("user.core")
+require("user.lazy")

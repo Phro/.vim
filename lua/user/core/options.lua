@@ -8,6 +8,8 @@ opt.relativenumber = true
 opt.expandtab = true
 opt.autoindent = true
 opt.smarttab  = true
+opt.tabstop = 4
+opt.shiftwidth = 4
 
 -- whitespace highlighting
 vim.opt.listchars = {
@@ -26,11 +28,12 @@ opt.textwidth = 80
 opt.scrolloff = 4
 opt.sidescrolloff = 4
 
--- keymap and key sequence timeouts
-opt.timeout = false
-
 -- clipboard
 opt.clipboard:append("unnamedplus")
+
+-- make searches case-insensitive unless otherwise specified
+opt.ignorecase = true
+opt.smartcase = true
 
 -- sign column
 opt.signcolumn = "yes"
