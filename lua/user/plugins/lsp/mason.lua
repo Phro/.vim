@@ -1,9 +1,6 @@
 return {
     {
         "williamboman/mason.nvim",
-        dependencies = {
-            "williamboman/mason-lspconfig.nvim"
-        },
         opts = {
             ui = {
                 icons = {
@@ -16,7 +13,18 @@ return {
     },
     {
         "williamboman/mason-lspconfig.nvim",
+        dependencies = {
+            "williamboman/mason.nvim"
+        },
         opts = {
+            ensure_installed = {
+                "tsserver",
+                "html",
+                "cssls",
+                "tailwindcss",
+                "lua_ls",
+            },
+            automatic_installation = true,
         },
     },
 }

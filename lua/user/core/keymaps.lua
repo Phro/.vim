@@ -80,4 +80,4 @@ keymap.set("", "<Leader>ss", ":setlocal spell!<CR>", {
 })
 
 -- Redraw the screen
-keymap.set("", "<Leader>r", ":mode<CR>", { desc = "Redraw screen", })
+keymap.set("", "<Leader>R", ":mode<CR>", { desc = "Redraw screen", })
