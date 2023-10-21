@@ -4,8 +4,8 @@ vim.g.mapleader = " "
 keymap.set("", " ", "<Nop>")
 
 local function swap_keymaps(mode, map1, map2, opts)
-        keymap.set(mode, map1, map2, opts)
-        keymap.set(mode, map2, map1, opts)
+	keymap.set(mode, map1, map2, opts)
+	keymap.set(mode, map2, map1, opts)
 end
 
 keymap.set("n", "<Leader>w", "<Cmd>w<CR>")
@@ -43,43 +43,36 @@ keymap.set("t", "<a-s-j>", "<c-\\><c-n><c-w>J")
 keymap.set("t", "<a-s-k>", "<c-\\><c-n><c-w>K")
 keymap.set("t", "<a-s-l>", "<c-\\><c-n><c-w>L")
 
-
 -- Paste to current indent level with p.
 keymap.set("", "p", "]p")
 keymap.set("", "<c-p>", "p")
 
 -- Insert lines above or below current line.
-keymap.set("","<Leader>O", function()
-        return "mo" .. vim.v.count1 .. "O<Esc>`o"
-end, { expr = true, desc = "Insert blank line above", })
-keymap.set("","<Leader>o", function()
-        return "mo" .. vim.v.count1 .. "o<Esc>`o"
-end, {expr = true, desc = "Insert blank line below",})
+keymap.set("", "<Leader>O", function()
+	return "mo" .. vim.v.count1 .. "O<Esc>`o"
+end, { expr = true, desc = "Insert blank line above" })
+keymap.set("", "<Leader>o", function()
+	return "mo" .. vim.v.count1 .. "o<Esc>`o"
+end, { expr = true, desc = "Insert blank line below" })
 
 -- Move lines vertically.
 keymap.set("n", "-", function()
-        return "mz:silent! move+" .. vim.v.count1 .. "<cr>`z"
-end, { expr = true, })
+	return "mz:silent! move+" .. vim.v.count1 .. "<cr>`z"
+end, { expr = true })
 keymap.set("n", "_", function()
-        return "mz:silent! move-" .. vim.v.count1 + 1 .. "<cr>`z"
-end, { expr = true, })
+	return "mz:silent! move-" .. vim.v.count1 + 1 .. "<cr>`z"
+end, { expr = true })
 keymap.set("v", "-", function()
-        return
-                ":<c-u>silent!'<,'>move'>+" ..
-                vim.v.count1 ..
-                "<cr>`<my`>mzgv`yo`z"
-end, { expr = true, })
-keymap.set("v", "_", function ()
-        return
-                ":<c-u>silent!'<,'>move'<-" ..
-                vim.v.count1 + 1 ..
-                "<cr>`>my`<mzgv`yo`z"
-end, { expr = true, })
+	return ":<c-u>silent!'<,'>move'>+" .. vim.v.count1 .. "<cr>`<my`>mzgv`yo`z"
+end, { expr = true })
+keymap.set("v", "_", function()
+	return ":<c-u>silent!'<,'>move'<-" .. vim.v.count1 + 1 .. "<cr>`>my`<mzgv`yo`z"
+end, { expr = true })
 
 -- Toggle spell checking
 keymap.set("", "<Leader>ss", ":setlocal spell!<CR>", {
-        desc = "Toggle spellcheck", 
+	desc = "Toggle spellcheck",
 })
 
 -- Redraw the screen
-keymap.set("", "<Leader>R", ":mode<CR>", { desc = "Redraw screen", })
+keymap.set("", "<Leader>R", ":mode<CR>", { desc = "Redraw screen" })
