@@ -5,6 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
+		"nvim-telescope/telescope-ui-select.nvim",
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -21,9 +22,13 @@ return {
 					},
 				},
 			},
+			extensions = {
+				["ui-select"] = { require("telescope.themes").get_dropdown() },
+			},
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("ui-select")
 
 		local keymap = vim.keymap
 
