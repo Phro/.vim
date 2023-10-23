@@ -8,7 +8,8 @@ local function swap_keymaps(mode, map1, map2, opts)
 	keymap.set(mode, map2, map1, opts)
 end
 
-keymap.set("n", "<Leader>w", "<Cmd>w<CR>")
+keymap.set("n", "<Leader>ww", "<Cmd>update<CR>", { desc = "Write buffer" })
+keymap.set("n", "<Leader>wa", "<Cmd>wall<CR>", { desc = "Write all buffers" })
 
 -- Vertical motion should follow display lines, not true lines.
 swap_keymaps("", "j", "gj")
