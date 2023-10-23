@@ -51,3 +51,8 @@ opt.writebackup = false
 
 -- spellcheck
 opt.spell = true
+
+vim.api.nvim_create_autocmd({ "CursorHoldI", "CursorHold", "BufLeave" }, {
+	command = "silent! wall",
+	desc = "Auto-save.",
+})
