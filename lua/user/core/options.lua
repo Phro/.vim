@@ -43,7 +43,7 @@ opt.termguicolors = true
 
 -- split windows
 opt.splitright = true
-opt.splitbelow = true
+opt.splitbelow = false
 
 -- prefer version control systems over in-house backups
 opt.swapfile = false
