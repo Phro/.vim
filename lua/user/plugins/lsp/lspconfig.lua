@@ -22,6 +22,7 @@ return {
                     },
                 },
             },
+            rust_analyser = {},
         },
     },
     config = function(_,opts)

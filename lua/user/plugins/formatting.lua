@@ -25,6 +25,7 @@ return {
 			json = { "prettierd" },
 			yaml = { "prettierd" },
 			markdown = { "prettierd" },
+			rust = { "rustfmt" },
 		},
 		format_on_save = {
 			lsp_fallback = true,
