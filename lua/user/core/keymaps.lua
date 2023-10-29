@@ -77,3 +77,6 @@ keymap.set("", "<Leader>ss", ":setlocal spell!<CR>", {
 
 -- Redraw the screen
 keymap.set("", "<Leader>R", ":mode<CR>", { desc = "Redraw screen" })
+
+-- Edit neovim configuration files
+keymap.set("", "<leader>cv", "<Cmd>NvimTreeOpen ~/.config/nvim/lua/user/<CR>")
