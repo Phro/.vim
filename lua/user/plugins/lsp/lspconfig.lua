@@ -22,7 +22,11 @@ return {
 					},
 				},
 			},
-			rust_analyzer = {},
+			rust_analyzer = { ["rust-analyzer"] = {
+				diagnostics = {
+					enable = true,
+				},
+			} },
 		},
 	},
 	config = function(_, opts)
