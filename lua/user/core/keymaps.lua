@@ -79,4 +79,15 @@ keymap.set("", "<Leader>ss", ":setlocal spell!<CR>", {
 keymap.set("", "<Leader>R", ":mode<CR>", { desc = "Redraw screen" })
 
 -- Edit neovim configuration files
-keymap.set("", "<leader>cv", "<Cmd>NvimTreeOpen ~/.config/nvim/lua/user/<CR>")
+keymap.set("", "<Leader>cv", "<Cmd>NvimTreeOpen ~/.config/nvim/lua/user/<CR>")
+keymap.set("", "<Leader>cf", function()
+	local configdir = vim.fn.fnamemodify(vim.fn.expand("$MYVIMRC"), ":p:h")
+	local filetype = vim.bo.filetype
+	local filename = configdir .. "/ftplugin/" .. filetype
+	local extension = vim.fn.filereadable(filename .. ".vim") == 1 and "vim" or "lua"
+	vim.cmd("tabedit" .. filename .. "." .. extension)
+end)
+
+keymap.set("", "M", function()
+	vim.cmd.make()
+end)
