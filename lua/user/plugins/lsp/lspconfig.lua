@@ -24,9 +24,8 @@ return {
 			},
 			rust_analyzer = {
 				["rust-analyzer"] = {
-					diagnostics = {
-						enable = true,
-					},
+					diagnostics = { enable = true },
+					procMacro = { enable = true },
 				},
 			},
 		},
