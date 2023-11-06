@@ -50,29 +50,17 @@ return {
 			end
 
 			keymapBuf("n", "gR", "<Cmd>Telescope lsp_references<CR>", "Show LSP references")
-
 			keymapBuf("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-
 			keymapBuf("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", "Show LSP definitions")
-
 			keymapBuf("n", "gi", "<Cmd>Telescope lsp_implementations<CR>", "Show LSP implementations")
-
 			keymapBuf("n", "gt", "<Cmd>Telescope lsp_type_definitions<CR>", "Show LSP type definitions")
-
 			keymapBuf({ "n", "v" }, "<Leader>ca", vim.lsp.buf.code_action, "See available code actions")
-
 			keymapBuf("n", "<Leader>rn", vim.lsp.buf.rename, "Smart rename")
-
 			keymapBuf("n", "<Leader>D", "<Cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics")
-
 			keymapBuf("n", "<Leader>d", vim.diagnostic.open_float, "Show line diagnostics")
-
 			keymapBuf("n", "[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
-
 			keymapBuf("n", "]d", vim.diagnostic.goto_next, "Go to next diagnostic")
-
 			keymapBuf("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor")
-
 			keymapBuf("n", "<Leader>rs", "<Cmd>LspRestart<CR>", "Restart LSP")
 		end
 
