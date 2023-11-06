@@ -1,1 +1,3 @@
-vim.opt_local.makeprg = "cargo build"
+vim.b.runProject = "cargo run"
+vim.b.testProject = "cargo test"
+vim.b.buildProject = "cargo build"
