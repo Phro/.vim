@@ -88,6 +88,23 @@ keymap.set("", "<Leader>cf", function()
 	vim.cmd("tabedit" .. filename .. "." .. extension)
 end)
 
-keymap.set("", "M", function()
-	vim.cmd.make()
-end)
+local function runCommand(command, err)
+	if command then
+		vim.cmd("!" .. command)
+	else
+        vim.api.nvim_err_writeln(err)
+	end
+end
+local function testProject()
+    runCommand(vim.b.testProject,"No testProject defined.")
+end
+local function buildProject()
+    runCommand(vim.b.buildProject,"No buildProject defined.")
+end
+local function runProject()
+runCommand(vim.b.runProject,"No runProject defined.")
+end
+
+keymap.set("", "MM", runProject)
+keymap.set("", "MB", buildProject)
+keymap.set("", "MT", testProject)
