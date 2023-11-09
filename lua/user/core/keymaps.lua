@@ -95,6 +95,15 @@ local function runCommand(command, err)
 		vim.api.nvim_err_writeln(err)
 	end
 end
+
+local function runInteractiveCommand(command, err)
+	if command then
+		vim.cmd("vs term://" .. command)
+	else
+		vim.api.nvim_err_writeln(err)
+	end
+end
+
 local function testProject()
 	runCommand(vim.b.testProject, "No testProject defined.")
 end
@@ -102,7 +111,7 @@ local function buildProject()
 	runCommand(vim.b.buildProject, "No buildProject defined.")
 end
 local function runProject()
-	runCommand(vim.b.runProject, "No runProject defined.")
+	runInteractiveCommand(vim.b.runProject, "No runProject defined.")
 end
 
 keymap.set("", "MM", runProject, { desc = "Run project." })
