@@ -62,3 +62,13 @@ vim.api.nvim_create_autocmd({
 	command = "silent! wall",
 	desc = "Auto-save.",
 })
+
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
+	pattern = "term://*",
+	command = "startinsert",
+})
+
+vim.api.nvim_create_autocmd({ "BufLeave" }, {
+	pattern = "term://*",
+	command = "stopinsert",
+})
