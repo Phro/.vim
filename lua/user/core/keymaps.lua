@@ -92,19 +92,19 @@ local function runCommand(command, err)
 	if command then
 		vim.cmd("!" .. command)
 	else
-        vim.api.nvim_err_writeln(err)
+		vim.api.nvim_err_writeln(err)
 	end
 end
 local function testProject()
-    runCommand(vim.b.testProject,"No testProject defined.")
+	runCommand(vim.b.testProject, "No testProject defined.")
 end
 local function buildProject()
-    runCommand(vim.b.buildProject,"No buildProject defined.")
+	runCommand(vim.b.buildProject, "No buildProject defined.")
 end
 local function runProject()
-runCommand(vim.b.runProject,"No runProject defined.")
+	runCommand(vim.b.runProject, "No runProject defined.")
 end
 
-keymap.set("", "MM", runProject)
-keymap.set("", "MB", buildProject)
-keymap.set("", "MT", testProject)
+keymap.set("", "MM", runProject, { desc = "Run project." })
+keymap.set("", "MB", buildProject, { desc = "Build project." })
+keymap.set("", "MT", testProject, { desc = "Test project." })
