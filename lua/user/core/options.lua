@@ -52,11 +52,6 @@ opt.writebackup = false
 -- spellcheck
 opt.spell = true
 
-vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
-	command = "silent! write",
-	desc = "Auto-save.",
-})
-
 vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
 	pattern = "term://*",
 	command = "startinsert",
