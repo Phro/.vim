@@ -27,10 +27,6 @@ return {
 			markdown = { "prettierd" },
 			rust = { "rustfmt" },
 		},
-		format_on_save = {
-			lsp_fallback = true,
-			timeout_ms = 500,
-		},
 	},
 	init = function()
 		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
