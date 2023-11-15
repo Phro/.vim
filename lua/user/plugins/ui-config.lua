@@ -38,7 +38,11 @@ return {
 		},
 		messages = {
 			view = "mini",
-			view_warn = "mini",
+		},
+		views = {
+			mini = {
+				win_options = { winblend = 0 },
+			},
 		},
 	},
 }
