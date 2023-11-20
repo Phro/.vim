@@ -15,7 +15,7 @@ return {
 		-- Load VSCode-style snippets from plugins (esp. friendly-snippets).
 		require("luasnip.loaders.from_vscode").lazy_load()
 
-		vim.opt.completeopt = { "menu", "menuone", "preview", "noselect" }
+		vim.opt.completeopt = { "menu", "menuone", "preview" }
 
 		cmp.setup({
 			snippet = {
