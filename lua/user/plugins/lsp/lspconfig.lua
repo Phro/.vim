@@ -28,6 +28,10 @@ return {
 					procMacro = { enable = true },
 				},
 			},
+			yamlls = {},
+			hls = {
+				filetypes = { "haskell", "lhaskell", "cabal" },
+			},
 		},
 	},
 	config = function(_, opts)
