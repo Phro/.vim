@@ -32,6 +32,7 @@ return {
 			hls = {
 				filetypes = { "haskell", "lhaskell", "cabal" },
 			},
+			pyright = {},
 		},
 	},
 	config = function(_, opts)
