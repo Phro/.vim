@@ -23,9 +23,11 @@ return {
 			css = { "prettierd" },
 			html = { "prettierd" },
 			json = { "prettierd" },
+			json5 = { "prettierd" },
 			yaml = { "prettierd" },
 			markdown = { "prettierd" },
 			rust = { "rustfmt" },
+			haskell = { "ormolu" },
 		},
 	},
 	init = function()
