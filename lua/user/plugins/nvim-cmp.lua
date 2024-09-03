@@ -12,6 +12,12 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 
+		local has_words_before = function()
+			unpack = unpack or table.unpack
+			local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+			return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+		end
+
 		-- Load VSCode-style snippets from plugins (esp. friendly-snippets).
 		require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -24,7 +30,7 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				["<S-p>"] = cmp.mapping.select_prev_item(),
+				["<C-p>"] = cmp.mapping.select_prev_item(),
 				["<C-n>"] = cmp.mapping.select_next_item(),
 				["<C-f>"] = cmp.mapping.scroll_docs(4),
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
