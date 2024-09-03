@@ -33,6 +33,11 @@ return {
 				filetypes = { "haskell", "lhaskell", "cabal" },
 			},
 			pyright = {},
+			ccls = {},
+			eslint = {},
+			cmake = {},
+			texlab = {},
+			tsserver = {},
 		},
 	},
 	config = function(_, opts)
