@@ -25,9 +25,17 @@ return {
 			json = { "prettierd" },
 			json5 = { "prettierd" },
 			yaml = { "prettierd" },
-			markdown = { "prettierd" },
+			markdown = { "prettier" },
 			rust = { "rustfmt" },
 			haskell = { "ormolu" },
+			cmake = { "cmakelang" },
+		},
+		formatters = {
+			prettier = {
+				prepend_args = function()
+					return { "--prose-wrap", "always" }
+				end,
+			},
 		},
 	},
 	init = function()
