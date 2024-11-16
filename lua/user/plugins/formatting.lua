@@ -29,6 +29,7 @@ return {
 			rust = { "rustfmt" },
 			haskell = { "ormolu" },
 			cmake = { "cmakelang" },
+			bash = { "beautysh" },
 		},
 		formatters = {
 			prettier = {

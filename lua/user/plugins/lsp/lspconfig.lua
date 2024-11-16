@@ -38,6 +38,7 @@ return {
 			cmake = {},
 			texlab = {},
 			tsserver = {},
+			bash = {},
 		},
 	},
 	config = function(_, opts)

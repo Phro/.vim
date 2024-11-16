@@ -1,9 +1,8 @@
 return {
-	"Tsuzat/NeoSolarized.nvim",
+	"folke/tokyonight.nvim",
 	lazy = false, -- load during startup
 	priority = 1000, -- load first among plugins
 	init = function()
-		vim.cmd.colorscheme("NeoSolarized")
+		vim.cmd.colorscheme("tokyonight-moon")
 	end,
-	config = { transparent = false },
 }
